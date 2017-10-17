@@ -12,7 +12,7 @@ import MapKit
 
 class TestVC: UIViewController, UITextFieldDelegate, UINavigationControllerDelegate, MKMapViewDelegate {
     
-    var matchingItems: [MKMapItem] = []
+    var matchingItems: [MKMapItem] = [MKMapItem]()
     @IBOutlet weak var locationText: UITextField!
     @IBOutlet weak var mapView: MKMapView!
     @IBAction func submitLocation() {
@@ -30,9 +30,10 @@ class TestVC: UIViewController, UITextFieldDelegate, UINavigationControllerDeleg
         var lat = CLLocationDegrees(exactly: 40.722324)
         var long = CLLocationDegrees(exactly: -73.988429)
         
-        var span = MKCoordinateSpanMake(0.0015, 0.0015)
-        var region = MKCoordinateRegionMake(location, span)
+        let center = CLLocationCoordinate2D(latitude: lat!, longitude: long!)
         
+        var span = MKCoordinateSpanMake(2, 2)
+        var region = MKCoordinateRegionMake(center, span)
         mapView.setRegion(region, animated: true)
         
         var annotation = MKPointAnnotation()
@@ -155,6 +156,22 @@ class TestVC: UIViewController, UITextFieldDelegate, UINavigationControllerDeleg
                 print("\(item)")
 //                mapView.setRegion(item.placemark, animated: true)
 //                mapView.
+//                let randomIndex = Int(arc4random_uniform(UInt32(response.mapItems.count)))
+//                let mapItem = response.mapItems[randomIndex]
+                
+                //mapItem.openInMaps(launchOptions: nil)
+                //self.locationText.text = "\(mapItem.placemark)"
+                //self.location = CLLocationCoordinate2DMake(item.placemark.coordinate)
+                
+                self.matchingItems.append(item as MKMapItem)
+                print("Matching items = \(self.matchingItems.count)")
+                
+                let annotation = MKPointAnnotation()
+                annotation.coordinate = item.placemark.coordinate
+                annotation.title = item.name
+                annotation.subtitle = "\(String(describing: item.url))"
+                self.mapView.addAnnotation(annotation)
+                //self.mapView.setRegion(annotation.coordinate, animated: true)
             }
         }
 //        let search = MKLocalSearch(request: request)

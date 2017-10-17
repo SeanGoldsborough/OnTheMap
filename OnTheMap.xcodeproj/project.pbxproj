@@ -21,6 +21,9 @@
 		C63B683C1F96914800617549 /* TestTextDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63B683B1F96914800617549 /* TestTextDelegate.swift */; };
 		C63B683E1F96944200617549 /* AlertMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63B683D1F96944200617549 /* AlertMessage.swift */; };
 		C63B68401F96971100617549 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63B683F1F96971100617549 /* LoginVC.swift */; };
+		C63B68531F96C7B800617549 /* UdacityAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63B68521F96C7B800617549 /* UdacityAPI.swift */; };
+		C63B68551F96C7CA00617549 /* ParseAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63B68541F96C7CA00617549 /* ParseAPI.swift */; };
+		C63B68571F96C7D900617549 /* FacebookAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63B68561F96C7D800617549 /* FacebookAPI.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +64,19 @@
 		C63B683B1F96914800617549 /* TestTextDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestTextDelegate.swift; sourceTree = "<group>"; };
 		C63B683D1F96944200617549 /* AlertMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertMessage.swift; sourceTree = "<group>"; };
 		C63B683F1F96971100617549 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
+		C63B68481F96B18900617549 /* BaseOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseOperation.swift; sourceTree = "<group>"; };
+		C63B68491F96B18900617549 /* FlickrParseOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrParseOperation.swift; sourceTree = "<group>"; };
+		C63B684A1F96B18A00617549 /* OperationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationState.swift; sourceTree = "<group>"; };
+		C63B684B1F96B18A00617549 /* FlickrFetchOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrFetchOperation.swift; sourceTree = "<group>"; };
+		C63B684C1F96B19800617549 /* SearchDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDataSource.swift; sourceTree = "<group>"; };
+		C63B684D1F96B1A000617549 /* Double+InRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+InRange.swift"; sourceTree = "<group>"; };
+		C63B684E1F96C29300617549 /* FlickrAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrAPI.swift; sourceTree = "<group>"; };
+		C63B684F1F96C74000617549 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
+		C63B68501F96C74000617549 /* PhotoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoList.swift; sourceTree = "<group>"; };
+		C63B68511F96C74100617549 /* PhotoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoResponse.swift; sourceTree = "<group>"; };
+		C63B68521F96C7B800617549 /* UdacityAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UdacityAPI.swift; sourceTree = "<group>"; };
+		C63B68541F96C7CA00617549 /* ParseAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseAPI.swift; sourceTree = "<group>"; };
+		C63B68561F96C7D800617549 /* FacebookAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookAPI.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,13 +128,12 @@
 			isa = PBXGroup;
 			children = (
 				C63B68041F96601A00617549 /* AppDelegate.swift */,
+				C63B68411F96B09900617549 /* Models */,
+				C63B68431F96B0B900617549 /* Views */,
+				C63B68421F96B0A300617549 /* Controllers */,
+				C63B68471F96B11200617549 /* Extensions */,
 				C63B68061F96601A00617549 /* ViewController.swift */,
-				C63B683F1F96971100617549 /* LoginVC.swift */,
-				C63B68351F9669B000617549 /* ListVC.swift */,
-				C63B68371F96752C00617549 /* MapVC.swift */,
 				C63B683D1F96944200617549 /* AlertMessage.swift */,
-				C63B68391F967F8900617549 /* TestVC.swift */,
-				C63B683B1F96914800617549 /* TestTextDelegate.swift */,
 				C63B68081F96601A00617549 /* Main.storyboard */,
 				C63B680E1F96601A00617549 /* Assets.xcassets */,
 				C63B68101F96601A00617549 /* LaunchScreen.storyboard */,
@@ -144,6 +159,76 @@
 				C63B68291F96601B00617549 /* Info.plist */,
 			);
 			path = OnTheMapUITests;
+			sourceTree = "<group>";
+		};
+		C63B68411F96B09900617549 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C63B684F1F96C74000617549 /* Photo.swift */,
+				C63B68501F96C74000617549 /* PhotoList.swift */,
+				C63B68511F96C74100617549 /* PhotoResponse.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		C63B68421F96B0A300617549 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				C63B683F1F96971100617549 /* LoginVC.swift */,
+				C63B68351F9669B000617549 /* ListVC.swift */,
+				C63B68371F96752C00617549 /* MapVC.swift */,
+				C63B68391F967F8900617549 /* TestVC.swift */,
+				C63B683B1F96914800617549 /* TestTextDelegate.swift */,
+				C63B68441F96B0DB00617549 /* API */,
+				C63B68451F96B0E300617549 /* Operations */,
+				C63B68461F96B0EC00617549 /* DataSources */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		C63B68431F96B0B900617549 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		C63B68441F96B0DB00617549 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				C63B684E1F96C29300617549 /* FlickrAPI.swift */,
+				C63B68521F96C7B800617549 /* UdacityAPI.swift */,
+				C63B68541F96C7CA00617549 /* ParseAPI.swift */,
+				C63B68561F96C7D800617549 /* FacebookAPI.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		C63B68451F96B0E300617549 /* Operations */ = {
+			isa = PBXGroup;
+			children = (
+				C63B68481F96B18900617549 /* BaseOperation.swift */,
+				C63B684B1F96B18A00617549 /* FlickrFetchOperation.swift */,
+				C63B68491F96B18900617549 /* FlickrParseOperation.swift */,
+				C63B684A1F96B18A00617549 /* OperationState.swift */,
+			);
+			path = Operations;
+			sourceTree = "<group>";
+		};
+		C63B68461F96B0EC00617549 /* DataSources */ = {
+			isa = PBXGroup;
+			children = (
+				C63B684C1F96B19800617549 /* SearchDataSource.swift */,
+			);
+			path = DataSources;
+			sourceTree = "<group>";
+		};
+		C63B68471F96B11200617549 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				C63B684D1F96B1A000617549 /* Double+InRange.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -284,10 +369,13 @@
 				C63B68361F9669B000617549 /* ListVC.swift in Sources */,
 				C63B683E1F96944200617549 /* AlertMessage.swift in Sources */,
 				C63B683C1F96914800617549 /* TestTextDelegate.swift in Sources */,
+				C63B68531F96C7B800617549 /* UdacityAPI.swift in Sources */,
 				C63B680D1F96601A00617549 /* OnTheMap.xcdatamodeld in Sources */,
 				C63B68401F96971100617549 /* LoginVC.swift in Sources */,
 				C63B68071F96601A00617549 /* ViewController.swift in Sources */,
+				C63B68571F96C7D900617549 /* FacebookAPI.swift in Sources */,
 				C63B683A1F967F8900617549 /* TestVC.swift in Sources */,
+				C63B68551F96C7CA00617549 /* ParseAPI.swift in Sources */,
 				C63B68051F96601A00617549 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -457,6 +545,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3NA78F3F7G;
 				INFOPLIST_FILE = OnTheMap/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sean.OnTheMap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -472,6 +561,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3NA78F3F7G;
 				INFOPLIST_FILE = OnTheMap/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sean.OnTheMap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
