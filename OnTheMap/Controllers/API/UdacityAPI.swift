@@ -15,14 +15,15 @@ enum SearchType {
     case location(Double, Double)
     case phrase(String)
     
-    var isValid: Bool {
-        switch self {
-        case .location(let latitude, let longitude):
-            return latitude.inRange(FlickrAPI.searchLatRange) && longitude.inRange(FlickrAPI.searchLonRange)
-        case .phrase(let text):
-            return !text.isEmpty
-        }
-    }
+//    var isValid: Bool {
+//        switch self {
+//        case .location(let latitude, let longitude):
+//            
+//            return latitude.inRange(FlickrAPI.searchLatRange) && longitude.inRange(FlickrAPI.searchLonRange)
+//        case .phrase(let text):
+//            return !text.isEmpty
+//        }
+//    }
     
     var invalidString: String {
         switch self {
@@ -99,3 +100,4 @@ struct FlickrAPI {
         return components.url
     }
 }
+

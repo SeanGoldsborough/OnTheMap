@@ -14,6 +14,7 @@ class MapVC: UIViewController {
     
     @IBOutlet weak var mapView: MKMapView!
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -147,6 +148,34 @@ class MapVC: UIViewController {
                 "updatedAt" : "2015-03-13T03:37:58.389Z"
             ]
         ]
+    }
+    
+    func overwriteLocation(){
+        let pushedVC = self.storyboard!.instantiateViewController(withIdentifier: "PushedVC")
+        
+        let alertVC = UIAlertController(
+            title: "You Have Already posted A Student Location. Would You Like To Overwrite Your Current Location?".capitalized,
+            message: "",
+            preferredStyle: .alert)
+        let cancelAction = UIAlertAction(
+            title: "Cancel",
+            style:.default,
+            handler: nil)
+        let okAction = UIAlertAction(
+            title: "OK",
+            style:.default,
+            handler: {(action) -> Void in
+                //The (withIdentifier: "VC2") is the Storyboard Segue identifier.
+                //self.performSegue(withIdentifier: "VC2", sender: self)
+                self.navigationController!.pushViewController(pushedVC, animated: true)
+        })
+        
+        
+        alertVC.addAction(okAction)
+        alertVC.addAction(cancelAction)
+        
+        
+        self.present(alertVC, animated: true, completion: nil)
     }
     
     
