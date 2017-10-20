@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C62B8EE31F9A6022003D37FD /* StudentLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C62B8EE21F9A6022003D37FD /* StudentLocation.swift */; };
+		C62B8EE51F9A6874003D37FD /* UdacityGetPostMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = C62B8EE41F9A6874003D37FD /* UdacityGetPostMethods.swift */; };
+		C62B8EE71F9A69DD003D37FD /* UdacityConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C62B8EE61F9A69DD003D37FD /* UdacityConstants.swift */; };
 		C63B68051F96601A00617549 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63B68041F96601A00617549 /* AppDelegate.swift */; };
 		C63B68071F96601A00617549 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63B68061F96601A00617549 /* ViewController.swift */; };
 		C63B680A1F96601A00617549 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C63B68081F96601A00617549 /* Main.storyboard */; };
@@ -44,6 +47,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C62B8EE21F9A6022003D37FD /* StudentLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentLocation.swift; sourceTree = "<group>"; };
+		C62B8EE41F9A6874003D37FD /* UdacityGetPostMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UdacityGetPostMethods.swift; sourceTree = "<group>"; };
+		C62B8EE61F9A69DD003D37FD /* UdacityConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UdacityConstants.swift; sourceTree = "<group>"; };
 		C63B68011F96601A00617549 /* OnTheMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTheMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C63B68041F96601A00617549 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C63B68061F96601A00617549 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -165,8 +171,10 @@
 			isa = PBXGroup;
 			children = (
 				C63B684F1F96C74000617549 /* Photo.swift */,
+				C62B8EE21F9A6022003D37FD /* StudentLocation.swift */,
 				C63B68501F96C74000617549 /* PhotoList.swift */,
 				C63B68511F96C74100617549 /* PhotoResponse.swift */,
+				C62B8EE61F9A69DD003D37FD /* UdacityConstants.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -207,10 +215,11 @@
 		C63B68451F96B0E300617549 /* Operations */ = {
 			isa = PBXGroup;
 			children = (
+				C63B684A1F96B18A00617549 /* OperationState.swift */,
 				C63B68481F96B18900617549 /* BaseOperation.swift */,
 				C63B684B1F96B18A00617549 /* FlickrFetchOperation.swift */,
 				C63B68491F96B18900617549 /* FlickrParseOperation.swift */,
-				C63B684A1F96B18A00617549 /* OperationState.swift */,
+				C62B8EE41F9A6874003D37FD /* UdacityGetPostMethods.swift */,
 			);
 			path = Operations;
 			sourceTree = "<group>";
@@ -366,6 +375,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C63B68381F96752C00617549 /* MapVC.swift in Sources */,
+				C62B8EE31F9A6022003D37FD /* StudentLocation.swift in Sources */,
 				C63B68361F9669B000617549 /* ListVC.swift in Sources */,
 				C63B683E1F96944200617549 /* AlertMessage.swift in Sources */,
 				C63B683C1F96914800617549 /* TestTextDelegate.swift in Sources */,
@@ -375,6 +385,8 @@
 				C63B68071F96601A00617549 /* ViewController.swift in Sources */,
 				C63B68571F96C7D900617549 /* FacebookAPI.swift in Sources */,
 				C63B683A1F967F8900617549 /* TestVC.swift in Sources */,
+				C62B8EE71F9A69DD003D37FD /* UdacityConstants.swift in Sources */,
+				C62B8EE51F9A6874003D37FD /* UdacityGetPostMethods.swift in Sources */,
 				C63B68551F96C7CA00617549 /* ParseAPI.swift in Sources */,
 				C63B68051F96601A00617549 /* AppDelegate.swift in Sources */,
 			);

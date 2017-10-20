@@ -5,99 +5,67 @@
 //  Created by Sean Goldsborough on 10/17/17.
 //  Copyright © 2017 Sean Goldsborough. All rights reserved.
 //
-
+//DOES KEYS VALUES AND BUILDS URL
 import Foundation
-import Foundation
 
-// MARK: - SearchType
+// MARK: - UdacityAPI
 
-enum SearchType {
-    case location(Double, Double)
-    case phrase(String)
-    
-//    var isValid: Bool {
-//        switch self {
-//        case .location(let latitude, let longitude):
-//            
-//            return latitude.inRange(FlickrAPI.searchLatRange) && longitude.inRange(FlickrAPI.searchLonRange)
-//        case .phrase(let text):
-//            return !text.isEmpty
-//        }
-//    }
-    
-    var invalidString: String {
-        switch self {
-        case .location(_, _):
-            return "Lat should be [-90, 90].\nLon should be [-180, 180]."
-        case .phrase(_):
-            return "Phrase is empty."
-        }
-    }
-    
-    var bboxString: String {
-        switch self {
-        case .location(let latitude, let longitude):
-            let minimumLon = max(longitude - FlickrAPI.searchBBoxHalfWidth, FlickrAPI.searchLonRange.0)
-            let minimumLat = max(latitude - FlickrAPI.searchBBoxHalfHeight, FlickrAPI.searchLatRange.0)
-            let maximumLon = min(longitude + FlickrAPI.searchBBoxHalfWidth, FlickrAPI.searchLonRange.1)
-            let maximumLat = min(latitude + FlickrAPI.searchBBoxHalfHeight, FlickrAPI.searchLatRange.1)
-            return "\(minimumLon),\(minimumLat),\(maximumLon),\(maximumLat)"
-        default:
-            return ""
-        }
-    }
-}
-
-// MARK: - FlickrAPI
-
-struct FlickrAPI {
+struct UdacityAPI {
     
     // MARK: Constants
-    
-    static let scheme = "https"
-    static let host = "api.flickr.com"
-    static let path = "/services/rest"
-    static let searchBBoxHalfWidth = 1.0
-    static let searchBBoxHalfHeight = 1.0
-    static let searchLatRange = (-90.0, 90.0)
-    static let searchLonRange = (-180.0, 180.0)
-    
-    struct Keys {
-        static let searchMethod = "method"
-        static let apiKey = "api_key"
-        static let extras = "extras"
-        static let responseFormat = "format"
-        static let noJSONCallback = "nojsoncallback"
-        static let safeSearch = "safe_search"
-        static let text = "text"
-        static let boundingBox = "bbox"
-        static let page = "page"
+    struct Constants {
+        static let UdacityBaseURL = "https://www.udacity.com/api/"
+        static let SessionURL = "https://www.udacity.com/api/session"
     }
     
-    struct Values {
-        static let searchMethod = "flickr.photos.search"
-        static let apiKey = "API_KEY_HERE"
-        static let responseFormat = "json"
-        static let noJSONCallback = "1" /* 1 means "disable callback" */
-        static let urls = "url_o,url_m"
-        static let safeSearch = "1" /* 1 mean "use safe search" */
-    }
-    
-    // MARK: Helper
-    
-    func urlWithQueryItems(_ items: [String:Any]) -> URL? {
-        var components = URLComponents()
-        components.scheme = FlickrAPI.scheme
-        components.host = FlickrAPI.host
-        components.path = FlickrAPI.path
-        components.queryItems = [URLQueryItem]()
+    // MARK: HTTPMethods
+    struct HTTPMethods {
+        static let Session = "session"
+        static let users = "users/"
         
-        for (key, value) in items {
-            let queryItem = URLQueryItem(name: key, value: "\(value)")
-            components.queryItems?.append(queryItem)
-        }
-        
-        return components.url
     }
+    
+//    // MARK: Values
+//    struct Values {
+//        static let searchMethod = "flickr.photos.search"
+//        static let apiKey = "API_KEY_HERE"
+//        static let responseFormat = "json"
+//        static let noJSONCallback = "1" /* 1 means "disable callback" */
+//        static let urls = "url_o,url_m"
+//        static let safeSearch = "1" /* 1 mean "use safe search" */
+//    }
+    
+     // MARK: JSONKeys
+    struct JSONKeys {
+        
+        static let UdacityDict = "udacity"
+        static let Username = "username"
+        static let Password = "password"
+    }
+    
+    // MARK: ResponseKeys
+    struct ResponseKeys {
+        static let Session = "session"
+        static let SessionID = "id"
+        static let Account = "account"
+        static let AccountKey = "key"
+    }
+    
+    // MARK: URL Builder
+    
+//    func urlWithQueryItems(_ items: [String:Any]) -> URL? {
+//        var components = URLComponents()
+//        //components.UdacityBaseURL = UdacityAPI.Constants.UdacityBaseURL
+////        components.host = UdacityAPI.host
+////        components.path = UdacityAPI.path
+//        components.queryItems = [URLQueryItem]()
+//        
+//        for (key, value) in items {
+//            let queryItem = URLQueryItem(name: key, value: "\(value)")
+//            components.queryItems?.append(queryItem)
+//        }
+//        
+//        return components.url
+//    }
 }
 
