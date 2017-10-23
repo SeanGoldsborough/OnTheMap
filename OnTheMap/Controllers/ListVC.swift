@@ -16,7 +16,13 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!
     
-   
+    @IBAction func addPin(_ sender: Any) {
+        
+        let addLocationVC = self.storyboard!.instantiateViewController(withIdentifier: "AddLocationVC")
+        navigationController!.pushViewController(addLocationVC, animated: true)
+        
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()

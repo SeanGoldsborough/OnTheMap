@@ -27,6 +27,7 @@
 		C63B68531F96C7B800617549 /* UdacityAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63B68521F96C7B800617549 /* UdacityAPI.swift */; };
 		C63B68551F96C7CA00617549 /* ParseAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63B68541F96C7CA00617549 /* ParseAPI.swift */; };
 		C63B68571F96C7D900617549 /* FacebookAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63B68561F96C7D800617549 /* FacebookAPI.swift */; };
+		C6AA024E1F9E45F70035A572 /* AddLocationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6AA024D1F9E45F70035A572 /* AddLocationVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +84,7 @@
 		C63B68521F96C7B800617549 /* UdacityAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UdacityAPI.swift; sourceTree = "<group>"; };
 		C63B68541F96C7CA00617549 /* ParseAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseAPI.swift; sourceTree = "<group>"; };
 		C63B68561F96C7D800617549 /* FacebookAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookAPI.swift; sourceTree = "<group>"; };
+		C6AA024D1F9E45F70035A572 /* AddLocationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLocationVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,6 +187,7 @@
 				C63B683F1F96971100617549 /* LoginVC.swift */,
 				C63B68351F9669B000617549 /* ListVC.swift */,
 				C63B68371F96752C00617549 /* MapVC.swift */,
+				C6AA024D1F9E45F70035A572 /* AddLocationVC.swift */,
 				C63B68391F967F8900617549 /* TestVC.swift */,
 				C63B683B1F96914800617549 /* TestTextDelegate.swift */,
 				C63B68441F96B0DB00617549 /* API */,
@@ -383,6 +386,7 @@
 				C63B680D1F96601A00617549 /* OnTheMap.xcdatamodeld in Sources */,
 				C63B68401F96971100617549 /* LoginVC.swift in Sources */,
 				C63B68071F96601A00617549 /* ViewController.swift in Sources */,
+				C6AA024E1F9E45F70035A572 /* AddLocationVC.swift in Sources */,
 				C63B68571F96C7D900617549 /* FacebookAPI.swift in Sources */,
 				C63B683A1F967F8900617549 /* TestVC.swift in Sources */,
 				C62B8EE71F9A69DD003D37FD /* UdacityConstants.swift in Sources */,

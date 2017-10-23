@@ -18,7 +18,8 @@ class UdacityMethods: NSObject {
     
     
     func postSession(email: String, password: String) -> Void {
-        var request = URLRequest(url: URL(string: "https://www.udacity.com/api/session")!)
+        //var request = URLRequest(url: URL(string: "https://www.udacity.com/api/session")!)
+         var request = URLRequest(url: URL(string: UdacityAPI.Constants.SessionURL)!)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -29,6 +30,14 @@ class UdacityMethods: NSObject {
                 print("ERROR!")
                 return
             }
+            
+            //    /* GUARD: Was there any data returned? */
+            //    guard let data = data else {
+            //    let userInfo = [NSLocalizedDescriptionKey: "No data was returned by the request!"]
+            //    completionHandlerForPostSession(nil, NSError(domain: "taskForPostMethod", code: 1, userInfo: userInfo))
+            //    return
+            //    }
+            
             let range = Range(5..<data!.count)
             let newData = data?.subdata(in: range) /* subset response data! */
             print(String(data: newData!, encoding: .utf8)!)
@@ -41,11 +50,12 @@ class UdacityMethods: NSObject {
     
     //TODO: Replace the User Number with a Variable?
     func getUserData() {
-        let request = URLRequest(url: URL(string: "https://www.udacity.com/api/users/3903878747")!)
+        //let request = URLRequest(url: URL(string: "https://www.udacity.com/api/users/3903878747")!)
+        let request = URLRequest(url: URL(string: UdacityAPI.Constants.UdacityBaseURL + UdacityAPI.HTTPMethods.users)!)
         let session = URLSession.shared
         let task = session.dataTask(with: request) { data, response, error in
             if error != nil { // Handle error…
-                print("ERROR!\(error)")
+                print(error!)
                 return
             }
             let range = Range(5..<data!.count)
