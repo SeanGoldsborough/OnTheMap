@@ -13,7 +13,8 @@ class AddLocationVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var newLocationTF: UITextField!
     @IBOutlet weak var websiteTF: UITextField!
     @IBAction func cancelAddLoca(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+        //self.dismiss(animated: true, completion: nil)
+        self.navigationController!.popViewController
         
     }
     @IBAction func findLocation(_ sender: Any) {

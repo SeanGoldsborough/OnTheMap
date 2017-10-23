@@ -18,8 +18,10 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBAction func addPin(_ sender: Any) {
         
-        let addLocationVC = self.storyboard!.instantiateViewController(withIdentifier: "AddLocationVC")
-        navigationController!.pushViewController(addLocationVC, animated: true)
+        let addLocationNavVC = self.storyboard!.instantiateViewController(withIdentifier: "AddLocationVCNav")
+        self.present(addLocationNavVC, animated: true, completion: nil)
+        //navigationController!.pushViewController(addLocationNavVC, animated: true)
+        //try diff seques or pushing the add location vc onto the nav stack and having the nav bar change when it happens.
         
     }
     
