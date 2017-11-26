@@ -19,6 +19,8 @@ class TestVC: UIViewController, UITextFieldDelegate, UINavigationControllerDeleg
         //overwriteLocation()
         locationUpdate()
         //AlertMessage(overwriteLocation())
+        let firstPushVC = storyboard?.instantiateViewController(withIdentifier: "PushedVC") as! PushedVC
+        self.navigationController?.pushViewController(firstPushVC, animated: true)
     }
     
     

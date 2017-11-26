@@ -2,8 +2,8 @@
 //  FlickrAPI.swift
 //  FlickFinder
 //
-//  Created by Jarrod Parkes on 10/3/17.
-//  Copyright © 2017 Udacity. All rights reserved.
+//  Created by Sean Goldsborough on 10/17/17.
+//  Copyright © 2017 Sean Goldsborough. All rights reserved.
 //
 
 import Foundation

@@ -15,9 +15,11 @@ class UdacityMethods: NSObject {
     var accountKey: String? = ""
     var sessionID: String? = ""
     
+
     
     
-    func postSession(email: String, password: String) -> Void {
+    
+    func postSession(email: String, password: String, completionHandlerForPOST: @escaping(_ status: String, _ registered: Bool, _ error: AnyObject?) -> Void) {
         //var request = URLRequest(url: URL(string: "https://www.udacity.com/api/session")!)
          var request = URLRequest(url: URL(string: UdacityAPI.Constants.SessionURL)!)
         request.httpMethod = "POST"
@@ -26,8 +28,21 @@ class UdacityMethods: NSObject {
         request.httpBody = "{\"udacity\": {\"username\": \"\(email)\", \"password\": \"\(password)\"}}".data(using: .utf8)
         let session = URLSession.shared
         let task = session.dataTask(with: request) { data, response, error in
-            if error != nil { // Handle error…
-                print("ERROR!")
+            
+            func sendError(_ error: String) {
+                print(error)
+                //let userInfo = [NSLocalizedDescriptionKey : error]
+                //completionHandlerForGET(nil, NSError(domain: "taskForGETMethod", code: 1, userInfo: userInfo))
+            }
+            
+//            if error != nil { // Handle error…
+//                print("ERROR!")
+//                return
+//            }
+//
+            /* GUARD: Did we get a successful 2XX response? */
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299  else {
+                sendError("Your request returned a status code other than 2xx!")
                 return
             }
             
@@ -40,8 +55,11 @@ class UdacityMethods: NSObject {
             
             let range = Range(5..<data!.count)
             let newData = data?.subdata(in: range) /* subset response data! */
-            print(String(data: newData!, encoding: .utf8)!)
+            print(String(data: newData!, encoding: .utf8)! + "UdacityMethodsError")
             parseJSON(newData!)
+            let parsedData = parseJSON(newData!)
+            
+            
             //TODO: Parse JSON Further to return a Boolean value on account/registered to allow further login access
         }
         task.resume()
@@ -55,7 +73,7 @@ class UdacityMethods: NSObject {
         let session = URLSession.shared
         let task = session.dataTask(with: request) { data, response, error in
             if error != nil { // Handle error…
-                print(error!)
+                print("\(error!) + UdacityMethodsError2")
                 return
             }
             let range = Range(5..<data!.count)
@@ -81,7 +99,7 @@ class UdacityMethods: NSObject {
         let session = URLSession.shared
         let task = session.dataTask(with: request) { data, response, error in
             if error != nil { // Handle error…
-                print("ERROR!\(error)")
+                print("ERROR with LOGOUT")
                 return
             }
         
@@ -90,6 +108,7 @@ class UdacityMethods: NSObject {
         let newData = data?.subdata(in: range) /* subset response data! */
         print(String(data: newData!, encoding: .utf8)!)
         }
+        print("YAAAAAAAAY!!!!!")
         task.resume()
     }
 
@@ -102,12 +121,28 @@ func parseJSON(_ data: Data) -> Void {
     do {
         parsedResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as AnyObject
     } catch {
-        print(error)
+        print("\(error) + UdacityMethodsError-parseJSON")
         let userInfo = [NSLocalizedDescriptionKey: "Could not parse the data as JSON: \(data)"]
         
     }
     
 }
+
+//var parsedResult: AnyObject?
+//var parsedError: Error?
+//
+//func parseSwift4(data: Data) {
+//    do {
+//        let decoder = JSONDecoder()
+//        let result = try decoder.decode(PhotoResponse.self, from: data)
+//            parsedResult = result as AnyObject
+//            print("\(result)")
+//    } catch let error {
+//        parsedError = error
+//    }
+//}
+
+
 
 //      WORK THESE GUARD STATEMENTS INTO YOUR FUNCTIONS TO CHECK FOR ERRORS!!!
 //    /* GUARD: Did we get a successful 2XX response? */
@@ -131,6 +166,7 @@ func parseJSON(_ data: Data) -> Void {
 //    completionHandlerForPostSession(nil, NSError(domain: "taskForPostMethod", code: 1, userInfo: userInfo))
 //    return
 //    }
+
 
 
 

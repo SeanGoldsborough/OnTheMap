@@ -14,22 +14,58 @@ class AddLocationVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var websiteTF: UITextField!
     @IBAction func cancelAddLoca(_ sender: Any) {
         //self.dismiss(animated: true, completion: nil)
-        self.navigationController!.popViewController
+        ActivityIndicatorOverlay.show("")
+        Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(AddLocationVC.hideIndicator), userInfo: nil, repeats: false)
+        self.navigationController!.popViewController(animated: true)
         
+    }
+    
+    @objc func hideIndicator() {
+        ActivityIndicatorOverlay.hide()
     }
     @IBAction func findLocation(_ sender: Any) {
         if newLocationTF.text == "" && websiteTF.text == "" {
-            alertMessage()
+            alertMessage(title: "ERROR", message: "Invalid Location or Website", numberOfButtons: 1, leftButtonTitle: "OK", leftButtonStyle: 1, rightButtonTitle: "Cancel", rightButtonStyle: 0)
         } else {
-            print("OKAY")
-            //self.performSegue(withIdentifier: "MapVC", sender: self)
+            
+            let myVC = storyboard?.instantiateViewController(withIdentifier: "ConfirmVC") as! ConfirmVC
+            myVC.locationPassed = newLocationTF.text!
+            myVC.websitePassed = websiteTF.text!
+            navigationController?.pushViewController(myVC, animated: true)
+            
+//            func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//                if (segue.identifier == "confirmVC") {
+//                    let destination = segue.destination as? ConfirmVC
+//                    destination?.updateTheLabel = newLocationTF.text!
+//
+//                    destination?.cityLabel.text = newLocationTF.text
+//                    print(newLocationTF.text)
+//                }
+//            }
+            
+            print("Valid Location and/or Website Entered")
+            //let confirmVC = self.storyboard!.instantiateViewController(withIdentifier: "ConfirmVC")
+            //navigationController!.pushViewController(confirmVC, animated: true)
+            
+            //performSegue(withIdentifier: "confirmVC", sender: self)
+            
         }
+    }
+    
+//    func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//        if (segue.identifier == "confirmVC") {
+//            let destination = segue.destination as? ConfirmVC
+//            destination!.cityLabel.text = newLocationTF.text
+//        }
+//    }
+    
+    
 //        let udacityMethods = UdacityMethods()
 //        udacityMethods.postSession(email: emailTextField.text!, password: passwordTextField.text!)
         //TODO: DATA RETURNED IS: {"account": {"registered": true, "key": "8266875466"}, "session": {"id": "1540066524S789e7cbc844b82f38fea1ad0a2edc503", "expiration": "2017-12-19T20:15:24.707830Z"}}
         //TODO: NEED TO PARSE THIS DATA TO ALLOW ACCESS TO NEXT PAGE IN APP BASED ON 'account': "regisered": true
         //if someAspectOfJSON.JSONData = true { performSegue(withIdentifier: "MapVC", sender: self) } else { alert access denied }
-    }
+    
     
     @IBAction func signUpButton(_ sender: Any) {
         let url = URL(string:"https://www.udacity.com/account/auth#!/signup")
@@ -40,6 +76,8 @@ class AddLocationVC: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print(APIClient.sharedInstance().uniqueID!)
+    
         newLocationTF.delegate = self
         websiteTF.delegate = self
         
@@ -48,6 +86,10 @@ class AddLocationVC: UIViewController, UITextFieldDelegate {
         subscribeToNotification(.UIKeyboardDidShow, selector: #selector(keyboardDidShow))
         subscribeToNotification(.UIKeyboardDidHide, selector: #selector(keyboardDidHide))
         
+        tabBarController?.tabBar.isHidden = true
+        navigationController?.navigationBar.backItem?.backBarButtonItem?.title = "Cancel"
+        //navigationController?.navigationBar.t
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -55,9 +97,13 @@ class AddLocationVC: UIViewController, UITextFieldDelegate {
         unsubscribeFromAllNotifications()
     }
     
-    func alertMessage() {
-        let alertController = UIAlertController(title: "ERROR", message: "No User Name or Password.", preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+    func alertMessage(title: String, message: String, numberOfButtons: Int, leftButtonTitle: String, leftButtonStyle: Int, rightButtonTitle: String, rightButtonStyle: Int) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: leftButtonTitle, style: UIAlertActionStyle(rawValue: leftButtonStyle)!, handler: nil))
+        if numberOfButtons < 1 {
+            alertController.addAction(UIAlertAction(title: rightButtonTitle, style: UIAlertActionStyle(rawValue: rightButtonStyle)!, handler: nil))
+        }
+        
         self.present(alertController, animated: true, completion: nil)
     }
     
@@ -77,13 +123,13 @@ class AddLocationVC: UIViewController, UITextFieldDelegate {
     
     @objc func keyboardWillShow(_ notification: Notification) {
         if !keyboardIsShown {
-            view.frame.origin.y -= keyboardHeight(notification)
+            view.frame.origin.y == keyboardHeight(notification)
         }
     }
     
     @objc func keyboardWillHide(_ notification: Notification) {
         if keyboardIsShown {
-            view.frame.origin.y += keyboardHeight(notification)
+            view.frame.origin.y == keyboardHeight(notification)
         }
     }
     
