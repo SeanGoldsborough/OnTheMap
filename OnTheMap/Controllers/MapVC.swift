@@ -391,10 +391,10 @@ class MapVC: UIViewController {
         
     }
     
-    @objc func addPin(sender: UIBarButtonItem) {
-        let addLocationNavVC = self.storyboard!.instantiateViewController(withIdentifier: "AddLocationVC") as! AddLocationVC
-        navigationController!.pushViewController(addLocationNavVC, animated: true)
-    }
+//    @objc func addPin(sender: UIBarButtonItem) {
+//        let addLocationNavVC = self.storyboard!.instantiateViewController(withIdentifier: "AddLocationVC") as! AddLocationVC
+//        navigationController!.pushViewController(addLocationNavVC, animated: true)
+//    }
     
     @objc func refreshData(sender: UIBarButtonItem) {
         //self.activityIndicatorView.startAnimating()

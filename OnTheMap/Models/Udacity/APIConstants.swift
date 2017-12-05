@@ -157,10 +157,12 @@ extension APIClient {
         //1542887989S7e1b5b5a3ad108a68e252783c598e012
         
         // MARK: Udacity Personal Data JSON Response
+        static let UdacityPersonalDataUser = "user"
         static let UdacityPersonalDataID = "key"
         static let UdacityPersonalDataFirstName = "nickname"
         static let UdacityPersonalDataLastName = "lastname"
-        static let WebsiteURL = "website_url"
+        static let UdacityPersonalDataMediaURL = "website_url"
+        static let UdacityPersonalDataMapString = "location"
         
         
         // MARK: Parse JSON Response
@@ -179,4 +181,3 @@ extension APIClient {
     }
     
 }
-

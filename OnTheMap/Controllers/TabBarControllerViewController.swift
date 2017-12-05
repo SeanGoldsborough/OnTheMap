@@ -44,6 +44,7 @@ class TabBarControllerViewController: UITabBarController {
     
     @objc func addPin(sender: UIBarButtonItem) {
         print("addPin has been pressed")
+        //print("addPin has been pressed and we have the userID as: \(UdacityPersonalData.userFromResults(results))")
         let addLocationNavVC = self.storyboard!.instantiateViewController(withIdentifier: "AddLocationVC") as! AddLocationVC
         navigationController!.pushViewController(addLocationNavVC, animated: true)
     }
@@ -55,6 +56,7 @@ class TabBarControllerViewController: UITabBarController {
         
         let mapView = self.storyboard!.instantiateViewController(withIdentifier: "MapVC") as! MapVC
         ActivityIndicatorOverlay.show("Loading...")
+        
         
         // simulate time consuming work
         Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(self.hideIndicator), userInfo: nil, repeats: false)
