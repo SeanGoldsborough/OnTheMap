@@ -33,10 +33,16 @@ class APIClient : NSObject {
     //    var sessionID: String? = nil
     //    var uniqueID: String? = nil
     
+    var firstName: String? = nil
+    var lastName: String? = nil
+    
+    var latitude: String? = nil
+    var longitude: String? = nil
+    
     
     
     var userNameVar: String? = "smgoldsborough@gmail.com"
-    var userPasswordVar: String? = "We051423"
+    var userPasswordVar: String? = "XXXXXX"
     
     // MARK: Initializers
     
@@ -117,15 +123,6 @@ class APIClient : NSObject {
     }
     
     // MARK: Authentication (GET) Methods
-    /*
-     Steps for Authentication...
-     https://www.themoviedb.org/documentation/api/sessions
-     
-     Step 1: Create a new request token
-     Step 2a: Ask the user for permission via the website
-     Step 3: Create a session ID
-     Bonus Step: Go ahead and get the user id 😄!
-     */
     
     // TODO: FIX THIS SO IT WORKS WITH PROPER PARAMETERS
     func authenticateWithViewController(completionHandlerForAuth: @escaping (_ success: Bool, _ errorString: NSError?) -> Void) {

@@ -44,9 +44,10 @@ class TabBarControllerViewController: UITabBarController {
     
     @objc func addPin(sender: UIBarButtonItem) {
         print("addPin has been pressed")
+        AlertView.alertPopUp(view: self, alertMessage: "Add a new location?")
         //print("addPin has been pressed and we have the userID as: \(UdacityPersonalData.userFromResults(results))")
-        let addLocationNavVC = self.storyboard!.instantiateViewController(withIdentifier: "AddLocationVC") as! AddLocationVC
-        navigationController!.pushViewController(addLocationNavVC, animated: true)
+        //let addLocationNavVC = self.storyboard!.instantiateViewController(withIdentifier: "AddLocationVC") as! AddLocationVC
+        //navigationController!.pushViewController(addLocationNavVC, animated: true)
     }
     
     @objc func refreshData(sender: UIBarButtonItem) {

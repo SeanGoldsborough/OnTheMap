@@ -20,12 +20,6 @@ extension APIClient {
         static let APIKeyParse = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
         static let ApplicationIDParse = "QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr"
         
-        // MARK: URLs
-        //        static let APIScheme = "https"
-        //        static let APIHost = "api.themoviedb.org"
-        //        static let APIPath = "/3"
-        //        static let AuthorizationURL = "https://www.themoviedb.org/authenticate/"
-        //        static let AccountURL = "https://www.themoviedb.org/account/"
         
         static let APISchemeParse = "https"
         static let APIHostParse = "parse.udacity.com"
@@ -105,47 +99,13 @@ extension APIClient {
         static let Password = "password"
     }
     
-    // MARK: JSON Body Keys - IDK WTF THIS IS BECAUSE IT SAYS JSON BUT ITS ONLY USED IN THE URL...WTF?!?
-    struct JSONBodyKeys {
-        static let MediaType = "media_type"
-        static let MediaID = "media_id"
-        static let Favorite = "favorite"
-        static let Watchlist = "watchlist"
-    }
     
     // MARK: JSON Response Keys
     struct JSONResponseKeys {
+        // TODO: To shush compiler for now...delete this when you build your funcs in APIClient
+        static let SessionID = "sessionId"
         
-        // MARK: General
-        static let StatusMessage = "status_message"
-        static let StatusCode = "status_code"
         
-        // MARK: Authorization
-        static let RequestToken = "request_token"
-        static let SessionID = "session_id"
-        
-        // MARK: Account
-        static let UserID = "id"
-        
-        // MARK: Config
-        static let ConfigBaseImageURL = "base_url"
-        static let ConfigSecureBaseImageURL = "secure_base_url"
-        static let ConfigImages = "images"
-        static let ConfigPosterSizes = "poster_sizes"
-        static let ConfigProfileSizes = "profile_sizes"
-        
-        // MARK: Components of a Movie JSON Object We Are Trying To Make Use Of
-        static let MovieID = "id"
-        static let MovieTitle = "title"
-        static let MoviePosterPath = "poster_path"
-        static let MovieReleaseDate = "release_date"
-        static let MovieReleaseYear = "release_year"
-        static let MovieResults = "results"
-        
-        // MARK: General
-        //        static let StatusMessage = "status_message"
-        //        static let StatusCode = "status_code"
-        //
         // MARK: Udacity Authorization JSON Response
         static let Account = "account"
         static let Registered = "registered"
@@ -154,7 +114,7 @@ extension APIClient {
         static let Session = "session"
         static let SessionIDUdacity = "id"
         static let Expiration = "expiration"
-        //1542887989S7e1b5b5a3ad108a68e252783c598e012
+        
         
         // MARK: Udacity Personal Data JSON Response
         static let UdacityPersonalDataUser = "user"
