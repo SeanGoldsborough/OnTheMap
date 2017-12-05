@@ -41,8 +41,8 @@ class APIClient : NSObject {
     
     
     
-    var userNameVar: String? = "smgoldsborough@gmail.com"
-    var userPasswordVar: String? = "XXXXXX"
+    var userNameVar: String = "smgoldsborough@gmail.com"
+    var userPasswordVar: String = "We051423!!!"
     
     // MARK: Initializers
     
@@ -125,8 +125,13 @@ class APIClient : NSObject {
     // MARK: Authentication (GET) Methods
     
     // TODO: FIX THIS SO IT WORKS WITH PROPER PARAMETERS
-    func authenticateWithViewController(completionHandlerForAuth: @escaping (_ success: Bool, _ errorString: NSError?) -> Void) {
-        
+    func authenticateUser(completionHandlerForAuth: @escaping (_ success: Bool, _ errorString: NSError?) -> Void) {
+//    func authenticateWithViewController(email: String, password: String, completionHandlerForAuth: @escaping (_ success: Bool, _ errorString: NSError?) -> Void) {
+//        self.userNameVar = email
+//        self.userPasswordVar = password
+//        print(email)
+//        print(password)
+    
         // chain completion handlers for each request so that they run one after the other
         //getRequestToken() { (success, requestToken, errorString) in
         getSessionID(userNameVar: userNameVar, userPasswordVar: userPasswordVar ) { (success, sessionID, errorString) in
@@ -207,7 +212,7 @@ class APIClient : NSObject {
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         //request.httpBody = jsonBody.data(using: String.Encoding.utf8)
-        request.httpBody = "{\"udacity\": {\"username\": \"smgoldsborough@gmail.com\", \"password\": \"We051423\"}}".data(using: .utf8)
+        request.httpBody = "{\"udacity\": {\"username\": \"smgoldsborough@gmail.com\", \"password\": \"We051423!!!\"}}".data(using: .utf8)
         print("The request.httpBody is: \(request.httpBody)")
         
         /* 4. Make the request */
@@ -219,6 +224,7 @@ class APIClient : NSObject {
             
             func sendError(_ error: String) {
                 print(error)
+                AlertView.alertPopUp(view: LoginVC() as LoginVC, alertMessage: "Networking Error")
                 let userInfo = [NSLocalizedDescriptionKey : error]
                 completionHandlerForPOST(nil, NSError(domain: "taskForPOSTMethodUdacity", code: 1, userInfo: userInfo))
             }

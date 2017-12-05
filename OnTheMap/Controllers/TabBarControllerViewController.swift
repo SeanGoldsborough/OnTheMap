@@ -44,7 +44,28 @@ class TabBarControllerViewController: UITabBarController {
     
     @objc func addPin(sender: UIBarButtonItem) {
         print("addPin has been pressed")
-        AlertView.alertPopUp(view: self, alertMessage: "Add a new location?")
+        
+        //let UdacityPersonalData.sharedInstance().uniqueKey = "8266875466"
+        let uniqueKey = "10081758676"
+        let userID = "10081758676" //UdacityPersonalData.sharedInstance().uniqueKey
+        let studentsArray = [StudentLocations]()
+        if userID == uniqueKey {
+            
+            //TODO: MAKE STUDENT ARRAY A SHARED INSTANCE SO YOU CAN CALL IT HERE
+        //if studentsArray.contains(where: { $0.uniqueKey == userID }) {
+            // found
+            print("students array contains value for current user")
+            AlertView.addLocationAlert(view: self, alertTitle: "Update Location", alertMessage: "Would you like update a location?")
+            
+        } else {
+            // not
+            print("current user has not yet created a location")
+            UdacityPersonalData.sharedInstance().latitude = 55.55
+            AlertView.addLocationAlert(view: self, alertTitle: "New Location", alertMessage: "Would you like to add a new location?")
+        }
+        
+        
+        
         //print("addPin has been pressed and we have the userID as: \(UdacityPersonalData.userFromResults(results))")
         //let addLocationNavVC = self.storyboard!.instantiateViewController(withIdentifier: "AddLocationVC") as! AddLocationVC
         //navigationController!.pushViewController(addLocationNavVC, animated: true)

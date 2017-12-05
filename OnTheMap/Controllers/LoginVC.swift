@@ -23,8 +23,8 @@ class LoginVC: UIViewController, UITextFieldDelegate {
         let isEmailAddressValid = isValidEmailAddress(emailAddressString: providedEmailAddress!)
         
         if isEmailAddressValid {
-            
-            APIClient.sharedInstance().authenticateWithViewController(email: emailTextField.text!, password: passwordTextField.text!) { (success, errorString) in
+            //email: emailTextField.text!, password: passwordTextField.text!
+            APIClient.sharedInstance().authenticateUser() { (success, errorString) in
                 
                 performUIUpdatesOnMain {
                     if success {
@@ -44,6 +44,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                     } else {
                         //self.displayError(errorString)
                         print(errorString!)
+                        AlertView.alertPopUp(view: self, alertMessage: "Log In Unsuccessful")
                     }
                 }
             }

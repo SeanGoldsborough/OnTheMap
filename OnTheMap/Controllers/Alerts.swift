@@ -20,4 +20,23 @@ class AlertView {
         }
     }
     
+    class func addLocationAlert(view: UIViewController, alertTitle: String, alertMessage: String) {
+        let alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
+        
+        
+        let addLocation = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
+            print("AKAJASDKJHFKAJSHDF;LKASJF;LKSAJHF;AJSFJ")
+            
+            let addLocationNavVC = view.storyboard!.instantiateViewController(withIdentifier: "AddLocationVC") as! AddLocationVC
+            view.navigationController!.pushViewController(addLocationNavVC, animated: true)
+   
+        })
+        alert.addAction(addLocation)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        performUIUpdatesOnMain {
+            view.present(alert, animated: true, completion: nil)
+        }
+    }
+    
 }
