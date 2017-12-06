@@ -77,7 +77,7 @@ struct StudentLocations : Decodable {
         mediaURL = dictionary["mediaURL"] as? String ?? "[No URL]"
         objectId = dictionary["objectId"] as? String ?? "no value"
         uniqueKey = dictionary["uniqueKey"] as? String ?? "[No Unique Key Value]"
-        updatedAt = dictionary["updatedAt"] as? String ?? "no value"
+        updatedAt = dictionary["updatedAt"] as? String ?? "[No Updated At Value]"// Date ?? 2000-01-01T10:42:39.989Z
     }
     
     static func studentsFromResults(_ results: [[String:AnyObject]]) -> [StudentLocations] {
@@ -88,6 +88,9 @@ struct StudentLocations : Decodable {
         for result in results {
             students.append(StudentLocations(dictionary: result)!)
         }
+        
+        //students.sort { $0.updatedAt < $1.updatedAt }
+        students.sort(by: { $0.updatedAt!.compare($1.updatedAt!) == .orderedDescending })
         
         print(students)
         return students

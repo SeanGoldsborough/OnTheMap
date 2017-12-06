@@ -71,6 +71,8 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
     override func viewDidLoad() {
         super.viewDidLoad()
         
+
+        
         ActivityIndicatorOverlay.show("Loading...")
         Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(MapVC.hideIndicator), userInfo: nil, repeats: false)
         
@@ -247,6 +249,8 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
+        
+        
         // TODO: Filter out all no name/no value nils in array...Maybe.
         //self.students.filter { $0 != nil }
         for student in students {

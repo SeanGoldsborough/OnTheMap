@@ -617,7 +617,7 @@ class APIClient : NSObject {
         
         /* 1. Set the parameters */
         var parametersWithApiKey = parameters
-        //parametersWithApiKey[URLQueryKeys.APIKey] = Constants.APIKeyParse as AnyObject?
+        //parametersWithApiKey[URLQueryKeys.Limit] = "100" as AnyObject?
         //print("The GET parameter keys are: \( parametersWithApiKey[URLQueryKeys.APIKey])")
         
         /* 2/3. Build the URL, Configure the request */

@@ -20,16 +20,17 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
     var uniqueKey = APIClient.sharedInstance().uniqueID
     
     @IBAction func addStudentLocation() {
+        overwriteLocation()
         //TODO: Parse POST/PUT Method Goes Here
         // If student ID already exisits in the database of locations call PUT method to update
         // Else call POST method to add a new location for that particular student ID Number
-//        let listVC = storyboard?.instantiateViewController(withIdentifier: "ListVC") as! ListVC
+        //let mapVC = storyboard?.instantiateViewController(withIdentifier: "MapVC") as! MapVC
 //        self.navigationController!.popToViewController(listVC, animated: true)
         
-        let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController];
-        self.navigationController!.popToViewController(viewControllers[viewControllers.count - 3], animated: true);
-        
-//        LoadingIndicatorView.show(mapView, loadingText: "Loading")
+//        let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController];
+//        self.navigationController!.popToViewController(viewControllers[viewControllers.count - 3], animated: true);
+        //mapVC.activityView.startAnimating()
+//        mapVC.LoadingIndicatorView.show(mapView, loadingText: "Loading")
 //        Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(ViewController.doWork), userInfo: nil, repeats: false)
     }
     
@@ -37,6 +38,18 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
         super.viewDidLoad()
         cityLabel.text = locationPassed
         print(websitePassed)
+        
+//        // set initial location in Honolulu
+//        let initialLocation = CLLocation(latitude: 21.282778, longitude: -157.829444)
+//
+//        let regionRadius: CLLocationDistance = 1000
+//        func centerMapOnLocation(location: CLLocation) {
+//            let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate,
+//                                                                      regionRadius, regionRadius)
+//            mapView.setRegion(coordinateRegion, animated: true)
+//        }
+//
+//        centerMapOnLocation(location: initialLocation)
         
         
         var location = CLLocationCoordinate2DMake(40.722324, -73.988429)
@@ -57,20 +70,10 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
         
         locationUpdate()
         
-        //mapView.addAnnotation(annotation)
+       
+
         
-//        // set initial location in Honolulu
-//        let initialLocation = CLLocation(latitude: 21.282778, longitude: -157.829444)
-//
-//        let regionRadius: CLLocationDistance = 1000
-//        func centerMapOnLocation(location: CLLocation) {
-//            let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate,
-//                                                                      regionRadius, regionRadius)
-//            mapView.setRegion(coordinateRegion, animated: true)
-//        }
-//
-//        centerMapOnLocation(location: initialLocation)
-//
+
 //
 //
 //
@@ -106,14 +109,45 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
         
     }
     
+    // Called when the annotation was added
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if annotation is MKUserLocation {
+            return nil
+        }
+        
+        let reuseId = "pin"
+        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKPinAnnotationView
+        if pinView == nil {
+            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+            pinView?.animatesDrop = true
+            pinView?.canShowCallout = true
+            pinView?.isDraggable = true
+            pinView?.pinTintColor = .purple
+            
+            let rightButton: AnyObject! = UIButton(type: UIButtonType.detailDisclosure)
+            pinView?.rightCalloutAccessoryView = rightButton as? UIView
+        }
+        else {
+            pinView?.annotation = annotation
+        }
+        
+        return pinView
+    }
     
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        print(#function)
+        let url = URL(string:websitePassed)
+        if control == view.rightCalloutAccessoryView {
+            UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+        }
+    }
     
     
     func overwriteLocation(){
         let pushedVC = self.storyboard!.instantiateViewController(withIdentifier: "PushedVC")
         
         let alertVC = UIAlertController(
-            title: "You Have Already posted A Student Location. Would You Like To Overwrite Your Current Location?".capitalized,
+            title: "Confirm Overwrite Your Current Location?".capitalized,
             message: "",
             preferredStyle: .alert)
         let cancelAction = UIAlertAction(
@@ -126,7 +160,9 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
             handler: {(action) -> Void in
                 //The (withIdentifier: "VC2") is the Storyboard Segue identifier.
                 //self.performSegue(withIdentifier: "VC2", sender: self)
-                self.navigationController!.pushViewController(pushedVC, animated: true)
+                //self.navigationController!.pushViewController(pushedVC, animated: true)
+                let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController];
+                self.navigationController!.popToViewController(viewControllers[viewControllers.count - 3], animated: true);
         })
         
         
@@ -137,6 +173,31 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
         self.present(alertVC, animated: true, completion: nil)
     }
     
+    
+//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+//        print("got location \(locations)")
+//        print("my location \(myPosition)")
+//        print(String(describing: myPosition))
+//        myPosition = (locationManager.location?.coordinate)!
+//        //locationManager.stopUpdatingLocation()
+//        self.label.text = "\(myPosition)"
+//
+//        let span = MKCoordinateSpanMake(0.05, 0.05)
+//        let region = MKCoordinateRegion(center: myPosition, span: span)
+//        mapView.setRegion(region, animated: true)
+//    }
+
+//    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+//        print(#function)
+//        let url = URL(string:websitePassed)
+//        print(url)
+//
+//        if control == view {
+//            //performSegue(withIdentifier: "toTheMoon", sender: self)
+//            UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+//        }
+//    }
+//
     func locationUpdate() {
         
         
@@ -184,7 +245,7 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
                 annotation.subtitle = self.websitePassed
                 self.mapView.addAnnotation(annotation)
                 //self.mapView.setRegion(annotation.coordinate, animated: true)
-                let initialLocation = annotation.coordinate
+                let initialLocation = CLLocation(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude)
                 let regionRadius: CLLocationDistance = 1000
                         func centerMapOnLocation(location: CLLocation) {
                             let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate,
@@ -192,7 +253,7 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
                             mapView.setRegion(coordinateRegion, animated: true)
                         }
                 
-                //centerMapOnLocation(location: initialLocation)
+                centerMapOnLocation(location: initialLocation)
             }
         }
         //        let search = MKLocalSearch(request: request)
