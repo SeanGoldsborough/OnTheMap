@@ -44,6 +44,9 @@ class APIClient : NSObject {
     var userNameVar: String = "smgoldsborough@gmail.com"
     var userPasswordVar: String = "We051423!!!"
     
+//    var userNameVar: String = ""
+//    var userPasswordVar: String = ""
+    
     // MARK: Initializers
     
     override init() {
@@ -125,72 +128,108 @@ class APIClient : NSObject {
     // MARK: Authentication (GET) Methods
     
     // TODO: FIX THIS SO IT WORKS WITH PROPER PARAMETERS
-    func authenticateUser(completionHandlerForAuth: @escaping (_ success: Bool, _ errorString: NSError?) -> Void) {
-//    func authenticateWithViewController(email: String, password: String, completionHandlerForAuth: @escaping (_ success: Bool, _ errorString: NSError?) -> Void) {
+    //func authenticateUser(completionHandlerForAuth: @escaping (_ success: Bool, _ errorString: NSError?) -> Void) {
+//    func authenticateUser(_ hostViewController: UIViewController, email: String, password: String, completionHandlerForAuth: @escaping (_ success: Bool, _ errorString: NSError?) -> Void) {
 //        self.userNameVar = email
 //        self.userPasswordVar = password
-//        print(email)
-//        print(password)
+//        print("from auth User email is:\(email)")
+//        print("from auth User password is:\(self.userPasswordVar)")
+//
+//        // chain completion handlers for each request so that they run one after the other
+//        //getRequestToken() { (success, requestToken, errorString) in
+//        getSessionID(userNameVar: email, userPasswordVar: password ) { (success, sessionID, errorString) in
+//            print("from auth User/sessionID email is:\(self.userNameVar)")
+//            print("from auth User/sessionID password is:\(self.userPasswordVar)")
+//            if success {
+//
+//                // success! we have the SessionID!
+//                self.sessionID = sessionID
+//
+//                //self.loginWithToken(requestToken, hostViewController: hostViewController) { (success, errorString) in
+//
+//                //if success {
+//                //self.getPublicUserDataUdacity() { (result, errorString) in
+//                //self.getStudentLocationsParse() { (result, errorString) in
+//
+//                if success {
+//
+//                    self.getUniqueIDUdacity() { (success, uniqueID, errorString) in
+//
+//                        if success {
+//
+//                            if let uniqueID = uniqueID {
+//
+//                                // and the userID 😄!
+//                                self.uniqueID = uniqueID
+//                                self.getPublicUserDataUdacity() { (result, errorString) in
+//                                    if success {
+//                                        //self.personalData = result!
+//                                        //print("getPublicUserDataUdacity result is: \(self.personalData)")
+//                                        //print("getPublicUserDataUdacity result also is: \(APIClient.JSONResponseKeys.UdacityPersonalDataFirstName) + \(APIClient.JSONResponseKeys.UdacityPersonalDataLastName)")
+//
+//                                    } else {
+//                                        completionHandlerForAuth(success, errorString)
+//                                    }
+//
+//                                    completionHandlerForAuth(success, errorString)
+//                                }
+//                            }
+//                        }
+//
+//                        completionHandlerForAuth(success, errorString)
+//                    }
+//                    //} else {
+//                    //    completionHandlerForAuth(success, errorString)
+//                    //}
+//                }
+//                                    } else {
+//                                        completionHandlerForAuth(success, errorString)
+//                                    }
+//
+////            } else {
+////                completionHandlerForAuth(success, errorString)
+////            }
+//        }
+//    }
     
-        // chain completion handlers for each request so that they run one after the other
-        //getRequestToken() { (success, requestToken, errorString) in
-        getSessionID(userNameVar: userNameVar, userPasswordVar: userPasswordVar ) { (success, sessionID, errorString) in
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    //value of requestToken is used/trickles down to be value of first parameter of loginWithToken, same for hostVC
+    func authenticateUser( email: String, password: String, completionHandlerForAuth: @escaping (_ success: Bool, _ errorString: NSError?) -> Void) {
+        print("from auth User email is:\(email)")
+        print("from auth User password is:\(password)")
+        
+        
+        getSessionID(userName: self.userNameVar, userPassword: self.userPasswordVar) { (success, sessionID, errorString) in
+//             print("from getSessionID email is:\(userName)")
+//             print("from getSessionID email is:\(password)")
             
             if success {
                 
-                // success! we have the SessionID!
-                self.sessionID = sessionID
+                // success! we have the sessionID!
+                self.sessionID = sessionID // takes returned value from compHandler and makes shared var = it
                 
-                //self.loginWithToken(requestToken, hostViewController: hostViewController) { (success, errorString) in
-                
-                //if success {
-                //self.getPublicUserDataUdacity() { (result, errorString) in
-                //self.getStudentLocationsParse() { (result, errorString) in
-                
-                if success {
-                    //print("getPublicUserDataUdacity result is: \(result)")
-                    // success! we have the StudentLocations!
-                    //self.studentLocations = result!
-                    //print("GetStudentLocationsParse result is: \(self.studentLocations)")
+                self.getUniqueIDUdacity(userName: self.userNameVar, userPassword: self.userPasswordVar) { (success, uniqueID, errorString) in
                     
-                    self.getUniqueIDUdacity() { (success, uniqueID, errorString) in
+                    if success {
                         
-                        if success {
+                        if let uniqueID = uniqueID {
                             
-                            if let uniqueID = uniqueID {
-                                
-                                // and the userID 😄!
-                                self.uniqueID = uniqueID
-                                self.getPublicUserDataUdacity() { (result, errorString) in
-                                    if success {
-                                        //self.personalData = result!
-                                        //print("getPublicUserDataUdacity result is: \(self.personalData)")
-                                        //print("getPublicUserDataUdacity result also is: \(APIClient.JSONResponseKeys.UdacityPersonalDataFirstName) + \(APIClient.JSONResponseKeys.UdacityPersonalDataLastName)")
-                                        
-                                    }   else {
-                                        completionHandlerForAuth(success, errorString)
-                                    }
-                                    
-                                    completionHandlerForAuth(success, errorString)
-                                }
-                            }
+                            // and the userID 😄!
+                            self.uniqueID = uniqueID  // takes returned value from compHandler and makes shared var = it
                         }
-                        
-                        completionHandlerForAuth(success, errorString)
                     }
-                    //} else {
-                    //    completionHandlerForAuth(success, errorString)
-                    //}
+                    
+                    completionHandlerForAuth(success, errorString) // completion handler for getUserID
                 }
-                //                    } else {
-                //                        completionHandlerForAuth(success, errorString)
-                //                    }
-                
             } else {
-                completionHandlerForAuth(success, errorString)
+                completionHandlerForAuth(success, errorString) // completion handler for SessionID
             }
         }
-    }
+        
+    }   //closes authUser Func
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -200,7 +239,7 @@ class APIClient : NSObject {
     // TODO:  FIX THIS SO IT WORKS WITH PROPER PARAMETERS
     //func taskForPOSTMethodUdacity(_ method: String, parameters: [String:AnyObject], jsonBody: String, completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
     
-    func taskForPOSTMethodUdacity(_ method: String, parameters: [String:AnyObject], completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+    func taskForPOSTMethodUdacity(_ method: String, parameters: [String:AnyObject], jsonBody: String, completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
         
         /* 1. Set the parameters */
         var parametersWithApiKey = parameters
@@ -211,9 +250,13 @@ class APIClient : NSObject {
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        //request.httpBody = jsonBody.data(using: String.Encoding.utf8)
-        request.httpBody = "{\"udacity\": {\"username\": \"smgoldsborough@gmail.com\", \"password\": \"We051423!!!\"}}".data(using: .utf8)
-        print("The request.httpBody is: \(request.httpBody)")
+        request.httpBody = jsonBody.data(using: String.Encoding.utf8)
+        //request.httpBody = "{\"udacity\": {\"username\": \"smgoldsborough@gmail.com\", \"password\": \"We051423!!!\"}}".data(using: .utf8)
+        
+        //request.httpBody = "{\"udacity\": {\"username\": \"\(self.userNameVar))\", \"password\": \"\(self.userPasswordVar))\"}}".data(using: .utf8)
+        
+        print("The POST Udacity request.httpBody is: ")
+        print(String(data: request.httpBody!, encoding: .utf8)!)
         
         /* 4. Make the request */
         let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
@@ -259,19 +302,22 @@ class APIClient : NSObject {
     }
     
     // MARK: POST Convenience Methods - Udacity
-    private func getSessionID(userNameVar: String?, userPasswordVar: String?, completionHandlerForSession: @escaping (_ success: Bool, _ sessionID: String?, _ errorString: NSError?) -> Void) {
+    private func getSessionID(userName: String?, userPassword: String?, completionHandlerForSession: @escaping (_ success: Bool, _ sessionID: String?, _ errorString: NSError?) -> Void) {
         
         /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
         //let parameters = [APIClient.UdacityParameterKeys.Udacity] as! [String: AnyObject]
         let parameters = [String:AnyObject]()
         
-        let jsonBody = "{\"udacity\": {\"username\": \"\(userNameVar))\", \"password\": \"\(userPasswordVar))\"}}" as! String
+        //let jsonBody = "{\"udacity\": {\"username\": \"smgoldsborough@gmail.com\", \"password\": \"We051423!!!\"}}"//.data(using: .utf8)
+        
+        let jsonBody = "{\"udacity\": {\"username\": \"\(userName!)\", \"password\": \"\(userPassword!)\"}}" //.data(using: .utf8)// as! String
         
         /* 2. Make the request */
         //let _ = taskForPOSTMethodUdacity(URLPathVariants.UdacitySession, parameters: parameters as [String:AnyObject], jsonBody: jsonBody) { (results, error) in
-        let _ = taskForPOSTMethodUdacity(URLPathVariants.UdacitySession, parameters: parameters as [String: AnyObject]) { (results, error) in
-            print("The getSessionID JSON Data is: \(results!)")
-            
+        let _ = taskForPOSTMethodUdacity(URLPathVariants.UdacitySession, parameters: parameters as [String: AnyObject], jsonBody: jsonBody) { (results, error) in
+            print(jsonBody)
+            print("The getSessionID JSON Data is: \(results)")
+            print("we got this far")
             /* GUARD: Is the "request_token" key in parsedResult? */
             //                guard let account = results![APIClient.JSONResponseKeys.Account] as? String else {
             //                    print("Cannot find key '\(APIClient.JSONResponseKeys.Account)' in \(results!)")
@@ -301,21 +347,24 @@ class APIClient : NSObject {
                 }
             }
         }
+        
+        //print("the new post request is \(request)")
     }
     
     // MARK: Get UniqueID - Udacity
     // TODO: FIX THIS SO IT WORKS WITH PROPER PARAMETERS
-    private func getUniqueIDUdacity(completionHandlerForUniqueID: @escaping (_ success: Bool, _ uniqueID: String?, _ errorString: NSError?) -> Void) {
+    private func getUniqueIDUdacity(userName: String?, userPassword: String?, completionHandlerForUniqueID: @escaping (_ success: Bool, _ uniqueID: String?, _ errorString: NSError?) -> Void) {
         
         /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
         //let parameters = [APIClient.UdacityParameterKeys.Udacity] as! [String: AnyObject]
         let parameters = [String:AnyObject]()
         // TODO: Make the userNameVar and userPasswordVar take input from UITextFields
-        let jsonBody = "{\"udacity\": {\"username\": \"\(userNameVar))\", \"password\": \"\(userPasswordVar))\"}}" as! String
-        
+        let jsonBody = "{\"udacity\": {\"username\": \"\(userName!)\", \"password\": \"\(userPassword!)\"}}"//.data(using: .utf8)// as! String
+        //let jsonBody = "{\"udacity\": {\"username\": \"smgoldsborough@gmail.com\", \"password\": \"We051423!!!\"}}" //.data(using: .utf8)
         /* 2. Make the request */
         //let _ = taskForPOSTMethodUdacity(URLPathVariants.UdacitySession, parameters: parameters as [String:AnyObject], jsonBody: jsonBody) { (results, error) in
-        let _ = taskForPOSTMethodUdacity(URLPathVariants.UdacitySession, parameters: parameters as [String: AnyObject]) { (results, error) in
+        let _ = taskForPOSTMethodUdacity(URLPathVariants.UdacitySession, parameters: parameters as [String: AnyObject], jsonBody: jsonBody) { (results, error) in
+            
             print("The getUniqueID JSON Data is: \(results!)")
             
             /* GUARD: Is the "request_token" key in parsedResult? */
@@ -759,7 +808,7 @@ class APIClient : NSObject {
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = jsonBody.data(using: String.Encoding.utf8)
-        print("The request.httpBody is: \(request.httpBody)")
+        print("The request.httpBody is: \(request.httpBody!)")
         
         /* 4. Make the request */
         let task = session.dataTask(with: request as URLRequest) { (data, response, error) in

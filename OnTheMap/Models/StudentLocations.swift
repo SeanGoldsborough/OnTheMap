@@ -7,48 +7,8 @@
 //
 
 import Foundation
-// MARK: Swift 3
-//struct StudentLocations {
-//
-//    public var createdAt : String?
-//    public var firstName : String?
-//    public var lastName : String?
-//    public var latitude : Double?
-//    public var longitude : Double?
-//    public var mapString : String?
-//    public var mediaURL : String?
-//    public var objectId : String?
-//    public var uniqueKey : Int?
-//    public var updatedAt : String?
-//
-//    init?(dictionary: [String:AnyObject]) {
-//
-//        //title = dictionary[TMDBClient.JSONResponseKeys.MovieTitle] as! String
-//
-//        createdAt = dictionary["createdAt"] as? String
-//        firstName = dictionary["firstName"] as? String
-//        lastName = dictionary["lastName"] as? String
-//        latitude = dictionary["latitude"] as? Double
-//        longitude = dictionary["longitude"] as? Double
-//        mapString = dictionary["mapString"] as? String
-//        mediaURL = dictionary["mediaURL"] as? String
-//        objectId = dictionary["objectId"] as? String
-//        uniqueKey = dictionary["uniqueKey"] as? Int
-//        updatedAt = dictionary["updatedAt"] as? String
-//    }
-//
-//    static func studentsFromResults(_ results: [[String:AnyObject]]) -> [StudentLocations] {
-//
-//        var students = [StudentLocations]()
-//
-//        // iterate through array of dictionaries, each Movie is a dictionary
-//        for result in results {
-//            students.append(StudentLocations(dictionary: result)!)
-//        }
-//
-//        return students
-//    }
-//}
+import MapKit
+import Contacts
 
 // MARK: Swift 4
 struct StudentLocations : Decodable {

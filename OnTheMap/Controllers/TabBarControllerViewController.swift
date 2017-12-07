@@ -94,8 +94,8 @@ class TabBarControllerViewController: UITabBarController {
            print("tableView has been reloaded")
             
         } else {
+            print("ERROR!!!: TableView has NOT been reloaded")
             
-             mapView.printPoop()
             //listView.printStudentNames()
         }
         
