@@ -18,46 +18,61 @@ class LoginVC: UIViewController {
     
     @IBAction func loginButton(_ sender: Any) {
         
-//        APIClient.sharedInstance().userNameVar = self.emailTextField.text!
-//        APIClient.sharedInstance().userPasswordVar = self.passwordTextField.text!
-//        print("user and password from textfield are...")
-//        print(APIClient.sharedInstance().userNameVar)
-//        print(APIClient.sharedInstance().userPasswordVar)
-
+//        let isEmailAddressValid = isValidEmailAddress(emailAddressString: self.emailTextField.text!)
+//
+//        if isEmailAddressValid == true {
+//
+//            let client = APIClient.sharedInstance()
+//
+//
+//            client.authenticateUser(email: self.emailTextField.text!, password: self.passwordTextField.text!) { (success, errorString) in
+//
+//                performUIUpdatesOnMain {
+//                    if success {
+//                        self.completeLogIn()
+//                        //self.students = StudentLocations.studentsFromResults(results)
+//                        print("will log in now...")
+//                        //self.completeLogIn()
+//
+////                        let controller = self.storyboard!.instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
+////                        self.present(controller, animated: true, completion: nil)
+//
+//                        //                    self.movies = Movie.moviesFromResults(results)
+//                        //                    performUIUpdatesOnMain {
+//                        //                        self.tableView.reloadData()
+//                        //                    }
+//
+//                    } else {
+//                        //self.displayError(errorString)
+//                        print(errorString!)
+//                        AlertView.alertPopUp(view: self, alertMessage: "Log In Unsuccessful")
+//                    }
+//                }
+//            }
         let isEmailAddressValid = isValidEmailAddress(emailAddressString: self.emailTextField.text!)
         
-        if isEmailAddressValid {
-            //email: emailTextField.text!, password: passwordTextField.text!
-//                var userNameVar: String = "smgoldsborough@gmail.com"
-//                var userPasswordVar: String = "We051423!!!"
+        if isEmailAddressValid == true {
+            
             let client = APIClient.sharedInstance()
-            //APIClient.sharedInstance().authenticateUser() { (success, errorString) in
+            
             
             client.authenticateUser(email: self.emailTextField.text!, password: self.passwordTextField.text!) { (success, errorString) in
                 
-                performUIUpdatesOnMain {
-                    if success {
+                
+                if success {
+                    performUIUpdatesOnMain {
                         self.completeLogIn()
                         //self.students = StudentLocations.studentsFromResults(results)
                         print("will log in now...")
-                        //self.completeLogIn()
-                        
-//                        let controller = self.storyboard!.instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
-//                        self.present(controller, animated: true, completion: nil)
-                        
-                        //                    self.movies = Movie.moviesFromResults(results)
-                        //                    performUIUpdatesOnMain {
-                        //                        self.tableView.reloadData()
-                        //                    }
-                        
-                    } else {
-                        //self.displayError(errorString)
-                        print(errorString!)
-                        AlertView.alertPopUp(view: self, alertMessage: "Log In Unsuccessful")
                     }
+                    
+                } else {
+                    //self.displayError(errorString)
+                    print(errorString!)
+                    AlertView.alertPopUp(view: self, alertMessage: "Log In Unsuccessful")
                 }
             }
-            
+        
 //            let post = UdacityClient()
 //            post.simplePostSession(email: emailTextField.text!, password: passwordTextField.text!)
             print("OKAY")
@@ -67,13 +82,13 @@ class LoginVC: UIViewController {
             //self.performSegue(withIdentifier: "MapVC", sender: self)
             print("Email address is valid")
             
-        } else if !isEmailAddressValid {
+        } else if isEmailAddressValid == false {
             
             print("Email address is not valid")
-            alertMessage(title: "ERROR", message: "Email address is not valid.", numberOfButtons: 1, leftButtonTitle: "OK", leftButtonStyle: 1, rightButtonTitle: "Cancel", rightButtonStyle: 0)
-            
-        } else if emailTextField.text == "" {
-            alertMessage(title: "ERROR", message: "No User Name or Password.", numberOfButtons: 1, leftButtonTitle: "OK", leftButtonStyle: 1, rightButtonTitle: "Cancel", rightButtonStyle: 0)
+            alertMessage(title: "Email is not valid", message: "Please try again.", numberOfButtons: 1, leftButtonTitle: "OK", leftButtonStyle: 1, rightButtonTitle: "Cancel", rightButtonStyle: 0)
+        
+        } else if emailTextField.text == "" || passwordTextField.text == "" {
+            alertMessage(title: "No User Name or Password", message: "Please try again.", numberOfButtons: 1, leftButtonTitle: "OK", leftButtonStyle: 1, rightButtonTitle: "Cancel", rightButtonStyle: 0)
         }
     }
 

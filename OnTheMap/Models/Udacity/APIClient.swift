@@ -201,8 +201,8 @@ class APIClient : NSObject {
         print("from auth User email is:\(email)")
         print("from auth User password is:\(password)")
         
-        
-        getSessionID(userName: self.userNameVar, userPassword: self.userPasswordVar) { (success, sessionID, errorString) in
+        getSessionID(userName: email, userPassword: password) { (success, sessionID, errorString) in
+        //getSessionID(userName: self.userNameVar, userPassword: self.userPasswordVar) { (success, sessionID, errorString) in
 //             print("from getSessionID email is:\(userName)")
 //             print("from getSessionID email is:\(password)")
             
@@ -211,7 +211,8 @@ class APIClient : NSObject {
                 // success! we have the sessionID!
                 self.sessionID = sessionID // takes returned value from compHandler and makes shared var = it
                 
-                self.getUniqueIDUdacity(userName: self.userNameVar, userPassword: self.userPasswordVar) { (success, uniqueID, errorString) in
+                self.getUniqueIDUdacity(userName: email, userPassword: password) { (success, uniqueID, errorString) in
+                //self.getUniqueIDUdacity(userName: self.userNameVar, userPassword: self.userPasswordVar) { (success, uniqueID, errorString) in
                     
                     if success {
                         
