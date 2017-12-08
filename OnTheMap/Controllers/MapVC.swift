@@ -28,6 +28,8 @@ class MapVC: UIViewController {
         
         super.viewDidLoad()
         
+      
+        
         ActivityIndicatorOverlay.show("Loading...")
         Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(MapVC.hideIndicator), userInfo: nil, repeats: false)
         
@@ -38,6 +40,16 @@ class MapVC: UIViewController {
         }
     
     func getStudents() {
+        
+        APIClient.sharedInstance().getPublicUserDataUdacity { (result, error) in
+            if let results = result {
+                print("printing results from getPublicDataUdacity:\(results)")
+            } else {
+                print(error ?? "empty error")
+            }
+            
+        }
+        
         APIClient.sharedInstance().getStudentLocationsParse { (students, error) in
 
             if let studentsResults = students {

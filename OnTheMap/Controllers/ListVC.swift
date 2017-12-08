@@ -197,14 +197,15 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
         //        tableView.isHidden = !hasContacts
         
         if hasContacts {
+            getStudents()
             self.tableView.reloadData()
-            print("tableView has been reloaded")
+            print("updateview called: tableView has been reloaded")
         } else {
             
             // Setup Alert Message
-//            let alert = UIAlertController(title: "Error:", message: "There are no contacts to show", preferredStyle: UIAlertControllerStyle.alert)
-//            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-//            self.present(alert, animated: true, completion: nil)
+            let alert = UIAlertController(title: "Error:", message: "There are no contacts to show", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
         }
         
         print(students.count)

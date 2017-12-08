@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -115,14 +114,31 @@
                                     </button>
                                 </subviews>
                             </stackView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j0M-GL-2D8">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <subviews>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="JSw-AH-8Gm">
+                                        <rect key="frame" x="169" y="315" width="37" height="37"/>
+                                    </activityIndicatorView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="0.75" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="JSw-AH-8Gm" firstAttribute="centerX" secondItem="j0M-GL-2D8" secondAttribute="centerX" id="08H-39-6L8"/>
+                                    <constraint firstItem="JSw-AH-8Gm" firstAttribute="centerY" secondItem="j0M-GL-2D8" secondAttribute="centerY" id="y17-Ze-VIC"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.78871805569999998" blue="0.72976693690000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="j0M-GL-2D8" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="4ac-kA-DnD"/>
                             <constraint firstItem="TCh-I3-SaJ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="9MO-qo-BSI"/>
                             <constraint firstItem="TCh-I3-SaJ" firstAttribute="top" secondItem="n7x-Rr-R78" secondAttribute="bottom" constant="8" id="Gj1-Hp-Clh"/>
+                            <constraint firstItem="j0M-GL-2D8" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="PfE-Fx-7Uk"/>
+                            <constraint firstItem="j0M-GL-2D8" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="ScM-kG-se3"/>
                             <constraint firstItem="lQG-cz-mp3" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="aCs-wa-Mhk"/>
                             <constraint firstItem="xlc-MS-tHl" firstAttribute="top" secondItem="FVa-rZ-Gar" secondAttribute="bottom" constant="8" id="bhK-Ie-I8H"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="lQG-cz-mp3" secondAttribute="bottom" constant="20" id="fdw-I6-zVS"/>
+                            <constraint firstItem="j0M-GL-2D8" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="lF0-Cv-9bE"/>
                             <constraint firstItem="Zn5-C9-eIs" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="m3S-lz-LQW"/>
                             <constraint firstItem="FVa-rZ-Gar" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="tKt-8V-x8M"/>
                             <constraint firstItem="Zn5-C9-eIs" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="v9V-Qk-aYr"/>
@@ -130,6 +146,8 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="JSw-AH-8Gm" id="f7a-bg-r1e"/>
+                        <outlet property="activityOverlay" destination="j0M-GL-2D8" id="5N8-8g-kIh"/>
                         <outlet property="emailTextField" destination="sLz-2Y-Sud" id="2gr-hO-b5a"/>
                         <outlet property="passwordTextField" destination="Zr6-Ne-CIV" id="XWH-gO-wt7"/>
                     </connections>
@@ -141,7 +159,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="34" y="199"/>
+            <point key="canvasLocation" x="32.799999999999997" y="198.35082458770617"/>
         </scene>
         <!--MapVC-->
         <scene sceneID="do3-jI-Xve">

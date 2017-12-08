@@ -43,24 +43,27 @@ class TabBarControllerViewController: UITabBarController {
     }
     
     @objc func addPin(sender: UIBarButtonItem) {
+        
         print("addPin has been pressed")
         
-        //let UdacityPersonalData.sharedInstance().uniqueKey = "8266875466"
-        let uniqueKey = "10081758676"
-        let userID = "10081758676" //UdacityPersonalData.sharedInstance().uniqueKey
-        let studentsArray = [StudentLocations]()
-        if userID == uniqueKey {
+        let uniqueKey = UdacityPersonalData.sharedInstance().uniqueKey //"10081758676" //UdacityPersonalData.sharedInstance().uniqueKey
+        let studentsArray = ["10081758676"]
+       
+         if studentsArray.contains(uniqueKey!) {
             
             //TODO: MAKE STUDENT ARRAY A SHARED INSTANCE SO YOU CAN CALL IT HERE
         //if studentsArray.contains(where: { $0.uniqueKey == userID }) {
             // found
             print("students array contains value for current user")
+            // Clicking OK on Alert Pushes AddLocationVC onto NavStack
             AlertView.addLocationAlert(view: self, alertTitle: "Update Location", alertMessage: "Would you like update a location?")
             
         } else {
             // not
+            
             print("current user has not yet created a location")
             UdacityPersonalData.sharedInstance().latitude = 55.55
+            // Clicking OK on Alert Pushes AddLocationVC onto NavStack
             AlertView.addLocationAlert(view: self, alertTitle: "New Location", alertMessage: "Would you like to add a new location?")
         }
         
@@ -89,15 +92,18 @@ class TabBarControllerViewController: UITabBarController {
         
         // TODO: ADD TAG #s to BUTTONS - Do tab bar buttons programmatically with tags...if tag = 0 (mapview is shown) then run mapVC funcs, else run listVC funcs
         
-        if tabBarItem.tag == 0 {
-            listView.updateView()
-           print("tableView has been reloaded")
-            
-        } else {
-            print("ERROR!!!: TableView has NOT been reloaded")
-            
-            //listView.printStudentNames()
-        }
+        listView.updateView()
+        print("tableView has been reloaded")
+        
+//        if tabBarItem.tag == 0 {
+//            print("ERROR!!!: TableView has NOT been reloaded")
+//        } else {
+//            
+//            listView.updateView()
+//            print("tableView has been reloaded")
+//            
+//            //listView.printStudentNames()
+//        }
         
 //        mapView.mapView.reloadInputViews()
     }

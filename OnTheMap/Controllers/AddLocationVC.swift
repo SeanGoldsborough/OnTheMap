@@ -67,10 +67,10 @@ class AddLocationVC: UIViewController, UITextFieldDelegate {
         //if someAspectOfJSON.JSONData = true { performSegue(withIdentifier: "MapVC", sender: self) } else { alert access denied }
     
     
-    @IBAction func signUpButton(_ sender: Any) {
-        let url = URL(string:"https://www.udacity.com/account/auth#!/signup")
-        UIApplication.shared.open(url!, options: [:], completionHandler: nil)
-    }
+//    @IBAction func signUpButton(_ sender: Any) {
+//        let url = URL(string:"https://www.udacity.com/account/auth#!/signup")
+//        UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+//    }
     
     var keyboardIsShown = false
     override func viewDidLoad() {

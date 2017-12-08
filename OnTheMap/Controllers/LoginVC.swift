@@ -16,7 +16,14 @@ class LoginVC: UIViewController {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     
+    @IBOutlet weak var activityOverlay: UIView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBAction func loginButton(_ sender: Any) {
+        
+        performUIUpdatesOnMain {
+            self.activityOverlay.isHidden = false
+            self.activityIndicator.startAnimating()
+        }
         
 //        let isEmailAddressValid = isValidEmailAddress(emailAddressString: self.emailTextField.text!)
 //
@@ -58,10 +65,14 @@ class LoginVC: UIViewController {
             
             client.authenticateUser(email: self.emailTextField.text!, password: self.passwordTextField.text!) { (success, errorString) in
                 
+              
+               
                 
                 if success {
                     performUIUpdatesOnMain {
                         self.completeLogIn()
+                        self.activityOverlay.isHidden = true
+                        self.activityIndicator.stopAnimating()
                         //self.students = StudentLocations.studentsFromResults(results)
                         print("will log in now...")
                     }
@@ -69,6 +80,8 @@ class LoginVC: UIViewController {
                 } else {
                     //self.displayError(errorString)
                     print(errorString!)
+                    self.activityOverlay.isHidden = true
+                    self.activityIndicator.stopAnimating()
                     AlertView.alertPopUp(view: self, alertMessage: "Log In Unsuccessful")
                 }
             }
@@ -86,6 +99,12 @@ class LoginVC: UIViewController {
             
             print("Email address is not valid")
             alertMessage(title: "Email is not valid", message: "Please try again.", numberOfButtons: 1, leftButtonTitle: "OK", leftButtonStyle: 1, rightButtonTitle: "Cancel", rightButtonStyle: 0)
+            performUIUpdatesOnMain {
+                
+                self.activityOverlay.isHidden = true
+                self.activityIndicator.stopAnimating()
+                
+            }
         
         } else if emailTextField.text == "" || passwordTextField.text == "" {
             alertMessage(title: "No User Name or Password", message: "Please try again.", numberOfButtons: 1, leftButtonTitle: "OK", leftButtonStyle: 1, rightButtonTitle: "Cancel", rightButtonStyle: 0)
@@ -128,12 +147,13 @@ class LoginVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-       
+        self.activityOverlay.isHidden = true
+        self.activityIndicator.stopAnimating()
         
         var registeredInt: Int
         
-//        emailTextField.delegate = self
-//        passwordTextField.delegate = self
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
         
 //        emailTextField.text = ""
 //        passwordTextField.text = ""

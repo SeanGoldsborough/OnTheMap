@@ -21,6 +21,20 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
     
     @IBAction func addStudentLocation() {
         overwriteLocation()
+        APIClient.sharedInstance().postUserPARSE(mapString: self.locationPassed, studentURL: self.websitePassed) { (success, error) in
+            print("pressed post student!")
+            print(UdacityPersonalData.sharedInstance().createdAt)
+            print(UdacityPersonalData.sharedInstance().firstName)
+            print(UdacityPersonalData.sharedInstance().lastName)
+            print(UdacityPersonalData.sharedInstance().latitude)
+            print(UdacityPersonalData.sharedInstance().longitude)
+            print(UdacityPersonalData.sharedInstance().mapString)
+            print(UdacityPersonalData.sharedInstance().mediaURL)
+            print(UdacityPersonalData.sharedInstance().objectId)
+            print(UdacityPersonalData.sharedInstance().uniqueKey)
+            print(UdacityPersonalData.sharedInstance().updatedAt)
+        }
+        
         //TODO: Parse POST/PUT Method Goes Here
         // If student ID already exisits in the database of locations call PUT method to update
         // Else call POST method to add a new location for that particular student ID Number
@@ -198,8 +212,10 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
 //        }
 //    }
 //
+    
+    //THIS IS WHERE WE CONVERT STRING TO COORDS!
     func locationUpdate() {
-        
+        print("THIS IS WHERE WE CONVERT STRING TO COORDS!")
         
         guard let mapView = mapView,
             let searchText = cityLabel.text else { return }
@@ -224,10 +240,16 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
                 //                let mapItem = response.mapItems[randomIndex]
                 print("item in map search lat is: \(item.placemark.coordinate.latitude)")
                 print("item in map search long is: \(item.placemark.coordinate.longitude)")
-                    APIClient.sharedInstance().latitude = "\(item.placemark.coordinate.latitude)"
-                    APIClient.sharedInstance().longitude = "\(item.placemark.coordinate.longitude)"
-                print("item in map search lat is: \(APIClient.sharedInstance().latitude!)")
-                print("item in map search long is: \(APIClient.sharedInstance().longitude!)")
+                
+                
+                    UdacityPersonalData.sharedInstance().mapString = searchText
+                    UdacityPersonalData.sharedInstance().latitude = item.placemark.coordinate.latitude
+                    UdacityPersonalData.sharedInstance().longitude = item.placemark.coordinate.longitude
+                    UdacityPersonalData.sharedInstance().mediaURL = self.websitePassed
+                print("The value of UdacityPersonalData lat is now: \(UdacityPersonalData.sharedInstance().mapString!)")
+                print("The value of UdacityPersonalData lat is now: \(UdacityPersonalData.sharedInstance().latitude!)")
+                print("The value of UdacityPersonalData long is now: \(UdacityPersonalData.sharedInstance().longitude!)")
+                print("The value of UdacityPersonalData mediaURL is now: \(UdacityPersonalData.sharedInstance().mediaURL!)")
                 
                 //mapItem.openInMaps(launchOptions: nil)
                 //self.locationText.text = "\(mapItem.placemark)"
@@ -240,9 +262,9 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
                 annotation.coordinate = item.placemark.coordinate
 //                annotation.title = item.name
 //                annotation.subtitle = "\(String(describing: item.url))"
-                
-                annotation.title = self.uniqueKey
-                annotation.subtitle = self.websitePassed
+//                annotation.title = UdacityPersonalData.sharedInstance().uniqueKey
+                annotation.title = UdacityPersonalData.sharedInstance().firstName! + " " + UdacityPersonalData.sharedInstance().lastName!
+                annotation.subtitle = UdacityPersonalData.sharedInstance().mediaURL
                 self.mapView.addAnnotation(annotation)
                 //self.mapView.setRegion(annotation.coordinate, animated: true)
                 let initialLocation = CLLocation(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude)
