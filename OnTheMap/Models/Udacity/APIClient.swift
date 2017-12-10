@@ -872,6 +872,8 @@ class APIClient : NSObject {
         /* 4. Make the request */
         let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
             
+            print("Parse POST: The URL Data Task Response is: \(response)")
+            //print("Parse POST: The URL Data Task Response is: \(task)")
             func sendError(_ error: String) {
                 print(error)
                 let userInfo = [NSLocalizedDescriptionKey : error]
@@ -895,6 +897,8 @@ class APIClient : NSObject {
                 sendError("No data was returned by the request!")
                 return
             }
+            
+            
             
             /* 5/6. Parse the data and use the data (happens in completion handler) */
             self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForPOST)

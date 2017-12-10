@@ -13,8 +13,11 @@ import MapKit
 class ConfirmVC: UIViewController, MKMapViewDelegate {
     
     var matchingItems: [MKMapItem] = [MKMapItem]()
+    
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var cityLabel: UILabel!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
     var locationPassed: String = ""
     var websitePassed: String = ""
     var uniqueKey = APIClient.sharedInstance().uniqueID
@@ -49,9 +52,19 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
     }
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
-        cityLabel.text = locationPassed
+        
+        cityLabel.text = locationPassed.capitalized
+        
         print(websitePassed)
+        
+        performUIUpdatesOnMain {
+            self.activityIndicator.startAnimating()
+            ActivityIndicatorOverlay.show("Locating...")
+        }
+        
+        
         
 //        // set initial location in Honolulu
 //        let initialLocation = CLLocation(latitude: 21.282778, longitude: -157.829444)
@@ -82,23 +95,31 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
         annotation.title = "UserName"
         annotation.subtitle = websitePassed
         
-        locationUpdate()
         
-       
-
         
+        
+        locationUpdate( { (results, error) in
+            
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+            
+            if let error = error {
+                print("locationUpdate Error is: \(error)")
+                AlertView.alertPopUp(view: self, alertMessage: "Could not load location")
+                
+            } else if results == true {
+                //completionHandlerForGeocoding(true, nil)
+                performUIUpdatesOnMain {
+                    self.activityIndicator.stopAnimating()
+                    ActivityIndicatorOverlay.hide()
+                }
+                
+                print("locationUpdate results is: \(results)")
+                
+            }
+            
+        })
+    }
+    
 //        func getCoordinate( addressString: String,
 //                            completionHandler: @escaping(CLLocationCoordinate2D, NSError?) -> Void ) {
 //            var addressString = cityLabel.text
@@ -121,7 +142,7 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
 //
 //        }
         
-    }
+
     
     // Called when the annotation was added
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -212,9 +233,12 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
 //        }
 //    }
 //
-    
+    // TODO: Add completion handler to this func so when done it stops the activity view from animated if success and if error present ALERTsd
     //THIS IS WHERE WE CONVERT STRING TO COORDS!
-    func locationUpdate() {
+    func locationUpdate(_ completionHandlerForGeocoding: @escaping (_ success: Bool, _ errorString: Error?) -> Void) {
+        
+        var parsedResult: AnyObject! = nil
+        
         print("THIS IS WHERE WE CONVERT STRING TO COORDS!")
         
         guard let mapView = mapView,
@@ -227,6 +251,7 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
         let search = MKLocalSearch(request: request)
         search.start { response, error in
             guard let response = response else {
+                completionHandlerForGeocoding(false, error)
                 print("There was an error searching for: error: ")
                 return
             }
@@ -234,10 +259,6 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
             for item in response.mapItems {
                 print(searchText)
                 print("item in map search response is: \(item)")
-                //                mapView.setRegion(item.placemark, animated: true)
-                //                mapView.
-                //                let randomIndex = Int(arc4random_uniform(UInt32(response.mapItems.count)))
-                //                let mapItem = response.mapItems[randomIndex]
                 print("item in map search lat is: \(item.placemark.coordinate.latitude)")
                 print("item in map search long is: \(item.placemark.coordinate.longitude)")
                 
@@ -251,18 +272,11 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
                 print("The value of UdacityPersonalData long is now: \(UdacityPersonalData.sharedInstance().longitude!)")
                 print("The value of UdacityPersonalData mediaURL is now: \(UdacityPersonalData.sharedInstance().mediaURL!)")
                 
-                //mapItem.openInMaps(launchOptions: nil)
-                //self.locationText.text = "\(mapItem.placemark)"
-                //self.location = CLLocationCoordinate2DMake(item.placemark.coordinate)
-                
                 self.matchingItems.append(item as MKMapItem)
                 print("Matching items = \(self.matchingItems.count)")
                 
                 let annotation = MKPointAnnotation()
                 annotation.coordinate = item.placemark.coordinate
-//                annotation.title = item.name
-//                annotation.subtitle = "\(String(describing: item.url))"
-//                annotation.title = UdacityPersonalData.sharedInstance().uniqueKey
                 annotation.title = UdacityPersonalData.sharedInstance().firstName! + " " + UdacityPersonalData.sharedInstance().lastName!
                 annotation.subtitle = UdacityPersonalData.sharedInstance().mediaURL
                 self.mapView.addAnnotation(annotation)
@@ -278,20 +292,8 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
                 centerMapOnLocation(location: initialLocation)
             }
         }
-        //        let search = MKLocalSearch(request: request)
-        //
-        //        search.start { response, _ in
-        //            guard let response = response else {
-        //                return
-        //            }
-        //            self.matchingItems = response.mapItems
-        //            //self.mapView.reloadData()
-        //        }
+        completionHandlerForGeocoding(true, nil)
     }
-    
-    //    func textFieldShouldReturn(textField: UITextField) -> Bool {
-    //         self.locationText.resignFirstResponder()
-    //        return true
-    //    }
+
 }
 

@@ -17,7 +17,9 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
     
     let reuseIdentifier = "Cell"
     
-    var students: [StudentLocations] = [StudentLocations]()
+    //var students: [StudentLocations] = [StudentLocations]()
+    
+    var students: [StudentLocations] = StudentArray.sharedInstance.listOfStudents
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -71,7 +73,7 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
+        
         
         ActivityIndicatorOverlay.show("Loading...")
         Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(MapVC.hideIndicator), userInfo: nil, repeats: false)
@@ -112,7 +114,7 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
     
     func getStudents() {
         APIClient.sharedInstance().getStudentLocationsParse { (students, error) in
- 
+            print("students array class is: \(self.students)")
                 if let students = students {
     //                let studentsFiltered = students.filter { $0 != nil }
                         self.students = students //as in the constant from if/let statement which = movies returned by comp hand
@@ -126,6 +128,7 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
                 } else {
                     print(error ?? "empty error")
             }
+            print("the student array class is now: \(StudentArray.sharedInstance.listOfStudents)")
     }
     
         APIClient.sharedInstance().getPublicUserDataUdacity { (result, error) in

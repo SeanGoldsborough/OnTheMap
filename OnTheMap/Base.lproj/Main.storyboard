@@ -303,14 +303,19 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="inQ-t1-CkE">
+                                <rect key="frame" x="169" y="315" width="37" height="37"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="inQ-t1-CkE" firstAttribute="centerY" secondItem="eFc-b2-3EA" secondAttribute="centerY" id="3Jq-6E-jZk"/>
                             <constraint firstItem="neg-Il-gEO" firstAttribute="bottom" secondItem="2Wt-AB-mFa" secondAttribute="bottom" constant="20" id="7md-O4-WT9"/>
                             <constraint firstItem="Ymo-Wv-fx1" firstAttribute="top" secondItem="eFc-b2-3EA" secondAttribute="top" constant="64" id="8G9-fh-wi2"/>
                             <constraint firstItem="Ymo-Wv-fx1" firstAttribute="leading" secondItem="neg-Il-gEO" secondAttribute="leading" id="Ixi-n7-S00"/>
                             <constraint firstItem="Ymo-Wv-fx1" firstAttribute="trailing" secondItem="neg-Il-gEO" secondAttribute="trailing" id="L1C-29-8jo"/>
                             <constraint firstItem="neg-Il-gEO" firstAttribute="trailing" secondItem="2Wt-AB-mFa" secondAttribute="trailing" constant="16" id="Qbb-t3-CPZ"/>
+                            <constraint firstItem="inQ-t1-CkE" firstAttribute="centerX" secondItem="eFc-b2-3EA" secondAttribute="centerX" id="RSD-BM-P06"/>
                             <constraint firstItem="5Oa-b3-5km" firstAttribute="top" secondItem="eFc-b2-3EA" secondAttribute="top" id="Sqo-vb-kWe"/>
                             <constraint firstItem="5Oa-b3-5km" firstAttribute="bottom" secondItem="neg-Il-gEO" secondAttribute="bottom" id="UaL-L8-K6q"/>
                             <constraint firstItem="2Wt-AB-mFa" firstAttribute="leading" secondItem="neg-Il-gEO" secondAttribute="leading" constant="16" id="aOO-ty-7tH"/>
@@ -325,6 +330,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="gmr-sJ-oPa"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="inQ-t1-CkE" id="vck-vP-tWo"/>
                         <outlet property="cityLabel" destination="Ymo-Wv-fx1" id="Ywz-pp-2i0"/>
                         <outlet property="mapView" destination="5Oa-b3-5km" id="KTC-Fc-MT7"/>
                     </connections>

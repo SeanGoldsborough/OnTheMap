@@ -11,6 +11,14 @@ import MapKit
 import Contacts
 
 // MARK: Swift 4
+class StudentArray {
+    var listOfStudents : [StudentLocations] = []
+    static let sharedInstance = StudentArray()
+}
+
+// MARK: Shared Instance
+
+
 struct StudentLocations : Decodable {
     
     public var createdAt : String?
@@ -43,16 +51,31 @@ struct StudentLocations : Decodable {
     static func studentsFromResults(_ results: [[String:AnyObject]]) -> [StudentLocations] {
         
         var students = [StudentLocations]()
+        var studentList = StudentArray.sharedInstance.listOfStudents
         
         // iterate through array of dictionaries, each Movie is a dictionary
         for result in results {
             students.append(StudentLocations(dictionary: result)!)
+            studentList.append(StudentLocations(dictionary: result)!)
         }
         
+        
+        
+        // TODO: SORTING IN REV CHRONOLOGICAL ORDER IS IMPLEMENTED WITH THE URL QUERY ON PARSE GET
         //students.sort { $0.updatedAt < $1.updatedAt }
-        students.sort(by: { $0.updatedAt!.compare($1.updatedAt!) == .orderedDescending })
+        //students.sort(by: { $0.updatedAt!.compare($1.updatedAt!) == .orderedDescending })
         
         print(students)
+        print("student list array is: \(studentList)")
         return students
     }
+    
+    
+//    static func sharedInstance() -> StudentLocations {
+//        struct Singleton {
+//            static var sharedInstance = StudentLocations()
+//        }
+//        return Singleton.sharedInstance
+//    }
+ 
 }
