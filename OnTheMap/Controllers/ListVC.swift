@@ -74,9 +74,9 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
         super.viewDidLoad()
         
         
-        
-        ActivityIndicatorOverlay.show("Loading...")
-        Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(MapVC.hideIndicator), userInfo: nil, repeats: false)
+        ActivityIndicatorOverlay.show(self.view, "Locating...")
+        //ActivityIndicatorOverlay.show(self.tableView, loadingText: "Locating...")
+        //Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(MapVC.hideIndicator), userInfo: nil, repeats: false)
         
         self.navigationController?.navigationBar.isHidden = false
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "LOGOUT", style: .plain, target: self, action: #selector(logoutButtonTapped(sender: )))
@@ -113,23 +113,29 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
     }
     
     func getStudents() {
-        APIClient.sharedInstance().getStudentLocationsParse { (students, error) in
+        APIClient.sharedInstance().getStudentLocationsParse { (studentsResult, error) in
             print("students array class is: \(self.students)")
-                if let students = students {
-    //                let studentsFiltered = students.filter { $0 != nil }
-                        self.students = students //as in the constant from if/let statement which = movies returned by comp hand
-    //self.students = studentsFiltered //as in the constant from if/let statement which = movies returned by comp hand
+                if let students = studentsResult {
     
-                    performUIUpdatesOnMain {
-                        self.tableView.reloadData()
-                        print("printing students array:\(self.students)")
+                    self.students = students
+                    StudentArray.sharedInstance.listOfStudents = students
+                    
+                    
+                    if self.isViewLoaded {
+                        performUIUpdatesOnMain {
+                            self.tableView.reloadData()
+                            ActivityIndicatorOverlay.hide()
+                            print("printing students array:\(self.students)")
+                            print("the student array class is now: \(StudentArray.sharedInstance.listOfStudents)")
+                        }
+                    } else {
+                        print("put in map view reload here?")
                     }
-
                 } else {
                     print(error ?? "empty error")
             }
-            print("the student array class is now: \(StudentArray.sharedInstance.listOfStudents)")
-    }
+            
+        }
     
         APIClient.sharedInstance().getPublicUserDataUdacity { (result, error) in
             if let results = result {
@@ -139,6 +145,7 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
             }
     
         }
+    }
     
     //        APIClient.sharedInstance().getOneStudentLocationParse { (students, error) in
     //
@@ -159,7 +166,7 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
     //                print(error ?? "empty error")
     //            }
     //        }
-    }
+//    }
     @objc func logoutButtonTapped(sender: UIBarButtonItem) {
         print("logout tableview pressed")
         let logOutSession = UdacityClient()
@@ -179,7 +186,7 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
     @objc func refreshData(sender: UIBarButtonItem) {
         //self.activityIndicatorView.startAnimating()
         //refreshData(self)
-        ActivityIndicatorOverlay.show("Loading...")
+        ActivityIndicatorOverlay.show(self.view, "Loading...")
 
         // simulate time consuming work
         Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(self.hideIndicator), userInfo: nil, repeats: false)
@@ -201,7 +208,15 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
         
         if hasContacts {
             getStudents()
-            self.tableView.reloadData()
+            
+            let listView = ListVC()
+            if listView.isViewLoaded {
+                performUIUpdatesOnMain {
+                    self.tableView.reloadData()
+                }
+            } else {
+                print("put in map view reload here?")
+            }
             print("updateview called: tableView has been reloaded")
         } else {
             
@@ -214,7 +229,7 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
         print(students.count)
         //print(arrayOfContacts.count)
         
-        
+
     }
     
     @objc private func refreshData(_ sender: Any) {

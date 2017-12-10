@@ -17,6 +17,7 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var finishButton: UIButton!
     
     var locationPassed: String = ""
     var websitePassed: String = ""
@@ -60,8 +61,10 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
         print(websitePassed)
         
         performUIUpdatesOnMain {
-            self.activityIndicator.startAnimating()
-            ActivityIndicatorOverlay.show("Locating...")
+            //self.activityIndicator.startAnimating()
+            ActivityIndicatorOverlay.show(self.mapView, loadingText: "Locating...")
+            self.finishButton.isEnabled = false
+            
         }
         
         
@@ -108,10 +111,7 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
                 
             } else if results == true {
                 //completionHandlerForGeocoding(true, nil)
-                performUIUpdatesOnMain {
-                    self.activityIndicator.stopAnimating()
-                    ActivityIndicatorOverlay.hide()
-                }
+                
                 
                 print("locationUpdate results is: \(results)")
                 
@@ -287,9 +287,15 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
                             let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate,
                                                                                       regionRadius, regionRadius)
                             mapView.setRegion(coordinateRegion, animated: true)
+  
                         }
                 
                 centerMapOnLocation(location: initialLocation)
+                performUIUpdatesOnMain {
+                    //self.activityIndicator.stopAnimating()
+                    ActivityIndicatorOverlay.hide()
+                    self.finishButton.isEnabled = true
+                }
             }
         }
         completionHandlerForGeocoding(true, nil)

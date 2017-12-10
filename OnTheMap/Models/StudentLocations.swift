@@ -11,8 +11,9 @@ import MapKit
 import Contacts
 
 // MARK: Swift 4
-class StudentArray {
-    var listOfStudents : [StudentLocations] = []
+class StudentArray : NSObject, Decodable {
+    public var listOfStudents : [StudentLocations] = []
+    //var uniqueKeysFromList = StudentLocations.studentsFromResults(results).
     static let sharedInstance = StudentArray()
 }
 
@@ -57,6 +58,7 @@ struct StudentLocations : Decodable {
         for result in results {
             students.append(StudentLocations(dictionary: result)!)
             studentList.append(StudentLocations(dictionary: result)!)
+            
         }
         
         
@@ -67,6 +69,7 @@ struct StudentLocations : Decodable {
         
         print(students)
         print("student list array is: \(studentList)")
+        print("student list array uniqueKeys are: \(StudentLocations.CodingKeys.uniqueKey)")
         return students
     }
     

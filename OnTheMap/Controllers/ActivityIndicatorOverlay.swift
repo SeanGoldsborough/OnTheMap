@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import MapKit
 
 class ActivityIndicatorOverlay {
     
@@ -24,11 +25,13 @@ class ActivityIndicatorOverlay {
         show(currentMainWindow)
     }
     
-    static func show(_ loadingText: String) {
-        guard let currentMainWindow = UIApplication.shared.keyWindow else {
-            print("No main window.")
-            return
-        }
+    static func show(_ currentMainWindow: UIView, _ loadingText: String) {
+//        guard let currentMainWindow = UIApplication.shared.keyWindow else {
+//            print("No main window.")
+//            return
+//        }
+       // let currentMainWindow = UIView
+        
         show(currentMainWindow, loadingText: loadingText)
     }
     
@@ -48,12 +51,14 @@ class ActivityIndicatorOverlay {
             object: nil)
         
         // Create the overlay
+        
         let overlay = UIView(frame: overlayTarget.frame)
         overlay.center = overlayTarget.center
+        print("overlay center is: \(overlay.center)")
         overlay.alpha = 0
         overlay.backgroundColor = UIColor.black
         overlayTarget.addSubview(overlay)
-        overlayTarget.bringSubview(toFront: overlay)
+        //overlayTarget.bringSubview(toFront: overlay)
         
         // Create and animate the activity indicator
         let indicator = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)

@@ -12,7 +12,7 @@ import MapKit
 
 class MapVC: UIViewController {
     
-    var students: [StudentLocations] = [StudentLocations]()
+    var students = StudentArray.sharedInstance.listOfStudents
     
     var annotations = [MKPointAnnotation]()
     
@@ -29,9 +29,9 @@ class MapVC: UIViewController {
         super.viewDidLoad()
         
       
-        
-        ActivityIndicatorOverlay.show("Loading...")
-        Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(MapVC.hideIndicator), userInfo: nil, repeats: false)
+        //ActivityIndicatorOverlay.show(self.view, "Locating...")
+        ActivityIndicatorOverlay.show(self.view, loadingText: "Locating...")
+        //Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(MapVC.hideIndicator), userInfo: nil, repeats: false)
         
         self.navigationController?.navigationBar.isHidden = false
         
@@ -50,12 +50,12 @@ class MapVC: UIViewController {
             
         }
         
-        APIClient.sharedInstance().getStudentLocationsParse { (students, error) in
+        APIClient.sharedInstance().getStudentLocationsParse { (studentsResults, error) in
 
-            if let studentsResults = students {
+            if let students = studentsResults {
                 
-                self.students = studentsResults //as in the constant from if/let statement which = movies returned by comp hand
-                
+                self.students = students //as in the constant from if/let statement which = movies returned by comp hand
+                StudentArray.sharedInstance.listOfStudents = students
                 
                 performUIUpdatesOnMain {
                     //self.mapView.reloadData()
@@ -74,7 +74,7 @@ class MapVC: UIViewController {
                 // to create map annotations. This would be more stylish if the dictionaries were being
                 // used to create custom structs. Perhaps StudentLocation structs.
                 
-                for dictionary in studentsArray! {
+                for dictionary in studentsArray {
                     
                     let studentData = dictionary
                     //let studentFirstName = student.createdAt!
@@ -111,6 +111,9 @@ class MapVC: UIViewController {
                 // When the array is complete, we add the annotations to the map.
                 self.mapView.addAnnotations(self.annotations)
                 print("Annotations array = \(self.annotations)")
+                performUIUpdatesOnMain {
+                    ActivityIndicatorOverlay.hide()
+                }
             }
             
             
@@ -251,19 +254,19 @@ class MapVC: UIViewController {
 //        navigationController!.pushViewController(addLocationNavVC, animated: true)
 //    }
     
-    @objc func refreshData(sender: UIBarButtonItem) {
-        //self.activityIndicatorView.startAnimating()
-        //refreshData(self)
-        ActivityIndicatorOverlay.show("Loading...")
-        
-        // simulate time consuming work
-        Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(self.hideIndicator), userInfo: nil, repeats: false)
-        
-        //self.reloadData()
-    }
-    @objc func hideIndicator() {
-        ActivityIndicatorOverlay.hide()
-    }
+//    @objc func refreshData(sender: UIBarButtonItem) {
+//        //self.activityIndicatorView.startAnimating()
+//        //refreshData(self)
+//        ActivityIndicatorOverlay.show(self.view, "Loading...")
+//        print("poooooooodpdpdpdpakjdha;fkjhasdf")
+//        // simulate time consuming work
+//        Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(self.hideIndicator), userInfo: nil, repeats: false)
+//
+//        //self.reloadData()
+//    }
+//    @objc func hideIndicator() {
+//        ActivityIndicatorOverlay.hide()
+//    }
     
     
 }

@@ -14,7 +14,7 @@ class AddLocationVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var websiteTF: UITextField!
     @IBAction func cancelAddLoca(_ sender: Any) {
         //self.dismiss(animated: true, completion: nil)
-        ActivityIndicatorOverlay.show("")
+        ActivityIndicatorOverlay.show(self.view, "")
         Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(AddLocationVC.hideIndicator), userInfo: nil, repeats: false)
         self.navigationController!.popViewController(animated: true)
         
@@ -77,6 +77,7 @@ class AddLocationVC: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         
         print(APIClient.sharedInstance().uniqueID!)
+        
     
         newLocationTF.delegate = self
         websiteTF.delegate = self

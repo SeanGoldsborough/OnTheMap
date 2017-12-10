@@ -13,9 +13,11 @@ class TabBarControllerViewController: UITabBarController {
     
     
     
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
         
         let logOutButton = UIBarButtonItem(title: "LOGOUT", style: .plain, target: self, action: #selector(logoutButtonTapped(sender: )))
         let refreshButton = UIBarButtonItem(image: #imageLiteral(resourceName: "icon_refresh"), landscapeImagePhone: #imageLiteral(resourceName: "icon_refresh"), style: .plain, target: self, action: #selector(refreshData(sender: )))
@@ -47,7 +49,15 @@ class TabBarControllerViewController: UITabBarController {
         print("addPin has been pressed")
         
         let uniqueKey = UdacityPersonalData.sharedInstance().uniqueKey //"10081758676" //UdacityPersonalData.sharedInstance().uniqueKey
-        let studentsArray = ["10081758676"]
+        //let studentsArray = StudentArray.sharedInstance.listOfStudents//["10081758676"]
+        var studentsArray = ["10081758676"]
+        let moreStudents = StudentArray.sharedInstance.listOfStudents
+        print("more students: \(moreStudents)")
+        
+        for key in moreStudents {
+            print(key.uniqueKey)
+            studentsArray.append(key.uniqueKey!)
+        }
        
          if studentsArray.contains(uniqueKey!) {
             
@@ -80,7 +90,7 @@ class TabBarControllerViewController: UITabBarController {
         let listView = self.storyboard!.instantiateViewController(withIdentifier: "ListVC") as! ListVC
         
         let mapView = self.storyboard!.instantiateViewController(withIdentifier: "MapVC") as! MapVC
-        ActivityIndicatorOverlay.show("Loading...")
+        ActivityIndicatorOverlay.show(self.view, "Loading...")
         
         
         // simulate time consuming work
