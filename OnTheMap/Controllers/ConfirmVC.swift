@@ -25,26 +25,74 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
     
     @IBAction func addStudentLocation() {
         overwriteLocation()
-        APIClient.sharedInstance().putUserPARSE(mapString: self.locationPassed, studentURL: self.websitePassed) { (success, error) in
-            print("pressed post student!")
-            print("post student success is...\(success)")
-             print("post student error is...\(error)")
-            if success == true {
-                performUIUpdatesOnMain {
+        
+        let uniqueKey = UdacityPersonalData.sharedInstance().uniqueKey
+        var studentsArray = ["10081758676"]
+        let moreStudents = StudentArray.sharedInstance.listOfStudents
+        print("more students: \(moreStudents)")
+        
+        for key in moreStudents {
+            print(key.uniqueKey)
+            studentsArray.append(key.uniqueKey!)
+        }
+        
+        if studentsArray.contains(uniqueKey!) {
+            print("calling ParsePUTFunction")
+            
+            APIClient.sharedInstance().putUserPARSE(mapString: self.locationPassed, studentURL: self.websitePassed) { (success, error) in
+                print("pressed post student!")
+                print("post student success is...\(success)")
+                print("post student error is...\(error)")
+                if success == true {
+                    performUIUpdatesOnMain {
+                        
+                        print("will log in now...\(success)")
+                    }
                     
-                    
-                    //self.students = StudentLocations.studentsFromResults(results)
-                    print("will log in now...\(success)")
+                } else {
+                    performUIUpdatesOnMain {
+                        AlertView.alertPopUp(view: self, alertMessage: "Submission Unsuccessful")
+                    }
                 }
-                
-            } else {
-                performUIUpdatesOnMain {
-                    //self.displayError(errorString)
-                    //print(errorString!)
+            
+            
+            
+            
+        } else {
+            print("calling ParsePOSTFunction")
+            
+            APIClient.sharedInstance().postUserPARSE(mapString: self.locationPassed, studentURL: self.websitePassed) { (success, error) in
+                print("pressed post student!")
+                print("post student success is...\(success)")
+                print("post student error is...\(error)")
+                if success == true {
+                    performUIUpdatesOnMain {
+                        
+                        print("will log in now...\(success)")
+                    }
                     
-                    AlertView.alertPopUp(view: self, alertMessage: "Log In Unsuccessful")
+                } else {
+                    performUIUpdatesOnMain {
+                        AlertView.alertPopUp(view: self, alertMessage: "Submission Unsuccessful")
+                    }
                 }
-            }
+            
+            
+            
+            
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
             
             
             print(UdacityPersonalData.sharedInstance().createdAt)
