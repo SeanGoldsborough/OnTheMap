@@ -25,7 +25,7 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
     
     @IBAction func addStudentLocation() {
         overwriteLocation()
-        APIClient.sharedInstance().postUserPARSE(mapString: self.locationPassed, studentURL: self.websitePassed) { (success, error) in
+        APIClient.sharedInstance().putUserPARSE(mapString: self.locationPassed, studentURL: self.websitePassed) { (success, error) in
             print("pressed post student!")
             print("post student success is...\(success)")
              print("post student error is...\(error)")

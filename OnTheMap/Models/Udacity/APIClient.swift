@@ -1007,7 +1007,6 @@ class APIClient : NSObject {
        
         // TODO: When Calling this function the parameters will be UITextField.text for each of the said parameters
 
-         //let jsonBody = "{\"uniqueKey\": \"\(UdacityPersonalData.sharedInstance().uniqueKey!)\", \"firstName\": \"\(UdacityPersonalData.sharedInstance().firstName!)\", \"lastName\": \"\(UdacityPersonalData.sharedInstance().lastName!)\", \"mapString\": \"\(UdacityPersonalData.sharedInstance().mapString!)\", \"mediaURL\": \"\(UdacityPersonalData.sharedInstance().mediaURL!)\", \"latitude\": \"\(UdacityPersonalData.sharedInstance().latitude!)\", \"longitude\": \"\(UdacityPersonalData.sharedInstance().longitude!)\"}"
         let jsonBody = "{\"uniqueKey\": \"\(UdacityPersonalData.sharedInstance().uniqueKey!)\", \"firstName\": \"\(UdacityPersonalData.sharedInstance().firstName!)\", \"lastName\": \"\(UdacityPersonalData.sharedInstance().lastName!)\",\"mapString\": \"\(UdacityPersonalData.sharedInstance().mapString!)\", \"mediaURL\": \"\(UdacityPersonalData.sharedInstance().mediaURL!)\",\"latitude\": \(UdacityPersonalData.sharedInstance().latitude!), \"longitude\": \(UdacityPersonalData.sharedInstance().longitude!)}"
         
         
@@ -1021,7 +1020,21 @@ class APIClient : NSObject {
                 print(error)
                 completionHandlerForPOSTUser(false, error)
             } else {
-                completionHandlerForPOSTUser(true, nil)
+                
+                if let objectID = results?[APIClient.JSONResponseKeys.ObjectId] as? String {
+                    UdacityPersonalData.sharedInstance().objectId = objectID
+                    print("ObjectID from JSON is: \(objectID)")
+                    completionHandlerForPOSTUser(true, nil)
+                } else {
+                    print("Could not find \(APIClient.JSONResponseKeys.SessionID) in \(results)")
+                    completionHandlerForPOSTUser(false, error)
+                }
+                
+                
+                
+                
+                
+                //completionHandlerForPOSTUser(true, nil)
             }
         }
     }
@@ -1085,30 +1098,31 @@ class APIClient : NSObject {
     }
 
     // MARK: PUT Convenience Methods - PARSE
-    // TODO: FIX THIS SO IT WORKS WITH PROPER PARAMETERS
-    private func putUserPARSE(userNameVar: String?, userPasswordVar: String?, completionHandlerForPUTUser: @escaping (_ success: Bool, _ objectID: String?, _ errorString: String?) -> Void) {
+    // TODO: FIX THIS SO IT WORKS WITH PROPER PARAMETERS - URL = https://parse.udacity.com/parse/classes/StudentLocation/<objectId>
+    func putUserPARSE(mapString: String?, studentURL: String?, completionHandlerForPUTUser: @escaping (_ success: Bool, _ errorString: NSError?) -> Void) {
 
         /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
         //let parameters = [APIClient.UdacityParameterKeys.Udacity] as! [String: AnyObject]
         let parameters = [String:AnyObject]()
 
-        let jsonBody = "{\"uniqueKey\": \"\(UdacityPersonalData.sharedInstance().uniqueKey!)\", \"firstName\": \"\(UdacityPersonalData.sharedInstance().firstName!)\",\"lastName\": \"\(UdacityPersonalData.sharedInstance().lastName!)\", \"mapString\": \"\(UdacityPersonalData.sharedInstance().mapString!)\",\"mediaURL\": \"\(UdacityPersonalData.sharedInstance().mediaURL!)\",\"latitude\": \"\(UdacityPersonalData.sharedInstance().latitude!)\", \"longitude\": \"\(UdacityPersonalData.sharedInstance().longitude!)\"}"
+        let jsonBody = "{\"uniqueKey\": \"\(UdacityPersonalData.sharedInstance().uniqueKey!)\", \"firstName\": \"\(UdacityPersonalData.sharedInstance().firstName!)\", \"lastName\": \"\(UdacityPersonalData.sharedInstance().lastName!)\",\"mapString\": \"\(UdacityPersonalData.sharedInstance().mapString!)\", \"mediaURL\": \"\(UdacityPersonalData.sharedInstance().mediaURL!)\",\"latitude\": \(UdacityPersonalData.sharedInstance().latitude!), \"longitude\": \(UdacityPersonalData.sharedInstance().longitude!)}"
 
         /* 2. Make the request */
-        let _ = taskForPUTMethodPARSE(URLPathVariants.StudentLocationPath, parameters: parameters as [String:AnyObject], jsonBody: jsonBody) { (results, error) in
-            print("The getSessionID JSON Data is: \(results)")
+        let _ = taskForPUTMethodPARSE(URLPathVariants.StudentLocationPath + "/" + UdacityPersonalData.sharedInstance().objectId!, parameters: parameters, jsonBody: jsonBody) { (results, error) in
+            print("The taskForPUTMethodPARSE JSON Data is: \(results)")
             /* 3. Send the desired value(s) to completion handler */
             if let error = error {
                 print(error)
-                completionHandlerForPUTUser(false, nil, "Login Failed (Session ID).")
+                completionHandlerForPUTUser(false, error)
             } else {
-                if let objectID = results?[APIClient.JSONResponseKeys.ObjectId] as? String {
-                    UdacityPersonalData.sharedInstance().objectId = objectID
-                    completionHandlerForPUTUser(true, objectID, nil)
-                } else {
-                    print("Could not find \(APIClient.JSONResponseKeys.SessionID) in \(results)")
-                    completionHandlerForPUTUser(false, nil, "Login Failed (Session ID).")
-                }
+//                if let objectID = results?[APIClient.JSONResponseKeys.ObjectId] as? String {
+//                    UdacityPersonalData.sharedInstance().objectId = objectID
+//                    completionHandlerForPUTUser(true, nil)
+//                } else {
+//                    print("Could not find \(APIClient.JSONResponseKeys.SessionID) in \(results)")
+//                    completionHandlerForPUTUser(false, error)
+//                }
+                completionHandlerForPUTUser(true, nil)
             }
         }
     }
