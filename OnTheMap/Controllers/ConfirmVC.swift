@@ -54,10 +54,7 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
                         AlertView.alertPopUp(view: self, alertMessage: "Submission Unsuccessful")
                     }
                 }
-            
-            
-            
-            
+            }
         } else {
             print("calling ParsePOSTFunction")
             
@@ -77,12 +74,10 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
                     }
                 }
             
-            
-            
-            
+            }
+          }
         }
-        
-        
+    
         
         
         
@@ -95,17 +90,17 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
 
             
             
-            print(UdacityPersonalData.sharedInstance().createdAt)
-            print(UdacityPersonalData.sharedInstance().firstName)
-            print(UdacityPersonalData.sharedInstance().lastName)
-            print(UdacityPersonalData.sharedInstance().latitude)
-            print(UdacityPersonalData.sharedInstance().longitude)
-            print(UdacityPersonalData.sharedInstance().mapString)
-            print(UdacityPersonalData.sharedInstance().mediaURL)
-            print(UdacityPersonalData.sharedInstance().objectId)
-            print(UdacityPersonalData.sharedInstance().uniqueKey)
-            print(UdacityPersonalData.sharedInstance().updatedAt)
-        }
+//            print(UdacityPersonalData.sharedInstance().createdAt)
+//            print(UdacityPersonalData.sharedInstance().firstName)
+//            print(UdacityPersonalData.sharedInstance().lastName)
+//            print(UdacityPersonalData.sharedInstance().latitude)
+//            print(UdacityPersonalData.sharedInstance().longitude)
+//            print(UdacityPersonalData.sharedInstance().mapString)
+//            print(UdacityPersonalData.sharedInstance().mediaURL)
+//            print(UdacityPersonalData.sharedInstance().objectId)
+//            print(UdacityPersonalData.sharedInstance().uniqueKey)
+//            print(UdacityPersonalData.sharedInstance().updatedAt)
+//        }
         
         //TODO: Parse POST/PUT Method Goes Here
         // If student ID already exisits in the database of locations call PUT method to update
@@ -118,7 +113,7 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
         //mapVC.activityView.startAnimating()
 //        mapVC.LoadingIndicatorView.show(mapView, loadingText: "Loading")
 //        Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(ViewController.doWork), userInfo: nil, repeats: false)
-    }
+//    }
     
     override func viewDidLoad() {
         
