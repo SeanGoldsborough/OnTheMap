@@ -86,9 +86,9 @@ extension APIClient {
         
         // Parse URL Query Parameter Keys
         static let Where = "/where"
-        static let Limit = "/limit"
-        static let Skip = "/skip"
-        static let Order = "/order"
+        static let Limit = "limit"
+        static let Skip = "skip"
+        static let Order = "order"
         
     }
     

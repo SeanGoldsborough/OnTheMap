@@ -109,10 +109,11 @@ class MapVC: UIViewController {
                 }
                 
                 // When the array is complete, we add the annotations to the map.
-                self.mapView.addAnnotations(self.annotations)
+                
                 print("Annotations array = \(self.annotations)")
                 performUIUpdatesOnMain {
                     ActivityIndicatorOverlay.hide()
+                    self.mapView.addAnnotations(self.annotations)
                 }
             }
             

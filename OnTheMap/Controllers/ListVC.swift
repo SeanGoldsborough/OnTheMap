@@ -112,15 +112,25 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
         
     }
     
+
+    
     func getStudents() {
         APIClient.sharedInstance().getStudentLocationsParse { (studentsResult, error) in
             print("students array class is: \(self.students)")
+            
+            guard studentsResult != nil else {
+                print("1There was an error with your request: \(error!)")
+                performUIUpdatesOnMain {
+                AlertView.alertPopUp(view: self, alertMessage: "Networking Error")
+                }
+                return
+            }
+
                 if let students = studentsResult {
     
                     self.students = students
                     StudentArray.sharedInstance.listOfStudents = students
-                    
-                    
+         
                     if self.isViewLoaded {
                         performUIUpdatesOnMain {
                             self.tableView.reloadData()
@@ -134,15 +144,25 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
                 } else {
                     print(error ?? "empty error")
             }
-            
         }
     
+
+    
         APIClient.sharedInstance().getPublicUserDataUdacity { (result, error) in
-            if let results = result {
-                print("printing results from getPublicDataUdacity:\(results)")
-            } else {
-                print(error ?? "empty error")
+            
+            guard result != nil else {
+                print("1There was an error with your request: \(error!)")
+                performUIUpdatesOnMain {
+                    AlertView.alertPopUp(view: self, alertMessage: "Networking Error")
+                }
+                return
             }
+            
+//            if let results = result {
+//                print("printing results from getPublicDataUdacity:\(results)")
+//            } else {
+//                print(error ?? "empty error")
+//            }
     
         }
     }

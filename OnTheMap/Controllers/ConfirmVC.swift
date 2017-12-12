@@ -27,6 +27,26 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
         overwriteLocation()
         APIClient.sharedInstance().postUserPARSE(mapString: self.locationPassed, studentURL: self.websitePassed) { (success, error) in
             print("pressed post student!")
+            print("post student success is...\(success)")
+             print("post student error is...\(error)")
+            if success == true {
+                performUIUpdatesOnMain {
+                    
+                    
+                    //self.students = StudentLocations.studentsFromResults(results)
+                    print("will log in now...\(success)")
+                }
+                
+            } else {
+                performUIUpdatesOnMain {
+                    //self.displayError(errorString)
+                    //print(errorString!)
+                    
+                    AlertView.alertPopUp(view: self, alertMessage: "Log In Unsuccessful")
+                }
+            }
+            
+            
             print(UdacityPersonalData.sharedInstance().createdAt)
             print(UdacityPersonalData.sharedInstance().firstName)
             print(UdacityPersonalData.sharedInstance().lastName)

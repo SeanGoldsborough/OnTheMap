@@ -9,11 +9,6 @@
 import UIKit
 
 class TabBarControllerViewController: UITabBarController {
-    
-    
-    
-    
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,13 +21,71 @@ class TabBarControllerViewController: UITabBarController {
         navigationItem.leftBarButtonItems = [logOutButton]
         navigationItem.rightBarButtonItems = [addPinButton, refreshButton]
         // Do any additional setup after loading the view.
+
+       // getOneStudent()
+        
+        
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+//    func getStudents() {
+//        APIClient.sharedInstance().getStudentLocationsParse( { (studentsResult, error) in
+//            print("students array class is: \(self.students)")
+//
+//            guard studentsResult != nil else {
+//                print("1There was an error with your request: \(error!)")
+//                performUIUpdatesOnMain {
+//                    AlertView.alertPopUp(view: self, alertMessage: "Networking Error")
+//                }
+//                return
+//            }
+//
+//            if let students = studentsResult {
+//
+//                self.students = students
+//                StudentArray.sharedInstance.listOfStudents = students
+//
+//                if self.isViewLoaded {
+//                    performUIUpdatesOnMain {
+//                        self.tableView.reloadData()
+//                        ActivityIndicatorOverlay.hide()
+//                        print("printing students array:\(self.students)")
+//                        print("the student array class is now: \(StudentArray.sharedInstance.listOfStudents)")
+//                    }
+//                } else {
+//                    print("put in map view reload here?")
+//                }
+//            } else {
+//                print(error ?? "empty error")
+//            }
+//        })
+//    }
     
+//    func getOneStudent() {
+//        APIClient.sharedInstance().getOneStudentLocationParse({ (result, error) in
+//            //print("students array class is: \(self.students)")
+//            
+//            guard result != nil else {
+//                print("1There was an error with your request: \(error!)")
+//                performUIUpdatesOnMain {
+//                    AlertView.alertPopUp(view: self, alertMessage: "Networking Error")
+//                }
+//                return
+//            }
+//            
+//            for student in result {
+//                let studentFirstName = result[indexPath.row]
+//                
+//                let firstName = studentFirstName.firstName!
+//                let lastName = studentFirstName.lastName!
+//                let fullName = firstName + " " + lastName as! String
+//                cell.textLabel!.text = fullName
+//                //cell.textLabel!.text = studentFirstName.firstName
+//                cell.detailTextLabel!.text = studentFirstName.mediaURL
+//                
+//            }
+//        })
+//    }
+//    
     @objc func logoutButtonTapped(sender: UIBarButtonItem) {
         
         let logOutSession = UdacityClient()

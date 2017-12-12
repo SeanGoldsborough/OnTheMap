@@ -13,16 +13,16 @@ class LoginVC: UIViewController {
     
 //    var client = APIClient.sharedInstance()
     
-    @IBOutlet weak var emailTextField: UITextField!
-    @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var emailTextField: UITextField?
+    @IBOutlet weak var passwordTextField: UITextField?
     
-    @IBOutlet weak var activityOverlay: UIView!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var activityOverlay: UIView?
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView?
     @IBAction func loginButton(_ sender: Any) {
         
         performUIUpdatesOnMain {
-            self.activityOverlay.isHidden = false
-            self.activityIndicator.startAnimating()
+            self.activityOverlay?.isHidden = false
+            self.activityIndicator?.startAnimating()
         }
         
 //        let isEmailAddressValid = isValidEmailAddress(emailAddressString: self.emailTextField.text!)
@@ -56,33 +56,31 @@ class LoginVC: UIViewController {
 //                    }
 //                }
 //            }
-        let isEmailAddressValid = isValidEmailAddress(emailAddressString: self.emailTextField.text!)
+        let isEmailAddressValid = isValidEmailAddress(emailAddressString: (self.emailTextField?.text!)!)
         
         if isEmailAddressValid == true {
             
             let client = APIClient.sharedInstance()
-            
-            
-            client.authenticateUser(email: self.emailTextField.text!, password: self.passwordTextField.text!) { (success, errorString) in
-                
-              
-               
-                
+       
+            client.authenticateUser(email: (self.emailTextField?.text!)!, password: (self.passwordTextField?.text!)!) { (success, errorString) in
+
                 if success {
                     performUIUpdatesOnMain {
                         self.completeLogIn()
-                        self.activityOverlay.isHidden = true
-                        self.activityIndicator.stopAnimating()
+                        self.activityOverlay?.isHidden = true
+                        self.activityIndicator?.stopAnimating()
                         //self.students = StudentLocations.studentsFromResults(results)
                         print("will log in now...")
                     }
                     
                 } else {
+                    performUIUpdatesOnMain {
                     //self.displayError(errorString)
-                    print(errorString!)
-                    self.activityOverlay.isHidden = true
-                    self.activityIndicator.stopAnimating()
+                    //print(errorString!)
+                    self.activityOverlay?.isHidden = true
+                    self.activityIndicator?.stopAnimating()
                     AlertView.alertPopUp(view: self, alertMessage: "Log In Unsuccessful")
+                    }
                 }
             }
         
@@ -101,12 +99,12 @@ class LoginVC: UIViewController {
             alertMessage(title: "Email is not valid", message: "Please try again.", numberOfButtons: 1, leftButtonTitle: "OK", leftButtonStyle: 1, rightButtonTitle: "Cancel", rightButtonStyle: 0)
             performUIUpdatesOnMain {
                 
-                self.activityOverlay.isHidden = true
-                self.activityIndicator.stopAnimating()
+                self.activityOverlay?.isHidden = true
+                self.activityIndicator?.stopAnimating()
                 
             }
         
-        } else if emailTextField.text == "" || passwordTextField.text == "" {
+        } else if emailTextField?.text == "" || passwordTextField?.text == "" {
             alertMessage(title: "No User Name or Password", message: "Please try again.", numberOfButtons: 1, leftButtonTitle: "OK", leftButtonStyle: 1, rightButtonTitle: "Cancel", rightButtonStyle: 0)
         }
     }
@@ -147,16 +145,20 @@ class LoginVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.activityOverlay.isHidden = true
-        self.activityIndicator.stopAnimating()
+        performUIUpdatesOnMain {
+            
+            self.activityOverlay?.isHidden = true
+            self.activityIndicator?.stopAnimating()
+            
+        }
         
         var registeredInt: Int
         
-        emailTextField.delegate = self
-        passwordTextField.delegate = self
+        emailTextField?.delegate = self
+        passwordTextField?.delegate = self
         
-//        emailTextField.text = ""
-//        passwordTextField.text = ""
+        emailTextField?.text = ""
+        passwordTextField?.text = ""
         
         subscribeToNotification(.UIKeyboardWillShow, selector: #selector(keyboardWillShow))
         subscribeToNotification(.UIKeyboardWillHide, selector: #selector(keyboardWillHide))
@@ -181,6 +183,7 @@ class LoginVC: UIViewController {
     }
     
     func completeLogIn() {
+        print("completeLogIn is happening")
         let nextStoryboard = storyboard?.instantiateViewController(withIdentifier: "NavBarController")
         self.present(nextStoryboard!, animated: true, completion: nil)
         
@@ -193,8 +196,8 @@ extension LoginVC: UITextFieldDelegate {
     // MARK: UITextFieldDelegate
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        self.emailTextField.resignFirstResponder()
-        self.passwordTextField.resignFirstResponder()
+        self.emailTextField?.resignFirstResponder()
+        self.passwordTextField?.resignFirstResponder()
         return true
     }
     
