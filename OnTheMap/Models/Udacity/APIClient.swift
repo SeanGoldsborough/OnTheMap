@@ -86,6 +86,9 @@ class APIClient : NSObject {
             components.queryItems!.append(queryItem)
         }
         
+        components.percentEncodedQuery = components.percentEncodedQuery?
+            .replacingOccurrences(of: ":", with: "%3A")
+        
         print(components.url!)
         return components.url!
     }
@@ -102,6 +105,8 @@ class APIClient : NSObject {
             let queryItem = URLQueryItem(name: key, value: "\(value)")
             components.queryItems!.append(queryItem)
         }
+        
+        
         
         print("UdacityURLFromParameters \(components.url!)")
         return components.url!
@@ -287,7 +292,7 @@ class APIClient : NSObject {
 //            
             /* GUARD: Was there an error? */
             guard data != nil else {
-                sendError("1There was an error with your request: \(error!)")
+                sendError("1There was an error with your request - UdacityPOST: \(error!)")
 //                 AlertView.alertPopUp(view: LoginVC() as LoginVC, alertMessage: "Networking Error-FAAAAHHHK")
                 return
             }
@@ -462,10 +467,12 @@ class APIClient : NSObject {
             //                    print("Cannot find key '\(APIClient.JSONResponseKeys.Account)' in \(results!)")
             //                    return
             //                }
-            guard let account = results!["account"] as? [String: Any] else {print("error: no account");return}
-            print("the results are: \(account)")
-            guard let uniqueKey = account["key"] as? String else {print("error");return}
-            print("the uniqueKey is: \(uniqueKey)")
+            
+            //MARK: 12/15 - COMMENTED OUT - POSSIBLY UNNEEDED?
+//            guard let account = results!["account"] as? [String: Any] else {print("error: no account");return}
+//            print("the results are: \(account)")
+//            guard let uniqueKey = account["key"] as? String else {print("error");return}
+//            print("the uniqueKey is: \(uniqueKey)")
             
             
             /* 3. Send the desired value(s) to completion handler */
@@ -478,7 +485,7 @@ class APIClient : NSObject {
                 guard let uniqueKey = account[APIClient.JSONResponseKeys.UniqueKeyUdacity] as? String else {print("error");return}
                 print("the uniqueKey is: \(uniqueKey)")
                 if let uniqueKey = account[APIClient.JSONResponseKeys.UniqueKeyUdacity] as? String {
-                    //if let sessionID = results?[APIClient.JSONResponseKeys.Account] as? String {
+                    UdacityPersonalData.sharedInstance().uniqueKey = uniqueKey
                     completionHandlerForUniqueID(true, uniqueKey, nil)
                 } else {
                     print("Could not find \(APIClient.JSONResponseKeys.Account) in \(results!)")
@@ -518,7 +525,7 @@ class APIClient : NSObject {
             
             /* GUARD: Was there an error? */
             guard data != nil else {
-                print("1There was an error with your request: \(error!)")
+                print("1There was an error with your request - UdacityDELETE: \(error!)")
                 return
             }
             
@@ -620,7 +627,7 @@ class APIClient : NSObject {
             
             /* GUARD: Was there an error? */
             guard data != nil else {
-                print("1There was an error with your request: \(error!)")
+                print("1There was an error with your request - UdacityGET: \(error!)")
                 return
             }
             
@@ -760,8 +767,7 @@ class APIClient : NSObject {
                     UdacityPersonalData.sharedInstance().uniqueKey = keyResults
                     
                     print("The UdacityPersonalData shared instance key Results are: \(UdacityPersonalData.sharedInstance().uniqueKey)")
-                    
-                    
+
                     
                     // TODO: THIS NEEDS TO COME FROM PARSE GET ONE STUDENT
                     
@@ -771,21 +777,7 @@ class APIClient : NSObject {
 //                    }
 //                    print("The getPublicUserDataUdacity Guard/Let firstName Results are: \(updatedAtResults)")
 //                    UdacityPersonalData.sharedInstance().updatedAt = updatedAtResults
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    //if let personalData = UdacityPersonalData.init(firstName: firstNameResults, lastName: lastNameResults, latitude: 0.0, longitude: 0.0, mapString: "", mediaURL: "", objectId: "", uniqueKey: keyResults) {
-                    
-                    
-                    //                    print("The getPublicUserDataUdacity Results personalData are: \(personalData)")
-                    //                    self.udacityDataArray = [personalData]
-                    //                    completionHandlerForUdacityGet(personalData, nil)
+
                     completionHandlerForUdacityGet(UdacityPersonalData.sharedInstance(), nil)
                 } else {
                     completionHandlerForUdacityGet(nil, NSError(domain: "getPublicUserDataUdacity parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getPublicUserDataUdacity"]))
@@ -896,40 +888,67 @@ class APIClient : NSObject {
     }
     
     // MARK: GETing One Student Location - PARSE - https://parse.udacity.com/parse/classes/StudentLocation?where={"uniqueKey":"1234"}
-    // TODO: FIX THIS SO IT WORKS WITH PROPER PARAMETERS
-    func getOneStudentLocationParse(_ completionHandlerForParseGet: @escaping (_ result: [StudentLocations]?, _ error: NSError?) -> Void) {
+    // TODO: ESCAPE THE : IN THE URL - FIX THIS SO IT WORKS WITH PROPER PARAMETERS
+    func getOneStudentLocationParse(_ completionHandlerForParseGet: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) {
         
         //1. Specify parameters, method (if has {key}), and HTTP body (if POST)
-        var parameters = [APIClient.URLQueryKeys.Where: APIClient.sharedInstance().uniqueID!] as? [String: AnyObject]
-        //var parametersWithQueryKeys: [String: AnyObject]
-        //var variant: String = URLPathVariants.StudentLocationPath + URLQueryKeys.Where + JSONResponseKeys.UniqueKey
-        var variant: String = URLPathVariants.StudentLocationPath
+        let variant: String = URLPathVariants.StudentLocationPath
         
-        //parametersWithQueryKeys[URLQueryKeys.APIKey] = Constants.APIKeyUdacity as AnyObject?
-        //1b. Substitute in a value for the URLKey "id" in /account/{id}/favorite
-        //        var mutableMethod: String = Methods.AccountIDFavoriteMovies
-        //        variant = substituteKeyInMethod(mutableMethod, key: APIClient.URLKeys.UniqueID, value: String(APIClient.sharedInstance().uniqueID!))!
+        var queryVariation = "{\"\(APIClient.URLQueryKeys.UniqueKey)\":\"\(UdacityPersonalData.sharedInstance().uniqueKey!)\"}"
+        //let escapedString = queryVariation.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
+        
+        var parameters = [APIClient.URLQueryKeys.Where: queryVariation] as? [String: AnyObject]
         
         /* 2. Make the request */
-        
-        let _ = taskForGETMethodParse(variant: variant, parameters: parameters!) { (results, error) in
+        print("The getOneStudentLocationParse URL parameters are: \(parameters)")
+        let request = taskForGETMethodParse(variant: variant, parameters: parameters!) { (results, error) in
             print("The getOneStudentLocationParse JSON Data is: \(results)")
             
             
+            
+            
             /* 3. Send the desired value(s) to completion handler */
-            if let error = error {
-                completionHandlerForParseGet([], error)
+            if error != nil {
+                print("Error: \(error) in \(results)")
+                completionHandlerForParseGet(nil, error)
             } else {
+                 print("The getOneStudentLocationParse results is: \(results)")
                 
-                if let results = results?[APIClient.JSONResponseKeys.ParseResults] as? [[String:AnyObject]] {
-                    
-                    let students = StudentLocations.studentsFromResults(results)
-                    completionHandlerForParseGet(students, nil)
-                } else {
-                    completionHandlerForParseGet([], NSError(domain: "getOneStudentLocationParse parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getOneStudentLocationParse"]))
+                guard let getResults = results!["results"] as? [[String:AnyObject]] else {
+                    print("Cannot find key '\(APIClient.JSONResponseKeys.UdacityPersonalDataUser)' in \(results!)")
+                    return
                 }
+                print("The getOneStudentLocationParse Guard/Let Get Results are: \(getResults)")
+                
+                for result in getResults {
+                    let objectID = result["objectId"] as? String
+                    UdacityPersonalData.sharedInstance().objectId = objectID
+                     print("The UdacityPersonalData shared instance objectID Results are: \(UdacityPersonalData.sharedInstance().objectId)")
+                }
+                
+                
+//                guard let objectIdResults = getResults["objectId"] as? String else {
+//                    print("Cannot find objectIdResults '\(APIClient.JSONResponseKeys.UdacityPersonalDataFirstName)' in \(getResults)")
+//                    return
+//                }
+//                print("The getPublicUserDataUdacity Guard/Let objectIdResults Results are: \(objectIdResults)")
+//                UdacityPersonalData.sharedInstance().objectId = objectIdResults
+//
+//                print("The UdacityPersonalData shared instance key Results are: \(UdacityPersonalData.sharedInstance().objectId)")
+//
+//
+//                if let objectID = objectIdResults as? String{
+//                    UdacityPersonalData.sharedInstance().objectId = objectID
+//                    print("ObjectID from JSON is: \(UdacityPersonalData.sharedInstance().objectId)")
+//                    completionHandlerForParseGet(results, nil)
+//                } else {
+//                    print("Could not find \(APIClient.JSONResponseKeys.ObjectId) in \(results)")
+//                    completionHandlerForParseGet(nil, error)
+//                }
+//                completionHandlerForParseGet(results, nil)
             }
         }
+        print("The getOneStudentLocationParse request is: \(request)")
     }
     
     
@@ -1032,7 +1051,7 @@ class APIClient : NSObject {
                 
                 
                 
-                
+                print("The ParsePOST has been called")
                 
                 //completionHandlerForPOSTUser(true, nil)
             }
@@ -1052,8 +1071,10 @@ class APIClient : NSObject {
         //parametersWithApiKey[URLQueryKeys.APIKey] = Constants.APIKeyUdacity as AnyObject?
 
         /* 2/3. Build the URL, Configure the request */
-        let request = NSMutableURLRequest(url: UdacityURLFromParameters(parameters, withPathExtension: variant), cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10.0)
+        let request = NSMutableURLRequest(url: ParseURLFromParameters(parameters, withPathExtension: variant), cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10.0)
         request.httpMethod = "PUT"
+        request.addValue(Constants.ApplicationIDParse, forHTTPHeaderField: "X-Parse-Application-Id")
+        request.addValue(Constants.APIKeyParse, forHTTPHeaderField: "X-Parse-REST-API-Key")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = jsonBody.data(using: String.Encoding.utf8)
@@ -1076,7 +1097,7 @@ class APIClient : NSObject {
 
             /* GUARD: Did we get a successful 2XX response? */
             guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
-                sendError("Your request returned a status code other than 2xx!")
+                sendError("Your PUT request returned a status code other than 2xx! Response is: \(response)")
                 return
             }
 
@@ -1104,28 +1125,58 @@ class APIClient : NSObject {
 
         /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
         //let parameters = [APIClient.UdacityParameterKeys.Udacity] as! [String: AnyObject]
-        let parameters = [String:AnyObject]()
+        //let parameters = [String:AnyObject]()
+        //let parameters = ["":""] as [String : AnyObject]
 
         let jsonBody = "{\"uniqueKey\": \"\(UdacityPersonalData.sharedInstance().uniqueKey!)\", \"firstName\": \"\(UdacityPersonalData.sharedInstance().firstName!)\", \"lastName\": \"\(UdacityPersonalData.sharedInstance().lastName!)\",\"mapString\": \"\(UdacityPersonalData.sharedInstance().mapString!)\", \"mediaURL\": \"\(UdacityPersonalData.sharedInstance().mediaURL!)\",\"latitude\": \(UdacityPersonalData.sharedInstance().latitude!), \"longitude\": \(UdacityPersonalData.sharedInstance().longitude!)}"
 
         /* 2. Make the request */
-        let _ = taskForPUTMethodPARSE(URLPathVariants.StudentLocationPath + "/" + UdacityPersonalData.sharedInstance().objectId!, parameters: parameters, jsonBody: jsonBody) { (results, error) in
+        let urlString = "/StudentLocation/\(UdacityPersonalData.sharedInstance().objectId!)"
+        let request = taskForPUTMethodPARSE(URLPathVariants.StudentLocationPath + "/" + UdacityPersonalData.sharedInstance().objectId!, parameters: [String : AnyObject](), jsonBody: jsonBody) { (results, error) in
             print("The taskForPUTMethodPARSE JSON Data is: \(results)")
+            
             /* 3. Send the desired value(s) to completion handler */
             if let error = error {
-                print(error)
+                print("The taskForPUTMethodPARSE error Data is: \(error)")
                 completionHandlerForPUTUser(false, error)
             } else {
-//                if let objectID = results?[APIClient.JSONResponseKeys.ObjectId] as? String {
-//                    UdacityPersonalData.sharedInstance().objectId = objectID
-//                    completionHandlerForPUTUser(true, nil)
-//                } else {
-//                    print("Could not find \(APIClient.JSONResponseKeys.SessionID) in \(results)")
-//                    completionHandlerForPUTUser(false, error)
-//                }
+                
+                //if let objectID = results?[APIClient.JSONResponseKeys.ObjectId] as? String {
+                if let objectID = UdacityPersonalData.sharedInstance().objectId {
+                    print("ObjectID from JSON is: \(objectID)")
+                    completionHandlerForPUTUser(true, nil)
+                } else {
+                    print("Could not find \(APIClient.JSONResponseKeys.SessionID) in \(results)")
+                    completionHandlerForPUTUser(false, error)
+                }
+                
+                
+                
+                print("The ParsePUT has been called")
+                
                 completionHandlerForPUTUser(true, nil)
             }
+            
+            
+            
+            /* 3. Send the desired value(s) to completion handler */
+//            if let error = error {
+//                print(error)
+//                completionHandlerForPUTUser(false, error)
+//            } else {
+////                if let objectID = results?[APIClient.JSONResponseKeys.ObjectId] as? String {
+////                    UdacityPersonalData.sharedInstance().objectId = objectID
+////                    completionHandlerForPUTUser(true, nil)
+////                } else {
+////                    print("Could not find \(APIClient.JSONResponseKeys.SessionID) in \(results)")
+////                    completionHandlerForPUTUser(false, error)
+////                }
+//
+//                print("The ParsePOST has been called")
+//                completionHandlerForPUTUser(true, nil)
+//            }
         }
+        print("parse put request is: \(request)")
     }
     
 }

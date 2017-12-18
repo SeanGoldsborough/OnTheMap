@@ -22,7 +22,7 @@ class TabBarControllerViewController: UITabBarController {
         navigationItem.rightBarButtonItems = [addPinButton, refreshButton]
         // Do any additional setup after loading the view.
 
-       // getOneStudent()
+        //getOneStudent()
         
         
     }
@@ -71,21 +71,9 @@ class TabBarControllerViewController: UITabBarController {
 //                }
 //                return
 //            }
-//            
-//            for student in result {
-//                let studentFirstName = result[indexPath.row]
-//                
-//                let firstName = studentFirstName.firstName!
-//                let lastName = studentFirstName.lastName!
-//                let fullName = firstName + " " + lastName as! String
-//                cell.textLabel!.text = fullName
-//                //cell.textLabel!.text = studentFirstName.firstName
-//                cell.detailTextLabel!.text = studentFirstName.mediaURL
-//                
-//            }
 //        })
 //    }
-//    
+//
     @objc func logoutButtonTapped(sender: UIBarButtonItem) {
         
         let logOutSession = UdacityClient()

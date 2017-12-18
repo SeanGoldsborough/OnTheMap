@@ -28,98 +28,217 @@ class MapVC: UIViewController {
         
         super.viewDidLoad()
         
-      
-        //ActivityIndicatorOverlay.show(self.view, "Locating...")
         ActivityIndicatorOverlay.show(self.view, loadingText: "Locating...")
-        //Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(MapVC.hideIndicator), userInfo: nil, repeats: false)
+        
         
         self.navigationController?.navigationBar.isHidden = false
         
         getStudents()
+        populateMap()
+        //getOneStudent()
+        
 
         }
     
+    
     func getStudents() {
         
-        APIClient.sharedInstance().getPublicUserDataUdacity { (result, error) in
-            if let results = result {
-                print("printing results from getPublicDataUdacity:\(results)")
-            } else {
-                print(error ?? "empty error")
-            }
-            
-        }
-        
         APIClient.sharedInstance().getStudentLocationsParse { (studentsResults, error) in
-
+            
             if let students = studentsResults {
                 
                 self.students = students //as in the constant from if/let statement which = movies returned by comp hand
                 StudentArray.sharedInstance.listOfStudents = students
                 
-                performUIUpdatesOnMain {
-                    //self.mapView.reloadData()
-                    print("printing students resultsMAP:\(self.students)")
+                if students.count < 1 {
+                    
+                    performUIUpdatesOnMain {
+                        AlertView.alertPopUp(view: self, alertMessage: "Networking Error on GET All Students")
+                        ActivityIndicatorOverlay.hide()
+                        print("c:\(self.students)")
+                    }
+                    
+                } else {
+                    self.populateMap()
+                    self.getPublicUserData()
+                    self.getOneStudent()
+                    performUIUpdatesOnMain {
+                        print("c:\(self.students)")
+                    }
                 }
+            } else {
 
-                // The "locations" array is an array of dictionary objects that are similar to the JSON
-                // data that you can download from parse.
-                let studentsArray = students
-                print("printing students array MAP:\(studentsArray)")
-                // We will create an MKPointAnnotation for each dictionary in "locations". The
-                // point annotations will be stored in this array, and then provided to the map view.
-                self.annotations = [MKPointAnnotation]()
+                print("There was an error with your request: getStudents: \(error)")
                 
-                // The "locations" array is loaded with the sample data below. We are using the dictionaries
-                // to create map annotations. This would be more stylish if the dictionaries were being
-                // used to create custom structs. Perhaps StudentLocation structs.
-                
-                for dictionary in studentsArray {
-                    
-                    let studentData = dictionary
-                    //let studentFirstName = student.createdAt!
-                    
-                    print("printing studentFirstName:\(studentData)")
-                    
-
-//                    let lat = CLLocationDegrees(dictionary.latitude as! Double)
-//                    let long = CLLocationDegrees(dictionary.longitude as! Double)
-//                    print("printing lat:\(lat)")
-//                    print("printing long:\(long)")
-                    
-                    
-                    // The lat and long are used to create a CLLocationCoordinates2D instance.
-                    let coordinate = CLLocationCoordinate2D(latitude: dictionary.latitude!, longitude: dictionary.longitude!)
-                    
-                    let firstName = studentData.firstName!
-                    let lastName = studentData.lastName!
-                    let fullName = firstName + " " + lastName as! String
-                    let mediaURL = studentData.mediaURL as! String
-                    
-                    // Here we create the annotation and set its coordiate, title, and subtitle properties
-                    let annotation = MKPointAnnotation()
-                    annotation.coordinate = coordinate
-                    annotation.title = "\(firstName) \(lastName)"
-                    annotation.subtitle = mediaURL
-                    
-                    // Finally we place the annotation in an array of annotations.
-                    self.annotations.append(annotation)
-                    
-                    
-                }
-                
-                // When the array is complete, we add the annotations to the map.
-                
-                print("Annotations array = \(self.annotations)")
                 performUIUpdatesOnMain {
-                    ActivityIndicatorOverlay.hide()
-                    self.mapView.addAnnotations(self.annotations)
+                    AlertView.alertPopUp(view: self, alertMessage: "Networking Error on GET All Students")
                 }
             }
-            
-            
         }
+    }
+    
+    func getPublicUserData() {
         
+        APIClient.sharedInstance().getPublicUserDataUdacity { (result, error) in
+            
+            print("printing results from getPublicDataUdacity:\(result)")
+            
+            if let results = result {
+                print("printing results from getPublicDataUdacity:\(results)")
+                
+            } else {
+                
+                print("There was an error with your request: getStudents: \(error)")
+                
+                performUIUpdatesOnMain {
+                    AlertView.alertPopUp(view: self, alertMessage: "Networking Error on GET All Students")
+                }
+            }
+        }
+    }
+    
+    func populateMap() {
+        let studentsArray = students
+        print("printing students array MAP:\(studentsArray)")
+        
+        self.annotations = [MKPointAnnotation]()
+        
+        for dictionary in studentsArray {
+            
+            let studentData = dictionary
+            
+            print("printing studentFirstName:\(studentData)")
+            
+            let coordinate = CLLocationCoordinate2D(latitude: dictionary.latitude!, longitude: dictionary.longitude!)
+            
+            let firstName = studentData.firstName!
+            let lastName = studentData.lastName!
+            let fullName = firstName + " " + lastName as! String
+            let mediaURL = studentData.mediaURL as! String
+            
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = coordinate
+            annotation.title = "\(firstName) \(lastName)"
+            annotation.subtitle = mediaURL
+            
+            self.annotations.append(annotation)
+        }
+        print("Annotations array from PopulateMapFunc = \(self.annotations)")
+        
+        performUIUpdatesOnMain {
+            ActivityIndicatorOverlay.hide()
+            self.mapView.addAnnotations(self.annotations)
+            self.getOneStudent()
+        }
+    }
+    
+//    func getStudents() {
+//
+//        APIClient.sharedInstance().getPublicUserDataUdacity { (result, error) in
+//
+//             print("printing results from getPublicDataUdacity:\(result)")
+//
+//            if let results = result {
+//                print("printing results from getPublicDataUdacity:\(results)")
+//
+//            } else {
+//
+//                print("There was an error with your request: getStudents: \(error)")
+//
+//                performUIUpdatesOnMain {
+//                    AlertView.alertPopUp(view: self, alertMessage: "Networking Error on GET All Students")
+//                }
+//            }
+//        }
+//
+//        APIClient.sharedInstance().getStudentLocationsParse { (studentsResults, error) in
+//
+//            if let students = studentsResults {
+//
+//                self.students = students //as in the constant from if/let statement which = movies returned by comp hand
+//                StudentArray.sharedInstance.listOfStudents = students
+//
+//                if students.count < 1 {
+//
+//                    performUIUpdatesOnMain {
+//                        AlertView.alertPopUp(view: self, alertMessage: "Networking Error on GET All Students")
+//                        print("c:\(self.students)")
+//                    }
+//
+//                } else {
+//
+//                performUIUpdatesOnMain {
+//                    //self.mapView.reloadData()
+//                    print("c:\(self.students)")
+//                }
+//
+//                // The "locations" array is an array of dictionary objects that are similar to the JSON
+//                // data that you can download from parse.
+//                let studentsArray = students
+//                print("printing students array MAP:\(studentsArray)")
+//                // We will create an MKPointAnnotation for each dictionary in "locations". The
+//                // point annotations will be stored in this array, and then provided to the map view.
+//                self.annotations = [MKPointAnnotation]()
+//
+//                // The "locations" array is loaded with the sample data below. We are using the dictionaries
+//                // to create map annotations. This would be more stylish if the dictionaries were being
+//                // used to create custom structs. Perhaps StudentLocation structs.
+//
+//                for dictionary in studentsArray {
+//
+//                    let studentData = dictionary
+//                    //let studentFirstName = student.createdAt!
+//
+//                    print("printing studentFirstName:\(studentData)")
+//
+//
+////                    let lat = CLLocationDegrees(dictionary.latitude as! Double)
+////                    let long = CLLocationDegrees(dictionary.longitude as! Double)
+////                    print("printing lat:\(lat)")
+////                    print("printing long:\(long)")
+//
+//
+//                    // The lat and long are used to create a CLLocationCoordinates2D instance.
+//                    let coordinate = CLLocationCoordinate2D(latitude: dictionary.latitude!, longitude: dictionary.longitude!)
+//
+//                    let firstName = studentData.firstName!
+//                    let lastName = studentData.lastName!
+//                    let fullName = firstName + " " + lastName as! String
+//                    let mediaURL = studentData.mediaURL as! String
+//
+//                    // Here we create the annotation and set its coordiate, title, and subtitle properties
+//                    let annotation = MKPointAnnotation()
+//                    annotation.coordinate = coordinate
+//                    annotation.title = "\(firstName) \(lastName)"
+//                    annotation.subtitle = mediaURL
+//
+//                    // Finally we place the annotation in an array of annotations.
+//                    self.annotations.append(annotation)
+//                }
+//                }
+//
+//                // When the array is complete, we add the annotations to the map.
+//
+//                print("Annotations array = \(self.annotations)")
+//                performUIUpdatesOnMain {
+//                    ActivityIndicatorOverlay.hide()
+//                    self.mapView.addAnnotations(self.annotations)
+//                    self.getOneStudent()
+//                }
+//            } else {
+//
+//                print("There was an error with your request: getStudents: \(error)")
+//
+//                performUIUpdatesOnMain {
+//                    AlertView.alertPopUp(view: self, alertMessage: "Networking Error on GET All Students")
+//                }
+//            }
+//
+//
+//        }
+//
+//    }
+    
 //        // The "locations" array is an array of dictionary objects that are similar to the JSON
 //        // data that you can download from parse.
 //        let locations = hardCodedLocationData()
@@ -159,7 +278,7 @@ class MapVC: UIViewController {
 //        // When the array is complete, we add the annotations to the map.
 //        self.mapView.addAnnotations(annotations)
         
-    }
+//    }
     
     // MARK: - MKMapViewDelegate
     
@@ -209,37 +328,55 @@ class MapVC: UIViewController {
 //        }
 //    }
     
-
+    func getOneStudent() {
+        APIClient.sharedInstance().getOneStudentLocationParse({ (result, error) in
+            
+            if error != nil{
+                print("1getOneStudentThe results of your request: \(error)")
+                performUIUpdatesOnMain {
+                    AlertView.alertPopUp(view: self, alertMessage: "Networking Error on GET One Student")
+                }
+                
+            } else {
+                print("1getOneStudentThere was an NO error with your request: \(result)")
     
-    func overwriteLocation(){
-        let pushedVC = self.storyboard!.instantiateViewController(withIdentifier: "PushedVC")
-        
-        let alertVC = UIAlertController(
-            title: "You Have Already posted A Student Location. Would You Like To Overwrite Your Current Location?".capitalized,
-            message: "",
-            preferredStyle: .alert)
-        let cancelAction = UIAlertAction(
-            title: "Cancel",
-            style:.default,
-            handler: nil)
-        let okAction = UIAlertAction(
-            title: "OK",
-            style:.default,
-            handler: {(action) -> Void in
-                //The (withIdentifier: "VC2") is the Storyboard Segue identifier.
-                //self.performSegue(withIdentifier: "VC2", sender: self)
-                self.navigationController!.pushViewController(pushedVC, animated: true)
+            }
         })
-        
-        
-        alertVC.addAction(okAction)
-        alertVC.addAction(cancelAction)
-        
-        
-        self.present(alertVC, animated: true, completion: nil)
     }
     
+//    func overwriteLocation(){
+//        let pushedVC = self.storyboard!.instantiateViewController(withIdentifier: "PushedVC")
+//
+//        let alertVC = UIAlertController(
+//            title: "You Have Already posted A Student Location. Would You Like To Overwrite Your Current Location?".capitalized,
+//            message: "",
+//            preferredStyle: .alert)
+//        let cancelAction = UIAlertAction(
+//            title: "Cancel",
+//            style:.default,
+//            handler: nil)
+//        let okAction = UIAlertAction(
+//            title: "OK",
+//            style:.default,
+//            handler: {(action) -> Void in
+//                //The (withIdentifier: "VC2") is the Storyboard Segue identifier.
+//                //self.performSegue(withIdentifier: "VC2", sender: self)
+//                self.navigationController!.pushViewController(pushedVC, animated: true)
+//        })
+//
+//
+//        alertVC.addAction(okAction)
+//        alertVC.addAction(cancelAction)
+//
+//
+//        self.present(alertVC, animated: true, completion: nil)
+//    }
+    
+    
+    
     @objc func logoutButtonTapped(sender: UIBarButtonItem) {
+        
+        print("old logout button tapped!")
         
         let logOutSession = UdacityClient()
         

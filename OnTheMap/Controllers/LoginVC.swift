@@ -11,8 +11,6 @@ import UIKit
 
 class LoginVC: UIViewController {
     
-//    var client = APIClient.sharedInstance()
-    
     @IBOutlet weak var emailTextField: UITextField?
     @IBOutlet weak var passwordTextField: UITextField?
     
@@ -24,38 +22,7 @@ class LoginVC: UIViewController {
             self.activityOverlay?.isHidden = false
             self.activityIndicator?.startAnimating()
         }
-        
-//        let isEmailAddressValid = isValidEmailAddress(emailAddressString: self.emailTextField.text!)
-//
-//        if isEmailAddressValid == true {
-//
-//            let client = APIClient.sharedInstance()
-//
-//
-//            client.authenticateUser(email: self.emailTextField.text!, password: self.passwordTextField.text!) { (success, errorString) in
-//
-//                performUIUpdatesOnMain {
-//                    if success {
-//                        self.completeLogIn()
-//                        //self.students = StudentLocations.studentsFromResults(results)
-//                        print("will log in now...")
-//                        //self.completeLogIn()
-//
-////                        let controller = self.storyboard!.instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
-////                        self.present(controller, animated: true, completion: nil)
-//
-//                        //                    self.movies = Movie.moviesFromResults(results)
-//                        //                    performUIUpdatesOnMain {
-//                        //                        self.tableView.reloadData()
-//                        //                    }
-//
-//                    } else {
-//                        //self.displayError(errorString)
-//                        print(errorString!)
-//                        AlertView.alertPopUp(view: self, alertMessage: "Log In Unsuccessful")
-//                    }
-//                }
-//            }
+
         let isEmailAddressValid = isValidEmailAddress(emailAddressString: (self.emailTextField?.text!)!)
         
         if isEmailAddressValid == true {
@@ -69,48 +36,38 @@ class LoginVC: UIViewController {
                         self.completeLogIn()
                         self.activityOverlay?.isHidden = true
                         self.activityIndicator?.stopAnimating()
-                        //self.students = StudentLocations.studentsFromResults(results)
                         print("will log in now...")
                     }
                     
                 } else {
                     performUIUpdatesOnMain {
-                    //self.displayError(errorString)
-                    //print(errorString!)
                     self.activityOverlay?.isHidden = true
                     self.activityIndicator?.stopAnimating()
                     AlertView.alertPopUp(view: self, alertMessage: "Log In Unsuccessful")
                     }
                 }
             }
-        
-//            let post = UdacityClient()
-//            post.simplePostSession(email: emailTextField.text!, password: passwordTextField.text!)
+            
             print("OKAY")
-            //if post.postSession.email
-            //completeLogIn()
-            //UdacityClient().postSession(email: !, password: passwordTextField.text!)
-            //self.performSegue(withIdentifier: "MapVC", sender: self)
             print("Email address is valid")
+            
+        } else if emailTextField?.text == "" || passwordTextField?.text == "" {
+            AlertView.alertMessage(view: self, title: "No User Name or Password", message: "Please try again.", numberOfButtons: 1, leftButtonTitle: "OK", leftButtonStyle: 1, rightButtonTitle: "Cancel", rightButtonStyle: 0)
+            performUIUpdatesOnMain {
+                self.activityOverlay?.isHidden = true
+                self.activityIndicator?.stopAnimating()
+            }
             
         } else if isEmailAddressValid == false {
             
             print("Email address is not valid")
-            alertMessage(title: "Email is not valid", message: "Please try again.", numberOfButtons: 1, leftButtonTitle: "OK", leftButtonStyle: 1, rightButtonTitle: "Cancel", rightButtonStyle: 0)
+            AlertView.alertMessage(view: self, title: "Email/Password Not Valid", message: "Please try again.", numberOfButtons: 1, leftButtonTitle: "OK", leftButtonStyle: 1, rightButtonTitle: "Cancel", rightButtonStyle: 0)
             performUIUpdatesOnMain {
-                
                 self.activityOverlay?.isHidden = true
                 self.activityIndicator?.stopAnimating()
-                
             }
-        
-        } else if emailTextField?.text == "" || passwordTextField?.text == "" {
-            alertMessage(title: "No User Name or Password", message: "Please try again.", numberOfButtons: 1, leftButtonTitle: "OK", leftButtonStyle: 1, rightButtonTitle: "Cancel", rightButtonStyle: 0)
         }
     }
-
-//        let udacityMethods = UdacityClient()
-//        udacityMethods.postSession(email: emailTextField.text!, password: passwordTextField.text!)
     
     func isValidEmailAddress(emailAddressString: String) -> Bool {
         
@@ -172,16 +129,6 @@ class LoginVC: UIViewController {
         unsubscribeFromAllNotifications()
     }
     
-    func alertMessage(title: String, message: String, numberOfButtons: Int, leftButtonTitle: String, leftButtonStyle: Int, rightButtonTitle: String, rightButtonStyle: Int) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: leftButtonTitle, style: UIAlertActionStyle(rawValue: leftButtonStyle)!, handler: nil))
-        if numberOfButtons < 1 {
-        alertController.addAction(UIAlertAction(title: rightButtonTitle, style: UIAlertActionStyle(rawValue: rightButtonStyle)!, handler: nil))
-        }
-        
-        self.present(alertController, animated: true, completion: nil)
-    }
-    
     func completeLogIn() {
         print("completeLogIn is happening")
         let nextStoryboard = storyboard?.instantiateViewController(withIdentifier: "NavBarController")
@@ -229,18 +176,6 @@ extension LoginVC: UITextFieldDelegate {
         let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
         return keyboardSize.cgRectValue.height
     }
-    
-//    func resignIfFirstResponder(_ textField: UITextField) {
-//        if textField.isFirstResponder {
-//            textField.resignFirstResponder()
-//        }
-//    }
-//
-//    @IBAction func userDidTapView(_ sender: AnyObject) {
-//        resignIfFirstResponder(self.emailTextField)
-//        resignIfFirstResponder(self.passwordTextField)
-//
-//    }
 }
     // MARK: - LoginVC (Notifications)
     

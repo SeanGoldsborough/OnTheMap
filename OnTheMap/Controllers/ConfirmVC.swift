@@ -24,7 +24,7 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
     var uniqueKey = APIClient.sharedInstance().uniqueID
     
     @IBAction func addStudentLocation() {
-        overwriteLocation()
+        
         
         let uniqueKey = UdacityPersonalData.sharedInstance().uniqueKey
         var studentsArray = ["10081758676"]
@@ -40,15 +40,15 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
             print("calling ParsePUTFunction")
             
             APIClient.sharedInstance().putUserPARSE(mapString: self.locationPassed, studentURL: self.websitePassed) { (success, error) in
-                print("pressed post student!")
-                print("post student success is...\(success)")
-                print("post student error is...\(error)")
+                print("pressed PUT student!")
+                print("PUT student success is...\(success)")
+                print("PUT student error is...\(error)")
+                
                 if success == true {
                     performUIUpdatesOnMain {
-                        
+                        self.overwriteLocation()
                         print("will log in now...\(success)")
                     }
-                    
                 } else {
                     performUIUpdatesOnMain {
                         AlertView.alertPopUp(view: self, alertMessage: "Submission Unsuccessful")
@@ -62,58 +62,20 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
                 print("pressed post student!")
                 print("post student success is...\(success)")
                 print("post student error is...\(error)")
+                
                 if success == true {
                     performUIUpdatesOnMain {
-                        
+                        self.overwriteLocation()
                         print("will log in now...\(success)")
                     }
-                    
                 } else {
                     performUIUpdatesOnMain {
                         AlertView.alertPopUp(view: self, alertMessage: "Submission Unsuccessful")
                     }
                 }
-            
             }
           }
         }
-    
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            
-            
-//            print(UdacityPersonalData.sharedInstance().createdAt)
-//            print(UdacityPersonalData.sharedInstance().firstName)
-//            print(UdacityPersonalData.sharedInstance().lastName)
-//            print(UdacityPersonalData.sharedInstance().latitude)
-//            print(UdacityPersonalData.sharedInstance().longitude)
-//            print(UdacityPersonalData.sharedInstance().mapString)
-//            print(UdacityPersonalData.sharedInstance().mediaURL)
-//            print(UdacityPersonalData.sharedInstance().objectId)
-//            print(UdacityPersonalData.sharedInstance().uniqueKey)
-//            print(UdacityPersonalData.sharedInstance().updatedAt)
-//        }
-        
-        //TODO: Parse POST/PUT Method Goes Here
-        // If student ID already exisits in the database of locations call PUT method to update
-        // Else call POST method to add a new location for that particular student ID Number
-        //let mapVC = storyboard?.instantiateViewController(withIdentifier: "MapVC") as! MapVC
-//        self.navigationController!.popToViewController(listVC, animated: true)
-        
-//        let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController];
-//        self.navigationController!.popToViewController(viewControllers[viewControllers.count - 3], animated: true);
-        //mapVC.activityView.startAnimating()
-//        mapVC.LoadingIndicatorView.show(mapView, loadingText: "Loading")
-//        Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(ViewController.doWork), userInfo: nil, repeats: false)
-//    }
     
     override func viewDidLoad() {
         
@@ -123,89 +85,27 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
         
         print(websitePassed)
         
+        print("printing the objectID from udacity personal data\(UdacityPersonalData.sharedInstance().objectId)")
+        
         performUIUpdatesOnMain {
-            //self.activityIndicator.startAnimating()
             ActivityIndicatorOverlay.show(self.mapView, loadingText: "Locating...")
             self.finishButton.isEnabled = false
-            
         }
-        
-        
-        
-//        // set initial location in Honolulu
-//        let initialLocation = CLLocation(latitude: 21.282778, longitude: -157.829444)
-//
-//        let regionRadius: CLLocationDistance = 1000
-//        func centerMapOnLocation(location: CLLocation) {
-//            let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate,
-//                                                                      regionRadius, regionRadius)
-//            mapView.setRegion(coordinateRegion, animated: true)
-//        }
-//
-//        centerMapOnLocation(location: initialLocation)
-        
-        
-        var location = CLLocationCoordinate2DMake(40.722324, -73.988429)
-        var lat = CLLocationDegrees(exactly: 40.722324)
-        var long = CLLocationDegrees(exactly: -73.988429)
-        
-        let center = CLLocationCoordinate2D(latitude: lat!, longitude: long!)
-        
-        var span = MKCoordinateSpanMake(2, 2)
-        var region = MKCoordinateRegionMake(center, span)
-        mapView.setRegion(region, animated: true)
-        
-        var annotation = MKPointAnnotation()
-        annotation.coordinate.latitude = lat!
-        annotation.coordinate.longitude = long!
-        annotation.title = "UserName"
-        annotation.subtitle = websitePassed
-        
-        
-        
-        
+      
         locationUpdate( { (results, error) in
-            
 
-            
             if let error = error {
                 print("locationUpdate Error is: \(error)")
-                AlertView.alertPopUp(view: self, alertMessage: "Could not load location")
-                
+                performUIUpdatesOnMain {
+                    AlertView.alertPopUp(view: self, alertMessage: "Could not load location")
+                    ActivityIndicatorOverlay.hide()
+                }
             } else if results == true {
                 //completionHandlerForGeocoding(true, nil)
-                
-                
                 print("locationUpdate results is: \(results)")
-                
             }
-            
         })
     }
-    
-//        func getCoordinate( addressString: String,
-//                            completionHandler: @escaping(CLLocationCoordinate2D, NSError?) -> Void ) {
-//            var addressString = cityLabel.text
-//            let geocoder = CLGeocoder()
-//            geocoder.geocodeAddressString(addressString!) { (placemarks, error) in
-//                if error == nil {
-//                    if let placemark = placemarks?[0] {
-//                        let location = placemark.location!
-//
-//                        completionHandler(location.coordinate, nil)
-//                        print(addressString)
-//                        print(placemark.location)
-//                        return
-//                    }
-//                }
-//
-//                completionHandler(kCLLocationCoordinate2DInvalid, error as NSError?)
-//
-//            }
-//
-//        }
-        
-
     
     // Called when the annotation was added
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -224,11 +124,9 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
             
             let rightButton: AnyObject! = UIButton(type: UIButtonType.detailDisclosure)
             pinView?.rightCalloutAccessoryView = rightButton as? UIView
-        }
-        else {
+        } else {
             pinView?.annotation = annotation
         }
-        
         return pinView
     }
     
@@ -261,41 +159,14 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
                 //self.navigationController!.pushViewController(pushedVC, animated: true)
                 let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController];
                 self.navigationController!.popToViewController(viewControllers[viewControllers.count - 3], animated: true);
+                //MapVC().populateMap()
         })
-        
         
         alertVC.addAction(okAction)
         alertVC.addAction(cancelAction)
         
-        
         self.present(alertVC, animated: true, completion: nil)
     }
-    
-    
-//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//        print("got location \(locations)")
-//        print("my location \(myPosition)")
-//        print(String(describing: myPosition))
-//        myPosition = (locationManager.location?.coordinate)!
-//        //locationManager.stopUpdatingLocation()
-//        self.label.text = "\(myPosition)"
-//
-//        let span = MKCoordinateSpanMake(0.05, 0.05)
-//        let region = MKCoordinateRegion(center: myPosition, span: span)
-//        mapView.setRegion(region, animated: true)
-//    }
-
-//    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-//        print(#function)
-//        let url = URL(string:websitePassed)
-//        print(url)
-//
-//        if control == view {
-//            //performSegue(withIdentifier: "toTheMoon", sender: self)
-//            UIApplication.shared.open(url!, options: [:], completionHandler: nil)
-//        }
-//    }
-//
     // TODO: Add completion handler to this func so when done it stops the activity view from animated if success and if error present ALERTsd
     //THIS IS WHERE WE CONVERT STRING TO COORDS!
     func locationUpdate(_ completionHandlerForGeocoding: @escaping (_ success: Bool, _ errorString: Error?) -> Void) {
@@ -316,6 +187,7 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
             guard let response = response else {
                 completionHandlerForGeocoding(false, error)
                 print("There was an error searching for: error: ")
+
                 return
             }
             
@@ -326,14 +198,16 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
                 print("item in map search long is: \(item.placemark.coordinate.longitude)")
                 
                 
-                    UdacityPersonalData.sharedInstance().mapString = searchText
-                    UdacityPersonalData.sharedInstance().latitude = item.placemark.coordinate.latitude
-                    UdacityPersonalData.sharedInstance().longitude = item.placemark.coordinate.longitude
-                    UdacityPersonalData.sharedInstance().mediaURL = self.websitePassed
+                UdacityPersonalData.sharedInstance().mapString = searchText
+                UdacityPersonalData.sharedInstance().latitude = item.placemark.coordinate.latitude
+                UdacityPersonalData.sharedInstance().longitude = item.placemark.coordinate.longitude
+                UdacityPersonalData.sharedInstance().mediaURL = self.websitePassed
+                
                 print("The value of UdacityPersonalData lat is now: \(UdacityPersonalData.sharedInstance().mapString!)")
                 print("The value of UdacityPersonalData lat is now: \(UdacityPersonalData.sharedInstance().latitude!)")
                 print("The value of UdacityPersonalData long is now: \(UdacityPersonalData.sharedInstance().longitude!)")
                 print("The value of UdacityPersonalData mediaURL is now: \(UdacityPersonalData.sharedInstance().mediaURL!)")
+                print("The value of UdacityPersonalData objectID is now: \(UdacityPersonalData.sharedInstance().objectId!)")
                 
                 self.matchingItems.append(item as MKMapItem)
                 print("Matching items = \(self.matchingItems.count)")
@@ -350,12 +224,10 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
                             let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate,
                                                                                       regionRadius, regionRadius)
                             mapView.setRegion(coordinateRegion, animated: true)
-  
-                        }
+                          }
                 
                 centerMapOnLocation(location: initialLocation)
                 performUIUpdatesOnMain {
-                    //self.activityIndicator.stopAnimating()
                     ActivityIndicatorOverlay.hide()
                     self.finishButton.isEnabled = true
                 }
@@ -363,6 +235,4 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
         }
         completionHandlerForGeocoding(true, nil)
     }
-
 }
-
