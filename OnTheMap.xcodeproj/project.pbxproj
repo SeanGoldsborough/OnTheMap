@@ -60,6 +60,7 @@
 		C6AA027D1F9EBA7F0035A572 /* ParseConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6AA027A1F9EBA7F0035A572 /* ParseConvenience.swift */; };
 		C6DF8AB01FD64DA40080B7E9 /* StudentLocations.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DF8AAF1FD64DA40080B7E9 /* StudentLocations.swift */; };
 		C6DF8AB21FD650DD0080B7E9 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DF8AB11FD650DD0080B7E9 /* Alerts.swift */; };
+		C6F30AA41FE83DAE00806721 /* StudentMapPins.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F30AA31FE83DAE00806721 /* StudentMapPins.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -140,6 +141,7 @@
 		C6AA027A1F9EBA7F0035A572 /* ParseConvenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseConvenience.swift; sourceTree = "<group>"; };
 		C6DF8AAF1FD64DA40080B7E9 /* StudentLocations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentLocations.swift; sourceTree = "<group>"; };
 		C6DF8AB11FD650DD0080B7E9 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
+		C6F30AA31FE83DAE00806721 /* StudentMapPins.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentMapPins.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -230,6 +232,7 @@
 			isa = PBXGroup;
 			children = (
 				C66546001FCA5B3400ECEFE3 /* UdacityPersonalData.swift */,
+				C6F30AA31FE83DAE00806721 /* StudentMapPins.swift */,
 				C6DF8AAF1FD64DA40080B7E9 /* StudentLocations.swift */,
 				C65804F71FBE71D400FDE56C /* StudentLocations-OLD.swift */,
 				C62B8EE21F9A6022003D37FD /* StudentLocation-OLD.swift */,
@@ -498,6 +501,7 @@
 				C63B683C1F96914800617549 /* TestTextDelegate.swift in Sources */,
 				C6A14CAC1FB2B05A008E9C6C /* TabBarControllerViewController.swift in Sources */,
 				C63B68531F96C7B800617549 /* UdacityAPI.swift in Sources */,
+				C6F30AA41FE83DAE00806721 /* StudentMapPins.swift in Sources */,
 				C63B680D1F96601A00617549 /* OnTheMap.xcdatamodeld in Sources */,
 				C6DF8AB21FD650DD0080B7E9 /* Alerts.swift in Sources */,
 				C63B68401F96971100617549 /* LoginVC.swift in Sources */,
