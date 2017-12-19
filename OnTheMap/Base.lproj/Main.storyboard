@@ -5,6 +5,7 @@
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -184,15 +185,32 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="whr-TY-8af"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="icon_mapview-deselected" landscapeImage="icon_mapview-deselected" selectedImage="icon_mapview-deselected" id="auI-Xd-JUn"/>
-                    <navigationItem key="navigationItem" title="On The Map" id="b5l-xh-DYc"/>
+                    <navigationItem key="navigationItem" title="On The Map" id="b5l-xh-DYc">
+                        <barButtonItem key="leftBarButtonItem" title="LOGOUT" id="2xF-4o-RcV">
+                            <connections>
+                                <action selector="logoutButton:" destination="tYS-9C-7jk" id="Dcj-bZ-fId"/>
+                            </connections>
+                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem image="icon_addpin" id="aFm-8k-wU2">
+                                <connections>
+                                    <action selector="addPinButton:" destination="tYS-9C-7jk" id="fau-n6-zrZ"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="icon_refresh" id="3qi-Qk-WIp">
+                                <connections>
+                                    <action selector="refreshButton:" destination="tYS-9C-7jk" id="4xk-5h-fkb"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
+                    </navigationItem>
                     <connections>
                         <outlet property="mapView" destination="V5j-Vb-uZq" id="dcx-eN-5pI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qE9-FL-brh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2488.8000000000002" y="-87.706146926536732"/>
+            <point key="canvasLocation" x="3284" y="-89"/>
         </scene>
         <!--AddLocationVC-->
         <scene sceneID="Rv8-Qc-LyX">
@@ -271,7 +289,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eSf-Wp-YuH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3137" y="199"/>
+            <point key="canvasLocation" x="4440.8000000000002" y="198.35082458770617"/>
         </scene>
         <!--ConfirmVC-->
         <scene sceneID="7OM-ja-FbL">
@@ -341,7 +359,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PbW-0w-ccb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3765.5999999999999" y="198.35082458770617"/>
+            <point key="canvasLocation" x="5116" y="197.45127436281859"/>
         </scene>
         <!--ListVC-->
         <scene sceneID="gPD-F0-3ly">
@@ -412,8 +430,25 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="f4q-av-fOv"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="icon_listview-deselected" landscapeImage="icon_listview-deselected" id="ukW-8l-lQt"/>
-                    <navigationItem key="navigationItem" title="On The Map" id="Pvp-L1-20Y"/>
+                    <navigationItem key="navigationItem" title="On The Map" id="Pvp-L1-20Y">
+                        <barButtonItem key="leftBarButtonItem" title="LOGOUT" id="VO7-Ia-aA7">
+                            <connections>
+                                <action selector="logoutButton:" destination="hlO-FZ-2SB" id="ndQ-Zh-25g"/>
+                            </connections>
+                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem image="icon_addpin" id="0I8-Z8-v03">
+                                <connections>
+                                    <action selector="addPinButton:" destination="hlO-FZ-2SB" id="qEJ-aA-eR3"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="icon_refresh" id="hHH-8n-vjz">
+                                <connections>
+                                    <action selector="refreshButton:" destination="hlO-FZ-2SB" id="9qq-GT-9iJ"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
+                    </navigationItem>
                     <connections>
                         <outlet property="activityIndicatorView" destination="zsc-5m-flv" id="CpD-Iz-c5Z"/>
                         <outlet property="tableView" destination="8oj-Dk-IaI" id="rg5-ez-cc1"/>
@@ -421,7 +456,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qRh-VE-k2v" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2488.8000000000002" y="580.65967016491754"/>
+            <point key="canvasLocation" x="3284" y="580"/>
         </scene>
         <!--NavBarController-->
         <scene sceneID="zym-Do-5q3">
@@ -455,8 +490,8 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="tYS-9C-7jk" kind="relationship" relationship="viewControllers" id="VWF-kG-DWK"/>
-                        <segue destination="hlO-FZ-2SB" kind="relationship" relationship="viewControllers" id="Ysg-x4-KAk"/>
+                        <segue destination="Ktg-4S-WRV" kind="relationship" relationship="viewControllers" id="VWF-kG-DWK"/>
+                        <segue destination="ITP-bQ-X0G" kind="relationship" relationship="viewControllers" id="Ysg-x4-KAk"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uHT-CA-3g5" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -464,26 +499,51 @@
             <point key="canvasLocation" x="1697" y="200"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="NTm-Oc-pr0">
+        <scene sceneID="2hq-AZ-no6">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="vT8-AE-nR2" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Ktg-4S-WRV" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="" image="icon_mapview-deselected" landscapeImage="icon_mapview-deselected" selectedImage="icon_mapview-deselected" id="auI-Xd-JUn"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="GrW-5K-hdg">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="kQe-Xw-dym">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="tYS-9C-7jk" kind="relationship" relationship="rootViewController" id="ua2-By-4v0"/>
+                    </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="L3T-Cd-CBV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3Ry-a7-4Un" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3492" y="-690"/>
+            <point key="canvasLocation" x="2488" y="-88.15592203898052"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="ror-qy-7m6">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ITP-bQ-X0G" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="" image="icon_listview-deselected" landscapeImage="icon_listview-deselected" id="ukW-8l-lQt"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="vnH-da-Qhf">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="hlO-FZ-2SB" kind="relationship" relationship="rootViewController" id="SoN-AM-TtD"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6pZ-52-woO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2488" y="580.20989505247383"/>
         </scene>
     </scenes>
     <resources>
+        <image name="icon_addpin" width="24" height="24"/>
         <image name="icon_listview-deselected" width="75" height="50"/>
         <image name="icon_mapview-deselected" width="75" height="50"/>
         <image name="icon_mapview-selected" width="75" height="50"/>
         <image name="icon_pin" width="24" height="24"/>
+        <image name="icon_refresh" width="24" height="24"/>
         <image name="icon_world" width="52" height="67"/>
         <image name="logo-u" width="62" height="62"/>
     </resources>

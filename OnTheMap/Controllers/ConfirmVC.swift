@@ -51,7 +51,7 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
                 
                 if success == true {
                     performUIUpdatesOnMain {
-                        self.overwriteLocation()
+                        AlertView.overwriteLocation(view: self, tabBarView: TabBarControllerViewController())
                         ActivityIndicatorOverlay.hide()
                         print("will log in now...\(success)")
                         self.finishButton.isEnabled = true
@@ -74,7 +74,7 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
                 
                 if success == true {
                     performUIUpdatesOnMain {
-                        self.overwriteLocation()
+                        AlertView.overwriteLocation(view: self, tabBarView: TabBarControllerViewController())
                         ActivityIndicatorOverlay.hide()
                         print("will log in now...\(success)")
                         self.finishButton.isEnabled = true
@@ -110,7 +110,7 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
             if let error = error {
                 print("locationUpdate Error is: \(error)")
                 performUIUpdatesOnMain {
-                    AlertView.alertPopUp(view: self, alertMessage: "Could not load location")
+                    AlertView.popToAddLocationVC(view: self)
                     ActivityIndicatorOverlay.hide()
                 }
             } else if results == true {
@@ -150,36 +150,8 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
             UIApplication.shared.open(url!, options: [:], completionHandler: nil)
         }
     }
+
     
-    
-    func overwriteLocation(){
-        let pushedVC = self.storyboard!.instantiateViewController(withIdentifier: "PushedVC")
-        
-        let alertVC = UIAlertController(
-            title: "Confirm Overwrite Your Current Location?".capitalized,
-            message: "",
-            preferredStyle: .alert)
-        let cancelAction = UIAlertAction(
-            title: "Cancel",
-            style:.default,
-            handler: nil)
-        let okAction = UIAlertAction(
-            title: "OK",
-            style:.default,
-            handler: {(action) -> Void in
-                //The (withIdentifier: "VC2") is the Storyboard Segue identifier.
-                //self.performSegue(withIdentifier: "VC2", sender: self)
-                //self.navigationController!.pushViewController(pushedVC, animated: true)
-                let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController];
-                self.navigationController!.popToViewController(viewControllers[viewControllers.count - 3], animated: true);
-                //MapVC().populateMap()
-        })
-        
-        alertVC.addAction(okAction)
-        alertVC.addAction(cancelAction)
-        
-        self.present(alertVC, animated: true, completion: nil)
-    }
     // TODO: Add completion handler to this func so when done it stops the activity view from animated if success and if error present ALERTsd
     //THIS IS WHERE WE CONVERT STRING TO COORDS!
     func locationUpdate(_ completionHandlerForGeocoding: @escaping (_ success: Bool, _ errorString: Error?) -> Void) {

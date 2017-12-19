@@ -49,4 +49,41 @@ class AlertView {
         view.present(alertController, animated: true, completion: nil)
     }
     
+    class func popToAddLocationVC(view: UIViewController){
+
+        let alertVC = UIAlertController(title: "Could not load location".capitalized, message: "Please try again.", preferredStyle: .alert)
+        
+        let okAction = UIAlertAction(title: "OK", style:.default, handler: {(action) -> Void in
+            let viewControllers: [UIViewController] = view.navigationController!.viewControllers as [UIViewController];
+            view.navigationController!.popToViewController(viewControllers[viewControllers.count - 2], animated: true);
+        })
+        
+        alertVC.addAction(okAction)
+
+        view.present(alertVC, animated: true, completion: nil)
+    }
+    
+    
+    class func overwriteLocation(view: UIViewController, tabBarView: UITabBarController){
+        //let pushedVC = self.storyboard!.instantiateViewController(withIdentifier: "PushedVC")
+        let tabVC = view.storyboard!.instantiateViewController(withIdentifier: "TabBarController")
+        
+        let alertVC = UIAlertController(title: "Confirm Overwrite Your Current Location?".capitalized, message: "", preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style:.default, handler: nil)
+        let okAction = UIAlertAction(title: "OK", style:.default, handler: {(action) -> Void in
+            let viewControllers: [UIViewController] = view.navigationController!.viewControllers as [UIViewController];
+            view.navigationController!.popToViewController(viewControllers[viewControllers.count - 3], animated: true);
+            //presentViewController(tabBarView)
+            tabVC.modalTransitionStyle = .crossDissolve
+            view.present(tabVC, animated: true, completion: nil)
+//            let vc = TabBarControllerViewController()
+//            vc.modalTransitionStyle = .partialCurl
+//            view.present(vc, animated: true, completion: nil)
+        })
+        
+        alertVC.addAction(okAction)
+        alertVC.addAction(cancelAction)
+        
+        view.present(alertVC, animated: true, completion: nil)
+    }
 }

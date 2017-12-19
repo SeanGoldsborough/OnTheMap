@@ -8,11 +8,12 @@
 
 import UIKit
 
-class TabBarControllerViewController: UITabBarController {
+class TabBarControllerViewController: UITabBarController, UITabBarControllerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        self.navigationController?.navigationBar.isHidden = true
         
         let logOutButton = UIBarButtonItem(title: "LOGOUT", style: .plain, target: self, action: #selector(logoutButtonTapped(sender: )))
         let refreshButton = UIBarButtonItem(image: #imageLiteral(resourceName: "icon_refresh"), landscapeImagePhone: #imageLiteral(resourceName: "icon_refresh"), style: .plain, target: self, action: #selector(refreshData(sender: )))
@@ -21,7 +22,7 @@ class TabBarControllerViewController: UITabBarController {
         navigationItem.leftBarButtonItems = [logOutButton]
         //navigationItem.rightBarButtonItems = [addPinButton]
         navigationItem.rightBarButtonItems = [addPinButton, refreshButton]
-        // Do any additional setup after loading the view.
+//        // Do any additional setup after loading the view.
 
         //getOneStudent()
         
@@ -127,26 +128,27 @@ class TabBarControllerViewController: UITabBarController {
     }
     
     @objc func refreshData(sender: UIBarButtonItem) {
-        let listVC = self.storyboard!.instantiateViewController(withIdentifier: "ListVC")
-        //listVC().getStudents()
-       
-        //MapVC().getStudents()
-        
-        
-       
-        
-        
+//        let listVC = self.storyboard!.instantiateViewController(withIdentifier: "ListVC")
+//        let mapVC = self.storyboard!.instantiateViewController(withIdentifier: "MapVC")
+
         print("refreshData has been pressed")
         
-        if self.selectedIndex == 0 {
-            
-            MapVC().printFunc()
-           print("refreshData has been pressed and should reload mapView")
-        } else {
-            ListVC().getStudents()
-            
-            print("refreshData has been pressed and should refresh data on tableView")
-        }
+//        if self.selectedIndex == 0 {
+//
+//            MapVC().printFunc()
+//
+//
+//           print("refreshData has been pressed and should reload mapView")
+//
+//        } else {
+//            let myList = ListVC()
+//            //ListVC().printFunc()
+//            //ListVC().refreshData(refreshData)
+//            myList.getStudents()
+//            myList.printFunc()
+//
+//            print("refreshData has been pressed and should refresh data on tableView")
+//        }
         
         
         

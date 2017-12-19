@@ -19,7 +19,42 @@ class MapVC: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     
     @IBOutlet weak var activityView: UIActivityIndicatorView!
-
+    
+    @IBAction func logoutButton(_ sender: Any) {
+    }
+    
+    @IBAction func addPinButton(_ sender: Any) {
+        print("addPin has been pressed")
+        
+        let uniqueKey = UdacityPersonalData.sharedInstance().uniqueKey //"10081758676" //UdacityPersonalData.sharedInstance().uniqueKey
+        //let studentsArray = StudentArray.sharedInstance.listOfStudents//["10081758676"]
+        var studentsArray = ["10081758676"]
+        let moreStudents = StudentArray.sharedInstance.listOfStudents
+        print("more students: \(moreStudents)")
+        
+        for key in moreStudents {
+            print(key.uniqueKey)
+            studentsArray.append(key.uniqueKey!)
+        }
+        
+        if studentsArray.contains(uniqueKey!) {
+            print("students array contains value for current user")
+            AlertView.addLocationAlert(view: self, alertTitle: "Update Location", alertMessage: "Would you like update a location?")
+            
+        } else {
+            print("current user has not yet created a location")
+            AlertView.addLocationAlert(view: self, alertTitle: "New Location", alertMessage: "Would you like to add a new location?")
+        }
+        
+    }
+    
+    @IBAction func refreshButton(_ sender: Any) {
+        ActivityIndicatorOverlay.show(self.view, loadingText: "Locating...")
+        getStudents()
+        
+        }
+    
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -27,15 +62,9 @@ class MapVC: UIViewController {
         ActivityIndicatorOverlay.show(self.view, loadingText: "Locating...")
         
         mapView.delegate = self
-        self.navigationController?.navigationBar.isHidden = false
-        
-        let refreshButton = UIBarButtonItem(image: #imageLiteral(resourceName: "icon_refresh"), landscapeImagePhone: #imageLiteral(resourceName: "icon_refresh"), style: .plain, target: self, action: #selector(refreshData(sender: )))
-        navigationItem.rightBarButtonItems = [refreshButton]
-        
-        
+
         getStudents()
-//        populateMap()
-        //getOneStudent()
+
     }
     
     
@@ -53,7 +82,7 @@ class MapVC: UIViewController {
                     performUIUpdatesOnMain {
                         AlertView.alertPopUp(view: self, alertMessage: "Networking Error on GET All Students")
                         ActivityIndicatorOverlay.hide()
-                        print("c:\(self.students)")
+                        
                     }
                     
                 } else {
@@ -61,7 +90,7 @@ class MapVC: UIViewController {
                     self.getPublicUserData()
                     self.getOneStudent()
                     performUIUpdatesOnMain {
-                        print("c:\(self.students)")
+                       
                     }
                 }
             } else {
@@ -70,6 +99,7 @@ class MapVC: UIViewController {
                 
                 performUIUpdatesOnMain {
                     AlertView.alertPopUp(view: self, alertMessage: "Networking Error on GET All Students")
+                    ActivityIndicatorOverlay.hide()
                 }
             }
         }
@@ -96,7 +126,6 @@ class MapVC: UIViewController {
     }
     
     func populateMap() {
-        //mapView.removeAnnotations(annotations)
         self.annotations.removeAll()
         print("populateMap has been called:\(populateMap)")
         let studentsArray = students
@@ -116,9 +145,6 @@ class MapVC: UIViewController {
             let mediaURL = studentData.mediaURL as! String
             
             let annotation = StudentMapPins(title: fullName, subTitle: mediaURL, coordinate: coordinate)
-//            annotation.coordinate = coordinate
-//            annotation.name = "\(firstName) \(lastName)"
-//            annotation.mediaURL = mediaURL
             
 //            self.annotations.removeAll()
             self.annotations.append(annotation)
@@ -127,13 +153,12 @@ class MapVC: UIViewController {
         
         performUIUpdatesOnMain {
             ActivityIndicatorOverlay.hide()
+//            self.mapView.removeAnnotations(self.annotations)
             self.mapView.addAnnotations(self.annotations)
             self.getOneStudent()
         }
     }
-    
-
-    
+  
     func getOneStudent() {
         APIClient.sharedInstance().getOneStudentLocationParse({ (result, error) in
             
@@ -150,81 +175,11 @@ class MapVC: UIViewController {
         })
     }
     
-    @objc func refreshData(sender: UIBarButtonItem) {
-        
-        performUIUpdatesOnMain {
-            ActivityIndicatorOverlay.show(self.view, "Loading...")
-            self.populateMap()
-        }
-        print("mapView has been reloaded")
-    }
-    
     func printFunc() {
         print("printFunc has been called and should reload mapView")
+        self.populateMap()
     }
     
-//    func overwriteLocation(){
-//        let pushedVC = self.storyboard!.instantiateViewController(withIdentifier: "PushedVC")
-//
-//        let alertVC = UIAlertController(
-//            title: "You Have Already posted A Student Location. Would You Like To Overwrite Your Current Location?".capitalized,
-//            message: "",
-//            preferredStyle: .alert)
-//        let cancelAction = UIAlertAction(
-//            title: "Cancel",
-//            style:.default,
-//            handler: nil)
-//        let okAction = UIAlertAction(
-//            title: "OK",
-//            style:.default,
-//            handler: {(action) -> Void in
-//                //The (withIdentifier: "VC2") is the Storyboard Segue identifier.
-//                //self.performSegue(withIdentifier: "VC2", sender: self)
-//                self.navigationController!.pushViewController(pushedVC, animated: true)
-//        })
-//
-//
-//        alertVC.addAction(okAction)
-//        alertVC.addAction(cancelAction)
-//
-//
-//        self.present(alertVC, animated: true, completion: nil)
-//    }
-    
-    
-    
-//    @objc func logoutButtonTapped(sender: UIBarButtonItem) {
-//
-//        print("old logout button tapped!")
-//
-//        let logOutSession = UdacityClient()
-//
-//        logOutSession.deleteSession()
-//        let loginVC = self.storyboard!.instantiateViewController(withIdentifier: "LoginVC")
-//        //self.performSegue(withIdentifier: "AddLocation", sender: self)
-//        self.present(loginVC, animated: true, completion: nil)
-//
-//    }
-    
-//    @objc func addPin(sender: UIBarButtonItem) {
-//        let addLocationNavVC = self.storyboard!.instantiateViewController(withIdentifier: "AddLocationVC") as! AddLocationVC
-//        navigationController!.pushViewController(addLocationNavVC, animated: true)
-//    }
-    
-//    @objc func refreshData(sender: UIBarButtonItem) {
-//        //self.activityIndicatorView.startAnimating()
-//        //refreshData(self)
-//        ActivityIndicatorOverlay.show(self.view, "Loading...")
-//        print("poooooooodpdpdpdpakjdha;fkjhasdf")
-//        // simulate time consuming work
-//        Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(self.hideIndicator), userInfo: nil, repeats: false)
-//
-//        //self.reloadData()
-//    }
-//    @objc func hideIndicator() {
-//        ActivityIndicatorOverlay.hide()
-//    }
-  
 }
 
 

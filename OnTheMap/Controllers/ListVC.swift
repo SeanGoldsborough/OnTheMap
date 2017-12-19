@@ -21,26 +21,55 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
    
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     
+    @IBAction func logoutButton(_ sender: Any) {
+    }
+    
+    @IBAction func addPinButton(_ sender: Any) {
+        print("addPin has been pressed")
+        
+        let uniqueKey = UdacityPersonalData.sharedInstance().uniqueKey //"10081758676" //UdacityPersonalData.sharedInstance().uniqueKey
+        //let studentsArray = StudentArray.sharedInstance.listOfStudents//["10081758676"]
+        var studentsArray = ["10081758676"]
+        let moreStudents = StudentArray.sharedInstance.listOfStudents
+        print("more students: \(moreStudents)")
+        
+        for key in moreStudents {
+            print(key.uniqueKey)
+            studentsArray.append(key.uniqueKey!)
+        }
+        
+        if studentsArray.contains(uniqueKey!) {
+            print("students array contains value for current user")
+            AlertView.addLocationAlert(view: self, alertTitle: "Update Location", alertMessage: "Would you like update a location?")
+            
+        } else {
+            print("current user has not yet created a location")
+            AlertView.addLocationAlert(view: self, alertTitle: "New Location", alertMessage: "Would you like to add a new location?")
+        }
+    }
+    
+    @IBAction func refreshButton(_ sender: Any) {
+        
+        ActivityIndicatorOverlay.show(self.view, loadingText: "Locating...")
+        getStudents() 
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         ActivityIndicatorOverlay.show(self.view, "Locating...")
-        //ActivityIndicatorOverlay.show(self.tableView, loadingText: "Locating...")
-        //Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(MapVC.hideIndicator), userInfo: nil, repeats: false)
-        
+    
         self.navigationController?.navigationBar.isHidden = false
-//        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "LOGOUT", style: .plain, target: self, action: #selector(logoutButtonTapped(sender: )))
-//        let refreshButton = UIBarButtonItem(image: #imageLiteral(resourceName: "icon_refresh"), landscapeImagePhone: #imageLiteral(resourceName: "icon_refresh"), style: .plain, target: self, action: #selector(refreshData(sender: )))
-//        let addPinButton = UIBarButtonItem(image: #imageLiteral(resourceName: "icon_addpin"), landscapeImagePhone: #imageLiteral(resourceName: "icon_addpin"), style: .plain, target: self, action: #selector(addPin(sender: )))
-//        navigationItem.rightBarButtonItems = [addPinButton, refreshButton]
-        
-        
-        
+
         tabBarController?.tabBar.isHidden = false
         
         tableView.dataSource = self
         tableView.delegate = self
+        
+
+        
+        // Refresh Control Config
         
         if #available(iOS 10.0, *) {
             tableView.refreshControl = refreshControl
@@ -48,11 +77,9 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
             tableView.addSubview(refreshControl)
         }
         
-        // Configure Refresh Control
         refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
         refreshControl.tintColor = UIColor(red:0.0, green:0.0, blue:0.0, alpha:1.0)
         refreshControl.attributedTitle = NSAttributedString(string: "Loading ...", attributes: nil)
-        
         
         fetchData()
         
@@ -67,6 +94,18 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
     }
     
     
+    func printFunc() {
+        print("printFunc has been called and should reload tableView")
+//        performUIUpdatesOnMain {
+//            self.tableView.reloadData()
+//            ActivityIndicatorOverlay.hide()
+//            print("printing students array:\(self.students)")
+//            print("the student array class is now: \(StudentArray.sharedInstance.listOfStudents)")
+//        }
+       
+    }
+    
+    
     func getStudents() {
         APIClient.sharedInstance().getStudentLocationsParse { (studentsResult, error) in
             print("students array class is: \(self.students)")
@@ -78,28 +117,23 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
             guard studentsResult != nil else {
                 print("1There was an error with your request -getStudentsListVC: \(error)")
                 performUIUpdatesOnMain {
-                    
-                ActivityIndicatorOverlay.hide()
-                AlertView.alertPopUp(view: self, alertMessage: "Networking Error")
+                    ActivityIndicatorOverlay.hide()
+                    AlertView.alertPopUp(view: self, alertMessage: "Networking Error0")
                 }
                 return
             }
-
                 if let students = studentsResult {
     
                     self.students = students
                     StudentArray.sharedInstance.listOfStudents = students
                     
-                    if self.isViewLoaded {
-                        performUIUpdatesOnMain {
-                            self.tableView.reloadData()
-                            ActivityIndicatorOverlay.hide()
-                            print("printing students array:\(self.students)")
-                            print("the student array class is now: \(StudentArray.sharedInstance.listOfStudents)")
-                        }
-                    } else {
-                        print("put in map view reload here?")
+                    performUIUpdatesOnMain {
+                        self.tableView.reloadData()
+                        ActivityIndicatorOverlay.hide()
+                        print("printing students array:\(self.students)")
+                        print("the student array class is now: \(StudentArray.sharedInstance.listOfStudents)")
                     }
+                    
                 } else {
                     print(error ?? "empty error")
             }
@@ -110,7 +144,7 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
             guard result != nil else {
                 print("There was an error with your request - getPublicUserDataUdacity: \(error)")
                 performUIUpdatesOnMain {
-                    AlertView.alertPopUp(view: self, alertMessage: "Networking Error")
+                    AlertView.alertPopUp(view: self, alertMessage: "Networking Error1")
                 }
                 return
             }
@@ -123,7 +157,7 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
             guard result != nil else {
                 print("There was an error with your request - getOneStudent: \(error)")
                 performUIUpdatesOnMain {
-                    AlertView.alertPopUp(view: self, alertMessage: "Networking Error")
+                    AlertView.alertPopUp(view: self, alertMessage: "Networking Error2")
                 }
                 return
             }
@@ -131,76 +165,8 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
     }
     
 
-//    @objc func logoutButtonTapped(sender: UIBarButtonItem) {
-//        print("logout tableview pressed")
-//        let logOutSession = UdacityClient()
-//
-//        logOutSession.deleteSession()
-//        let loginVC = self.storyboard!.instantiateViewController(withIdentifier: "LoginVC")
-//        //self.performSegue(withIdentifier: "AddLocation", sender: self)
-//        self.present(loginVC, animated: true, completion: nil)
-//
-//    }
-//
-//    @objc func addPin(sender: UIBarButtonItem) {
-//        let addLocationNavVC = self.storyboard!.instantiateViewController(withIdentifier: "AddLocationVC") as! AddLocationVC
-//        navigationController!.pushViewController(addLocationNavVC, animated: true)
-//    }
-//
-//    @objc func refreshData(sender: UIBarButtonItem) {
-//        //self.activityIndicatorView.startAnimating()
-//        //refreshData(self)
-//        //ActivityIndicatorOverlay.show(self.view, "Loading...")
-//
-//        // simulate time consuming work
-//        //Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(self.hideIndicator), userInfo: nil, repeats: false)
-//        performUIUpdatesOnMain {
-//            self.tableView.reloadData()
-//            print("updateview called: tableView has been reloaded")
-//        }
-//    }
-    
-    @objc func hideIndicator() {
-        ActivityIndicatorOverlay.hide()
-    }
-    
-//    static func reloadTable() {
-//        performUIUpdatesOnMain {
-//            self.tableView.reloadData()
-//            print("updateview called: tableView has been reloaded")
-//        }
-//    }
-    
-    func updateView() {
-        print("updateview called")
-        
-//        performUIUpdatesOnMain {
-//            self.tableView.reloadData()
-//            print("updateview called: tableView has been reloaded")
-//        }
-        
-        if students.count > 0  {
-            getStudents()
-            
-            let listView = ListVC()
-            if listView.isViewLoaded {
-                performUIUpdatesOnMain {
-                    self.tableView.reloadData()
-                }
-            } else {
-                print("put in map view reload here?")
-            }
-            
-        } else {
-            performUIUpdatesOnMain {
-                AlertView.alertPopUp(view: self, alertMessage: "Networking Error")
-            }
-        }
-        
-        print(students.count)
-    }
-    
-    @objc private func refreshData(_ sender: Any) {
+    @objc func refreshData(_ sender: Any) {
+        refreshControl.beginRefreshing()
         fetchData()
     }
     
@@ -210,16 +176,55 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
         print("the students array is: \(students)")
         
         performUIUpdatesOnMain {
-            self.tableView.reloadData()
+           // self.tableView.reloadData()
             self.updateView()
             self.activityIndicatorView.stopAnimating()
             refreshControl.endRefreshing()
+            //ActivityIndicatorOverlay.hide()
         }
     }
     
+    func updateView() {
+        print("updateview called")
+        performUIUpdatesOnMain {
+            self.tableView.reloadData()
+        }
+        
+//        if students.count > 0  {
+//            getStudents()
+//
+//            performUIUpdatesOnMain {
+//                self.tableView.reloadData()
+//            }
+////
+////            let listView = ListVC()
+////            if listView.isViewLoaded {
+////                performUIUpdatesOnMain {
+////                    self.tableView.reloadData()
+////                }
+////            } else {
+////                performUIUpdatesOnMain {
+////                    //AlertView.alertPopUp(view: self, alertMessage: "Networking Error3")
+////                }
+////                print("put in map view reload here?")
+////            }
+//
+//        } else {
+//
+//        }
+        
+        print(students.count)
+    }
+    
     private func setupActivityIndicatorView() {
+        ActivityIndicatorOverlay.show(self.view, loadingText: "")
         activityIndicatorView.startAnimating()
     }
+    
+    @objc func hideIndicator() {
+        ActivityIndicatorOverlay.hide()
+    }
+    
     
     // MARK: - Table view data source
     
@@ -254,7 +259,7 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let studentFirstName = students[indexPath.row]
-        let studentWeb = studentFirstName.mediaURL//String(studentWebsite[indexPath.row])
+        let studentWeb = studentFirstName.mediaURL
         
         let url = URL(string:studentWeb!)
         print(url)
