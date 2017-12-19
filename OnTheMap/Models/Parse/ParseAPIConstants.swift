@@ -14,7 +14,7 @@ extension ParseAPIClient {
     struct Constants {
         
         // MARK: API Keys
-        //        static let APIKeyTMDB = "cec14169bb6921f04d7278bbc2277288"
+
         static let APIKeyUdacity = "cec14169bb6921f04d7278bbc2277288"
         static let APIKeyUdacityNil = ""
         static let APIKeyParse = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
@@ -36,23 +36,6 @@ extension ParseAPIClient {
     
     // MARK: URL Path Variants
     struct URLPathVariants {
-        
-        // MARK: Account
-        //        static let Account = "/account"
-        //        static let AccountIDFavoriteMovies = "/account/{id}/favorite/movies"
-        //        static let AccountIDFavorite = "/account/{id}/favorite"
-        //        static let AccountIDWatchlistMovies = "/account/{id}/watchlist/movies"
-        //        static let AccountIDWatchlist = "/account/{id}/watchlist"
-        //
-        //        // MARK: Authentication
-        //        static let AuthenticationTokenNew = "/authentication/token/new"
-        //        static let AuthenticationSessionNew = "/authentication/session/new"
-        //
-        //        // MARK: Search
-        //        static let SearchMovie = "/search/movie"
-        //
-        //        // MARK: Config
-        //        static let Config = "/configuration"
         
         // MARK: PUT - Parse
         static let StudentLocationPath = "/StudentLocation"

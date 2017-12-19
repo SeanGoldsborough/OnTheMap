@@ -30,12 +30,6 @@ class ParseAPIClient : NSObject {
     var latitude: String? = nil
     var longitude: String? = nil
     
-    
-    
-    var userNameVar: String = "smgoldsborough@gmail.com"
-    var userPasswordVar: String = "We051423!!!"
-
-    
     // MARK: Initializers
     
     override init() {

@@ -10,25 +10,21 @@ import Foundation
 extension ParseAPIClient {
 
         
-        // MARK: GET Convenience Methods - PARSE
+    // MARK: GET Convenience Methods - PARSE
     
-        func getStudentLocationsParse(_ completionHandlerForParseGet: @escaping (_ result: [StudentLocations]?, _ error: NSError?) -> Void) {
+    func getStudentLocationsParse(_ completionHandlerForParseGet: @escaping (_ result: [StudentLocations]?, _ error: NSError?) -> Void) {
             
             //1. Specify parameters, method (if has {key}), and HTTP body (if POST)
-            //let parameters = [String:AnyObject]()
+          
             let parameters = [ParseAPIClient.URLQueryKeys.Limit: "100", ParseAPIClient.URLQueryKeys.Order: "-updatedAt"] as? [String: AnyObject]
             var variant: String = URLPathVariants.StudentLocationPath
-            //1b. Substitute in a value for the URLKey "id" in /account/{id}/favorite
-            //                    variant = substituteKeyInMethod(mutableMethod, key: TMDBClient.URLKeys.UserID, value: String(TMDBClient.sharedInstance().userID!))!
             
             /* 2. Make the request */
             
             let request = taskForGETMethodParse(variant: variant, parameters: parameters!) { (results, error) in
                 
                 print("The getStudentLocationsParse JSON Data is: \(results)")
-                
-                
-                
+
                 /* 3. Send the desired value(s) to completion handler */
                 if let error = error {
                     completionHandlerForParseGet([], error)
@@ -47,15 +43,14 @@ extension ParseAPIClient {
             print("The getStudentLocationsParse URL Data is: \(request)")
         }
         
-        // MARK: GETing One Student Location - PARSE - https://parse.udacity.com/parse/classes/StudentLocation?where={"uniqueKey":"1234"}
-        // TODO: ESCAPE THE : IN THE URL - FIX THIS SO IT WORKS WITH PROPER PARAMETERS
-        func getOneStudentLocationParse(_ completionHandlerForParseGet: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) {
+    // MARK: GETing One Student Location - PARSE
+    func getOneStudentLocationParse(_ completionHandlerForParseGet: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) {
             
             //1. Specify parameters, method (if has {key}), and HTTP body (if POST)
             let variant: String = URLPathVariants.StudentLocationPath
             
             var queryVariation = "{\"\(ParseAPIClient.URLQueryKeys.UniqueKey)\":\"\(UdacityPersonalData.sharedInstance().uniqueKey!)\"}"
-            //let escapedString = queryVariation.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
+           
             
             var parameters = [ParseAPIClient.URLQueryKeys.Where: queryVariation] as? [String: AnyObject]
             
@@ -91,17 +86,15 @@ extension ParseAPIClient {
         }
     
     
-        // MARK: POST Convenience Methods - PARSE
-        //
-        // MARK: POSTing One Student Location - PARSE
-        // TODO: FIX THIS SO IT WORKS WITH PROPER PARAMETERS
-        func postUserPARSE(mapString: String?, studentURL: String?, completionHandlerForPOSTUser: @escaping (_ success: Bool, _ errorString: NSError?) -> Void) {
+    // MARK: POST Convenience Methods - PARSE
+    //
+    // MARK: POSTing One Student Location - PARSE
+
+    func postUserPARSE(mapString: String?, studentURL: String?, completionHandlerForPOSTUser: @escaping (_ success: Bool, _ errorString: NSError?) -> Void) {
             
             /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
             let parameters = [String: AnyObject]()
-            
-            // TODO: When Calling this function the parameters will be UITextField.text for each of the said parameters
-            
+
             let jsonBody = "{\"uniqueKey\": \"\(UdacityPersonalData.sharedInstance().uniqueKey!)\", \"firstName\": \"\(UdacityPersonalData.sharedInstance().firstName!)\", \"lastName\": \"\(UdacityPersonalData.sharedInstance().lastName!)\",\"mapString\": \"\(UdacityPersonalData.sharedInstance().mapString!)\", \"mediaURL\": \"\(UdacityPersonalData.sharedInstance().mediaURL!)\",\"latitude\": \(UdacityPersonalData.sharedInstance().latitude!), \"longitude\": \(UdacityPersonalData.sharedInstance().longitude!)}"
             
             
@@ -135,10 +128,9 @@ extension ParseAPIClient {
         }
     
         
-        // MARK: PUT Convenience Methods - PARSE
-        // TODO: FIX GET ONE STUDENT SO THAT YOU GET THE OBJECT ID ON THIS
-        // TODO: FIX THIS SO IT WORKS WITH PROPER PARAMETERS - URL = https://parse.udacity.com/parse/classes/StudentLocation/<objectId>
-        func putUserPARSE(mapString: String?, studentURL: String?, completionHandlerForPUTUser: @escaping (_ success: Bool, _ errorString: NSError?) -> Void) {
+    // MARK: PUT Convenience Methods - PARSE
+
+    func putUserPARSE(mapString: String?, studentURL: String?, completionHandlerForPUTUser: @escaping (_ success: Bool, _ errorString: NSError?) -> Void) {
 
             let jsonBody = "{\"uniqueKey\": \"\(UdacityPersonalData.sharedInstance().uniqueKey!)\", \"firstName\": \"\(UdacityPersonalData.sharedInstance().firstName!)\", \"lastName\": \"\(UdacityPersonalData.sharedInstance().lastName!)\",\"mapString\": \"\(UdacityPersonalData.sharedInstance().mapString!)\", \"mediaURL\": \"\(UdacityPersonalData.sharedInstance().mediaURL!)\",\"latitude\": \(UdacityPersonalData.sharedInstance().latitude!), \"longitude\": \(UdacityPersonalData.sharedInstance().longitude!)}"
             
@@ -161,15 +153,11 @@ extension ParseAPIClient {
                         print("Could not find \(ParseAPIClient.JSONResponseKeys.SessionID) in \(results)")
                         completionHandlerForPUTUser(false, error)
                     }
-                    
-                    
-                    
+         
                     print("The ParsePUT has been called")
                     
                     completionHandlerForPUTUser(true, nil)
                 }
-                
-                
                 
                 /* 3. Send the desired value(s) to completion handler */
                 //            if let error = error {

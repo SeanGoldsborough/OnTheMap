@@ -30,11 +30,7 @@ class UdacityAPIClient : NSObject {
     
     var latitude: String? = nil
     var longitude: String? = nil
-    
-    var userNameVar: String = "smgoldsborough@gmail.com"
-    var userPasswordVar: String = "We051423!!!"
-
-    
+        
     // MARK: Initializers
     
     override init() {
@@ -121,8 +117,7 @@ class UdacityAPIClient : NSObject {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     // MARK: POST Method - Udacity
-    // TODO:  FIX THIS SO IT WORKS WITH PROPER PARAMETERS
-    //func taskForPOSTMethodUdacity(_ method: String, parameters: [String:AnyObject], jsonBody: String, completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+   
     
     func taskForPOSTMethodUdacity(_ method: String, parameters: [String:AnyObject], jsonBody: String, completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
         
@@ -152,7 +147,7 @@ class UdacityAPIClient : NSObject {
 
             guard data != nil else {
                 sendError("1There was an error with your request - UdacityPOST: \(error!)")
-                //                 AlertView.alertPopUp(view: LoginVC() as LoginVC, alertMessage: "Networking Error-FAAAAHHHK")
+               
                 return
             }
             
@@ -160,9 +155,8 @@ class UdacityAPIClient : NSObject {
                 sendError("ERROR ON RANGE/DATA!")
                 return
             }
-            //let range = Range(5..<data?.count)
-            let newData = data?.subdata(in: range) /* subset response data! */
-            //print(String(data: newData!, encoding: .utf8)!)
+          
+            let newData = data?.subdata(in: range)
             
             
             
@@ -310,7 +304,7 @@ class UdacityAPIClient : NSObject {
             
             
             var encodedData = String(data: newData!, encoding: .utf8)!
-            print("pooooooop - endcoded data is: \(encodedData) and encoding the udacity get JSON data here:")
+            print("endcoded data is: \(encodedData) and encoding the udacity get JSON data here:")
             print(String(data: newData!, encoding: .utf8)!)
             
             
