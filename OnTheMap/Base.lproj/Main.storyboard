@@ -343,125 +343,6 @@
             </objects>
             <point key="canvasLocation" x="3765.5999999999999" y="198.35082458770617"/>
         </scene>
-        <!--TestVC-->
-        <scene sceneID="gVN-yj-Xda">
-            <objects>
-                <viewController storyboardIdentifier="Test2VC" title="TestVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="6rX-H3-pzX" customClass="TestVC" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="0d9-gu-5ta">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NC3-G9-hfr">
-                                <rect key="frame" x="16" y="231" width="343" height="30"/>
-                                <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Submit">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="submitLocation" destination="6rX-H3-pzX" eventType="touchUpInside" id="Li6-n0-X4I"/>
-                                </connections>
-                            </button>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" showsScale="YES" showsTraffic="YES" translatesAutoresizingMaskIntoConstraints="NO" id="val-Ql-uAw">
-                                <rect key="frame" x="67" y="269" width="240" height="128"/>
-                            </mapView>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter location" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Wva-eg-QCQ">
-                                <rect key="frame" x="16" y="193" width="343" height="30"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="Wva-eg-QCQ" firstAttribute="leading" secondItem="f55-aA-EWt" secondAttribute="leading" constant="16" id="1ry-Nu-SIb"/>
-                            <constraint firstItem="val-Ql-uAw" firstAttribute="top" secondItem="NC3-G9-hfr" secondAttribute="bottom" constant="8" id="2Is-8d-Qn1"/>
-                            <constraint firstAttribute="bottom" secondItem="val-Ql-uAw" secondAttribute="bottom" constant="270" id="DIE-Dq-9Vu"/>
-                            <constraint firstItem="val-Ql-uAw" firstAttribute="leading" secondItem="f55-aA-EWt" secondAttribute="leading" constant="67" id="Sea-qh-Q5K"/>
-                            <constraint firstItem="NC3-G9-hfr" firstAttribute="top" secondItem="Wva-eg-QCQ" secondAttribute="bottom" constant="8" id="TEy-k7-az3"/>
-                            <constraint firstItem="Wva-eg-QCQ" firstAttribute="top" secondItem="f55-aA-EWt" secondAttribute="top" constant="129" id="a97-Ki-d9O"/>
-                            <constraint firstItem="f55-aA-EWt" firstAttribute="trailing" secondItem="Wva-eg-QCQ" secondAttribute="trailing" constant="16" id="cE8-Ek-Osr"/>
-                            <constraint firstItem="f55-aA-EWt" firstAttribute="trailing" secondItem="val-Ql-uAw" secondAttribute="trailing" constant="68" id="cRs-uP-eak"/>
-                            <constraint firstItem="NC3-G9-hfr" firstAttribute="top" secondItem="Wva-eg-QCQ" secondAttribute="bottom" constant="8" id="kI7-UM-fYA"/>
-                            <constraint firstItem="f55-aA-EWt" firstAttribute="trailing" secondItem="NC3-G9-hfr" secondAttribute="trailing" constant="16" id="skj-qe-og3"/>
-                            <constraint firstItem="val-Ql-uAw" firstAttribute="top" secondItem="NC3-G9-hfr" secondAttribute="bottom" constant="8" id="upr-Pg-oyU"/>
-                            <constraint firstItem="NC3-G9-hfr" firstAttribute="leading" secondItem="0d9-gu-5ta" secondAttribute="leading" constant="16" id="vkP-LE-Yx6"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="f55-aA-EWt"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="g3q-ps-Ped"/>
-                    <connections>
-                        <outlet property="locationText" destination="Wva-eg-QCQ" id="EXU-0Z-duP"/>
-                        <outlet property="mapView" destination="val-Ql-uAw" id="qVJ-T5-iz1"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="JZt-Zp-n8j" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="6584.8000000000002" y="-39.130434782608695"/>
-        </scene>
-        <!--PushedVC-->
-        <scene sceneID="wKl-Aq-U6z">
-            <objects>
-                <viewController storyboardIdentifier="PushedVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="tRp-z0-qxC" customClass="PushedVC" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="wAp-a0-x1J">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="PushedVC" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UPt-MK-zFP">
-                                <rect key="frame" x="105" y="323" width="165" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MMy-SF-aDs">
-                                <rect key="frame" x="164" y="463" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <connections>
-                                    <action selector="pushSecondVC" destination="tRp-z0-qxC" eventType="touchUpInside" id="5ZS-jo-an6"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" red="1" green="0.55087674040000001" blue="0.72418144340000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <viewLayoutGuide key="safeArea" id="5He-U7-rsz"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="BKI-22-KKI" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="7302" y="-39"/>
-        </scene>
-        <!--SecondPushVC-->
-        <scene sceneID="BhX-JC-GzP">
-            <objects>
-                <viewController storyboardIdentifier="SecondPushVC" title="SecondPushVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Omp-av-IJO" customClass="SecondPushVC" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="2eX-RS-rFK">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Push2" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xoq-LO-jFh">
-                                <rect key="frame" x="166" y="313" width="137" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hCy-JS-yz1">
-                                <rect key="frame" x="164" y="460" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <connections>
-                                    <action selector="pushSecondVC" destination="Omp-av-IJO" eventType="touchUpInside" id="LTf-jd-dvT"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <viewLayoutGuide key="safeArea" id="i5Y-1d-khz"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ykg-DX-gXe" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="8020" y="-39.130434782608695"/>
-        </scene>
         <!--ListVC-->
         <scene sceneID="gPD-F0-3ly">
             <objects>
@@ -510,6 +391,10 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="hlO-FZ-2SB" id="h5N-2N-tyF"/>
+                                    <outlet property="delegate" destination="hlO-FZ-2SB" id="9PG-XD-YkK"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" red="0.7448342443" green="0.88815236090000005" blue="0.94217234849999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -577,24 +462,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uHT-CA-3g5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1697" y="200"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="Ld7-l8-Cmu">
-            <objects>
-                <navigationController storyboardIdentifier="TestVC" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="VWq-YN-OTl" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="r0p-bX-s2x">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="6rX-H3-pzX" kind="relationship" relationship="rootViewController" id="M0E-a9-dHa"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="4lx-HF-TOw" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="5863.1999999999998" y="-39.130434782608695"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="NTm-Oc-pr0">

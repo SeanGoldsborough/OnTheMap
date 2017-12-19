@@ -29,8 +29,12 @@ class MapVC: UIViewController {
         mapView.delegate = self
         self.navigationController?.navigationBar.isHidden = false
         
+        let refreshButton = UIBarButtonItem(image: #imageLiteral(resourceName: "icon_refresh"), landscapeImagePhone: #imageLiteral(resourceName: "icon_refresh"), style: .plain, target: self, action: #selector(refreshData(sender: )))
+        navigationItem.rightBarButtonItems = [refreshButton]
+        
+        
         getStudents()
-        populateMap()
+//        populateMap()
         //getOneStudent()
     }
     
@@ -92,6 +96,9 @@ class MapVC: UIViewController {
     }
     
     func populateMap() {
+        //mapView.removeAnnotations(annotations)
+        self.annotations.removeAll()
+        print("populateMap has been called:\(populateMap)")
         let studentsArray = students
         print("printing students array MAP:\(studentsArray)")
         
@@ -113,6 +120,7 @@ class MapVC: UIViewController {
 //            annotation.name = "\(firstName) \(lastName)"
 //            annotation.mediaURL = mediaURL
             
+//            self.annotations.removeAll()
             self.annotations.append(annotation)
         }
         print("Annotations array from PopulateMapFunc = \(self.annotations)")
@@ -140,6 +148,19 @@ class MapVC: UIViewController {
     
             }
         })
+    }
+    
+    @objc func refreshData(sender: UIBarButtonItem) {
+        
+        performUIUpdatesOnMain {
+            ActivityIndicatorOverlay.show(self.view, "Loading...")
+            self.populateMap()
+        }
+        print("mapView has been reloaded")
+    }
+    
+    func printFunc() {
+        print("printFunc has been called and should reload mapView")
     }
     
 //    func overwriteLocation(){
@@ -203,9 +224,10 @@ class MapVC: UIViewController {
 //    @objc func hideIndicator() {
 //        ActivityIndicatorOverlay.hide()
 //    }
-    
-    
+  
 }
+
+
 
 extension MapVC: MKMapViewDelegate {
     // 1

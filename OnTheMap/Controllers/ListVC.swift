@@ -30,10 +30,10 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
         //Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(MapVC.hideIndicator), userInfo: nil, repeats: false)
         
         self.navigationController?.navigationBar.isHidden = false
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "LOGOUT", style: .plain, target: self, action: #selector(logoutButtonTapped(sender: )))
-        let refreshButton = UIBarButtonItem(image: #imageLiteral(resourceName: "icon_refresh"), landscapeImagePhone: #imageLiteral(resourceName: "icon_refresh"), style: .plain, target: self, action: #selector(refreshData(sender: )))
-        let addPinButton = UIBarButtonItem(image: #imageLiteral(resourceName: "icon_addpin"), landscapeImagePhone: #imageLiteral(resourceName: "icon_addpin"), style: .plain, target: self, action: #selector(addPin(sender: )))
-        navigationItem.rightBarButtonItems = [addPinButton, refreshButton]
+//        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "LOGOUT", style: .plain, target: self, action: #selector(logoutButtonTapped(sender: )))
+//        let refreshButton = UIBarButtonItem(image: #imageLiteral(resourceName: "icon_refresh"), landscapeImagePhone: #imageLiteral(resourceName: "icon_refresh"), style: .plain, target: self, action: #selector(refreshData(sender: )))
+//        let addPinButton = UIBarButtonItem(image: #imageLiteral(resourceName: "icon_addpin"), landscapeImagePhone: #imageLiteral(resourceName: "icon_addpin"), style: .plain, target: self, action: #selector(addPin(sender: )))
+//        navigationItem.rightBarButtonItems = [addPinButton, refreshButton]
         
         
         
@@ -50,8 +50,9 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
         
         // Configure Refresh Control
         refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
-        refreshControl.tintColor = UIColor(red:0.75, green:0.72, blue:1.0, alpha:1.0)
+        refreshControl.tintColor = UIColor(red:0.0, green:0.0, blue:0.0, alpha:1.0)
         refreshControl.attributedTitle = NSAttributedString(string: "Loading ...", attributes: nil)
+        
         
         fetchData()
         
@@ -70,9 +71,15 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
         APIClient.sharedInstance().getStudentLocationsParse { (studentsResult, error) in
             print("students array class is: \(self.students)")
             
+            performUIUpdatesOnMain {
+                ActivityIndicatorOverlay.show(self.view, loadingText: "Loading...")
+            }
+            
             guard studentsResult != nil else {
                 print("1There was an error with your request -getStudentsListVC: \(error)")
                 performUIUpdatesOnMain {
+                    
+                ActivityIndicatorOverlay.hide()
                 AlertView.alertPopUp(view: self, alertMessage: "Networking Error")
                 }
                 return
@@ -82,7 +89,7 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
     
                     self.students = students
                     StudentArray.sharedInstance.listOfStudents = students
-         
+                    
                     if self.isViewLoaded {
                         performUIUpdatesOnMain {
                             self.tableView.reloadData()
@@ -124,42 +131,55 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
     }
     
 
-    @objc func logoutButtonTapped(sender: UIBarButtonItem) {
-        print("logout tableview pressed")
-        let logOutSession = UdacityClient()
-
-        logOutSession.deleteSession()
-        let loginVC = self.storyboard!.instantiateViewController(withIdentifier: "LoginVC")
-        //self.performSegue(withIdentifier: "AddLocation", sender: self)
-        self.present(loginVC, animated: true, completion: nil)
-
-    }
-
-    @objc func addPin(sender: UIBarButtonItem) {
-        let addLocationNavVC = self.storyboard!.instantiateViewController(withIdentifier: "AddLocationVC") as! AddLocationVC
-        navigationController!.pushViewController(addLocationNavVC, animated: true)
-    }
-
-    @objc func refreshData(sender: UIBarButtonItem) {
-        //self.activityIndicatorView.startAnimating()
-        //refreshData(self)
-        ActivityIndicatorOverlay.show(self.view, "Loading...")
-
-        // simulate time consuming work
-        Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(self.hideIndicator), userInfo: nil, repeats: false)
-        print("tableView.reloadData pressed")
-        self.tableView.reloadData()
-    }
+//    @objc func logoutButtonTapped(sender: UIBarButtonItem) {
+//        print("logout tableview pressed")
+//        let logOutSession = UdacityClient()
+//
+//        logOutSession.deleteSession()
+//        let loginVC = self.storyboard!.instantiateViewController(withIdentifier: "LoginVC")
+//        //self.performSegue(withIdentifier: "AddLocation", sender: self)
+//        self.present(loginVC, animated: true, completion: nil)
+//
+//    }
+//
+//    @objc func addPin(sender: UIBarButtonItem) {
+//        let addLocationNavVC = self.storyboard!.instantiateViewController(withIdentifier: "AddLocationVC") as! AddLocationVC
+//        navigationController!.pushViewController(addLocationNavVC, animated: true)
+//    }
+//
+//    @objc func refreshData(sender: UIBarButtonItem) {
+//        //self.activityIndicatorView.startAnimating()
+//        //refreshData(self)
+//        //ActivityIndicatorOverlay.show(self.view, "Loading...")
+//
+//        // simulate time consuming work
+//        //Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(self.hideIndicator), userInfo: nil, repeats: false)
+//        performUIUpdatesOnMain {
+//            self.tableView.reloadData()
+//            print("updateview called: tableView has been reloaded")
+//        }
+//    }
     
     @objc func hideIndicator() {
         ActivityIndicatorOverlay.hide()
     }
     
+//    static func reloadTable() {
+//        performUIUpdatesOnMain {
+//            self.tableView.reloadData()
+//            print("updateview called: tableView has been reloaded")
+//        }
+//    }
+    
     func updateView() {
+        print("updateview called")
         
-        let hasContacts = students.count > 0 
+//        performUIUpdatesOnMain {
+//            self.tableView.reloadData()
+//            print("updateview called: tableView has been reloaded")
+//        }
         
-        if hasContacts {
+        if students.count > 0  {
             getStudents()
             
             let listView = ListVC()
@@ -170,13 +190,11 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
             } else {
                 print("put in map view reload here?")
             }
-            print("updateview called: tableView has been reloaded")
-        } else {
             
-            // Setup Alert Message
-            let alert = UIAlertController(title: "Uh-Oh!:", message: "There are no contacts to show", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
+        } else {
+            performUIUpdatesOnMain {
+                AlertView.alertPopUp(view: self, alertMessage: "Networking Error")
+            }
         }
         
         print(students.count)
@@ -186,16 +204,16 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
         fetchData()
     }
     
-    private func fetchData() {
+    func fetchData() {
+        
         getStudents()
         print("the students array is: \(students)")
-        DispatchQueue.main.async{
-            
+        
+        performUIUpdatesOnMain {
             self.tableView.reloadData()
             self.updateView()
             self.activityIndicatorView.stopAnimating()
             refreshControl.endRefreshing()
-            
         }
     }
     

@@ -19,6 +19,7 @@ class TabBarControllerViewController: UITabBarController {
         let addPinButton = UIBarButtonItem(image: #imageLiteral(resourceName: "icon_addpin"), landscapeImagePhone: #imageLiteral(resourceName: "icon_addpin"), style: .plain, target: self, action: #selector(addPin(sender: )))
        
         navigationItem.leftBarButtonItems = [logOutButton]
+        //navigationItem.rightBarButtonItems = [addPinButton]
         navigationItem.rightBarButtonItems = [addPinButton, refreshButton]
         // Do any additional setup after loading the view.
 
@@ -76,12 +77,12 @@ class TabBarControllerViewController: UITabBarController {
 //
     @objc func logoutButtonTapped(sender: UIBarButtonItem) {
         
-        let logOutSession = UdacityClient()
-        
-        logOutSession.deleteSession()
-        let loginVC = self.storyboard!.instantiateViewController(withIdentifier: "LoginVC")
-        //self.performSegue(withIdentifier: "AddLocation", sender: self)
-        self.present(loginVC, animated: true, completion: nil)
+//        let logOutSession = UdacityClient()
+//        
+//        logOutSession.deleteSession()
+//        let loginVC = self.storyboard!.instantiateViewController(withIdentifier: "LoginVC")
+//        //self.performSegue(withIdentifier: "AddLocation", sender: self)
+//        self.present(loginVC, animated: true, completion: nil)
         
     }
     
@@ -113,7 +114,7 @@ class TabBarControllerViewController: UITabBarController {
             // not
             
             print("current user has not yet created a location")
-            UdacityPersonalData.sharedInstance().latitude = 55.55
+            //UdacityPersonalData.sharedInstance().latitude = 55.55
             // Clicking OK on Alert Pushes AddLocationVC onto NavStack
             AlertView.addLocationAlert(view: self, alertTitle: "New Location", alertMessage: "Would you like to add a new location?")
         }
@@ -126,38 +127,32 @@ class TabBarControllerViewController: UITabBarController {
     }
     
     @objc func refreshData(sender: UIBarButtonItem) {
-        //self.activityIndicatorView.startAnimating()
-        //refreshData(self)
-        let listView = self.storyboard!.instantiateViewController(withIdentifier: "ListVC") as! ListVC
-        
-        let mapView = self.storyboard!.instantiateViewController(withIdentifier: "MapVC") as! MapVC
-        ActivityIndicatorOverlay.show(self.view, "Loading...")
+        let listVC = self.storyboard!.instantiateViewController(withIdentifier: "ListVC")
+        //listVC().getStudents()
+       
+        //MapVC().getStudents()
         
         
-        // simulate time consuming work
-        Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(self.hideIndicator), userInfo: nil, repeats: false)
-//        
-//        listView.updateView()
-//        
-//        listView.printStudentNames()
+       
         
-        // TODO: ADD TAG #s to BUTTONS - Do tab bar buttons programmatically with tags...if tag = 0 (mapview is shown) then run mapVC funcs, else run listVC funcs
         
-        listView.updateView()
-        print("tableView has been reloaded")
+        print("refreshData has been pressed")
         
-//        if tabBarItem.tag == 0 {
-//            print("ERROR!!!: TableView has NOT been reloaded")
-//        } else {
-//            
-//            listView.updateView()
-//            print("tableView has been reloaded")
-//            
-//            //listView.printStudentNames()
-//        }
+        if self.selectedIndex == 0 {
+            
+            MapVC().printFunc()
+           print("refreshData has been pressed and should reload mapView")
+        } else {
+            ListVC().getStudents()
+            
+            print("refreshData has been pressed and should refresh data on tableView")
+        }
         
-//        mapView.mapView.reloadInputViews()
+        
+        
+        
     }
+    
     @objc func hideIndicator() {
         ActivityIndicatorOverlay.hide()
     }

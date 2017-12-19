@@ -25,6 +25,11 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
     
     @IBAction func addStudentLocation() {
         
+        performUIUpdatesOnMain {
+            ActivityIndicatorOverlay.show(self.mapView, loadingText: "Updating...")
+            self.finishButton.isEnabled = false
+        }
+        
         
         let uniqueKey = UdacityPersonalData.sharedInstance().uniqueKey
         var studentsArray = ["10081758676"]
@@ -47,11 +52,15 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
                 if success == true {
                     performUIUpdatesOnMain {
                         self.overwriteLocation()
+                        ActivityIndicatorOverlay.hide()
                         print("will log in now...\(success)")
+                        self.finishButton.isEnabled = true
                     }
                 } else {
                     performUIUpdatesOnMain {
+                        ActivityIndicatorOverlay.hide()
                         AlertView.alertPopUp(view: self, alertMessage: "Submission Unsuccessful")
+                        self.finishButton.isEnabled = true
                     }
                 }
             }
@@ -66,11 +75,15 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
                 if success == true {
                     performUIUpdatesOnMain {
                         self.overwriteLocation()
+                        ActivityIndicatorOverlay.hide()
                         print("will log in now...\(success)")
+                        self.finishButton.isEnabled = true
                     }
                 } else {
                     performUIUpdatesOnMain {
+                        ActivityIndicatorOverlay.hide()
                         AlertView.alertPopUp(view: self, alertMessage: "Submission Unsuccessful")
+                        self.finishButton.isEnabled = true
                     }
                 }
             }
