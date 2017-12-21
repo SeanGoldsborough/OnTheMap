@@ -60,9 +60,7 @@ struct StudentLocations : Decodable {
             studentList.append(StudentLocations(dictionary: result)!)
             
         }
-        
-        
-        
+
         // TODO: SORTING IN REV CHRONOLOGICAL ORDER IS IMPLEMENTED WITH THE URL QUERY ON PARSE GET
         //students.sort { $0.updatedAt < $1.updatedAt }
         //students.sort(by: { $0.updatedAt!.compare($1.updatedAt!) == .orderedDescending })
@@ -72,13 +70,5 @@ struct StudentLocations : Decodable {
         print("student list array uniqueKeys are: \(StudentLocations.CodingKeys.uniqueKey)")
         return students
     }
-    
-    
-//    static func sharedInstance() -> StudentLocations {
-//        struct Singleton {
-//            static var sharedInstance = StudentLocations()
-//        }
-//        return Singleton.sharedInstance
-//    }
- 
+     
 }

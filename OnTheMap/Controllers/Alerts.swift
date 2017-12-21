@@ -65,7 +65,7 @@ class AlertView {
     
     
     class func overwriteLocation(view: UIViewController, tabBarView: UITabBarController){
-        //let pushedVC = self.storyboard!.instantiateViewController(withIdentifier: "PushedVC")
+       
         let tabVC = view.storyboard!.instantiateViewController(withIdentifier: "TabBarController")
         
         let alertVC = UIAlertController(title: "Confirm Overwrite Your Current Location?".capitalized, message: "", preferredStyle: .alert)
@@ -73,12 +73,8 @@ class AlertView {
         let okAction = UIAlertAction(title: "OK", style:.default, handler: {(action) -> Void in
             let viewControllers: [UIViewController] = view.navigationController!.viewControllers as [UIViewController];
             view.navigationController!.popToViewController(viewControllers[viewControllers.count - 3], animated: true);
-            //presentViewController(tabBarView)
             tabVC.modalTransitionStyle = .crossDissolve
             view.present(tabVC, animated: true, completion: nil)
-//            let vc = TabBarControllerViewController()
-//            vc.modalTransitionStyle = .partialCurl
-//            view.present(vc, animated: true, completion: nil)
         })
         
         alertVC.addAction(okAction)

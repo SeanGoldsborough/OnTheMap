@@ -37,23 +37,6 @@ extension APIClient {
     // MARK: URL Path Variants
     struct URLPathVariants {
         
-        // MARK: Account
-        //        static let Account = "/account"
-        //        static let AccountIDFavoriteMovies = "/account/{id}/favorite/movies"
-        //        static let AccountIDFavorite = "/account/{id}/favorite"
-        //        static let AccountIDWatchlistMovies = "/account/{id}/watchlist/movies"
-        //        static let AccountIDWatchlist = "/account/{id}/watchlist"
-        //
-        //        // MARK: Authentication
-        //        static let AuthenticationTokenNew = "/authentication/token/new"
-        //        static let AuthenticationSessionNew = "/authentication/session/new"
-        //
-        //        // MARK: Search
-        //        static let SearchMovie = "/search/movie"
-        //
-        //        // MARK: Config
-        //        static let Config = "/configuration"
-        
         // MARK: PUT - Parse
         static let StudentLocationPath = "/StudentLocation"
         static let ObjectID = "/<objectId>"
@@ -139,6 +122,5 @@ extension APIClient {
         static let CreatedAt = "createdAt"
         static let UpdatedAt = "updatedAt"
         
-    }
-    
+    }  
 }

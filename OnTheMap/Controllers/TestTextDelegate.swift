@@ -18,9 +18,7 @@ class TestTextDelegate: NSObject, UITextFieldDelegate {
 //        var memeTextLength = text?.characters.count
 //        
 //        return memeTextLength! <= 140
-//    }
-    
-    
+//    }  
     
     //Jump To Bottom TextField After Pressing Next. Dismiss Keyboard When Pressing Go
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -43,7 +41,4 @@ class TestTextDelegate: NSObject, UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         textField.placeholder = ""
     }
-    
-    
-    
 }

@@ -26,8 +26,7 @@ class MapVC: UIViewController {
     @IBAction func addPinButton(_ sender: Any) {
         print("addPin has been pressed")
         
-        let uniqueKey = UdacityPersonalData.sharedInstance().uniqueKey //"10081758676" //UdacityPersonalData.sharedInstance().uniqueKey
-        //let studentsArray = StudentArray.sharedInstance.listOfStudents//["10081758676"]
+        let uniqueKey = UdacityPersonalData.sharedInstance().uniqueKey
         var studentsArray = ["10081758676"]
         let moreStudents = StudentArray.sharedInstance.listOfStudents
         print("more students: \(moreStudents)")
@@ -153,7 +152,6 @@ class MapVC: UIViewController {
         
         performUIUpdatesOnMain {
             ActivityIndicatorOverlay.hide()
-//            self.mapView.removeAnnotations(self.annotations)
             self.mapView.addAnnotations(self.annotations)
             self.getOneStudent()
         }

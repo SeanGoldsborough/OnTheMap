@@ -268,5 +268,3 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
     }
     
 }
-
-
