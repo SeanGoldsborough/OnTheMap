@@ -13,7 +13,7 @@ import Contacts
 // MARK: Swift 4
 class StudentArray : NSObject, Decodable {
     public var listOfStudents : [StudentLocations] = []
-    //var uniqueKeysFromList = StudentLocations.studentsFromResults(results).
+ 
     static let sharedInstance = StudentArray()
 }
 

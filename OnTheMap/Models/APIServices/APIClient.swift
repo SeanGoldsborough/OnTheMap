@@ -12,11 +12,7 @@ import Foundation
 class APIClient : NSObject {
     
     // MARK: Properties
-    
-    // StudentLocation Array
-    var studentLocations: [StudentLocations] = [StudentLocations]()
-    var udacityDataArray = [UdacityPersonalData]()
-    
+        
     // shared session
     var session = URLSession.shared
 
@@ -31,8 +27,6 @@ class APIClient : NSObject {
     var latitude: String? = nil
     var longitude: String? = nil
 
-    var userNameVar: String = "smgoldsborough@gmail.com"
-    var userPasswordVar: String = "We051423!!!"
 
     
     // MARK: Initializers
