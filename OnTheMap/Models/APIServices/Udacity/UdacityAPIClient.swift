@@ -71,12 +71,6 @@ extension APIClient {
           
             let newData = data?.subdata(in: range)
             
-            /* GUARD: Was there an error? */
-            guard (error == nil) else {
-                sendError("2There was an error with your request: \(error!)")
-                return
-            }
-            
             /* GUARD: Did we get a successful 2XX response? */
             guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
                 sendError("Your request returned a status code other than 2xx!")
@@ -137,20 +131,13 @@ extension APIClient {
             }
             
             guard let range = Range?(5..<data!.count) else {
-                print("ERROR ON RANGE/DATA!")
+                sendError("ERROR ON RANGE/DATA!")
                 return
             }
             //let range = Range(5..<data!.count)
             let newData = data?.subdata(in: range) /* subset response data! */
-            print(String(data: newData!, encoding: .utf8)!)
-            
-            
-            
-            /* GUARD: Was there an error? */
-            guard (error == nil) else {
-                sendError("There was an error with your request: \(error!)")
-                return
-            }
+            //print(String(data: newData!, encoding: .utf8)!)
+
             
             /* GUARD: Did we get a successful 2XX response? */
             guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
@@ -196,14 +183,20 @@ extension APIClient {
         /* 4. Make the request */
         let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
             
+            func sendError(_ error: String) {
+                print(error)
+                let userInfo = [NSLocalizedDescriptionKey : error]
+                completionHandlerForUdacityGET(nil, NSError(domain: "taskForGETMethodUdacity", code: 1, userInfo: userInfo))
+            }
+            
             /* GUARD: Was there an error? */
             guard data != nil else {
-                print("1There was an error with your request - UdacityGET: \(error!)")
+                sendError("1There was an error with your request - UdacityGET: \(error!)")
                 return
             }
             
             guard let range = Range?(5..<data!.count) else {
-                print("ERROR ON RANGE/DATA!")
+                sendError("ERROR ON RANGE/DATA!")
                 return
             }
             //let range = Range(5..<data!.count)
@@ -212,21 +205,7 @@ extension APIClient {
             
             var encodedData = String(data: newData!, encoding: .utf8)!
             print("endcoded data is: \(encodedData) and encoding the udacity get JSON data here:")
-            print(String(data: newData!, encoding: .utf8)!)
-            
-            
-            
-            func sendError(_ error: String) {
-                print(error)
-                let userInfo = [NSLocalizedDescriptionKey : error]
-                completionHandlerForUdacityGET(nil, NSError(domain: "taskForGETMethodUdacity", code: 1, userInfo: userInfo))
-            }
-            
-            /* GUARD: Was there an error? */
-            guard (error == nil) else {
-                sendError("Udacity GET: There was an error with your request: \(error!)")
-                return
-            }
+            //print(String(data: newData!, encoding: .utf8)!)
             
             /* GUARD: Did we get a successful 2XX response? */
             guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {

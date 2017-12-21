@@ -59,9 +59,6 @@ extension APIClient {
             let request = taskForGETMethodParse(variant: variant, parameters: parameters!) { (results, error) in
                 print("The getOneStudentLocationParse JSON Data is: \(results)")
                 
-                
-                
-                
                 /* 3. Send the desired value(s) to completion handler */
                 if error != nil {
                     print("Error: \(error) in \(results)")
@@ -117,12 +114,7 @@ extension APIClient {
                         print("Could not find \(APIClient.JSONResponseKeys.SessionID) in \(results)")
                         completionHandlerForPOSTUser(false, error)
                     }
-                    
-                    
-                    
                     print("The ParsePOST has been called")
-                    
-                    //completionHandlerForPOSTUser(true, nil)
                 }
             }
         }
@@ -158,23 +150,6 @@ extension APIClient {
                     
                     completionHandlerForPUTUser(true, nil)
                 }
-                
-                /* 3. Send the desired value(s) to completion handler */
-                //            if let error = error {
-                //                print(error)
-                //                completionHandlerForPUTUser(false, error)
-                //            } else {
-                ////                if let objectID = results?[APIClient.JSONResponseKeys.ObjectId] as? String {
-                ////                    UdacityPersonalData.sharedInstance().objectId = objectID
-                ////                    completionHandlerForPUTUser(true, nil)
-                ////                } else {
-                ////                    print("Could not find \(APIClient.JSONResponseKeys.SessionID) in \(results)")
-                ////                    completionHandlerForPUTUser(false, error)
-                ////                }
-                //
-                //                print("The ParsePOST has been called")
-                //                completionHandlerForPUTUser(true, nil)
-                //            }
             }
             print("parse put request is: \(request)")
         }
