@@ -166,7 +166,7 @@ extension APIClient {
     //
     // MARK: GETing Public User Data - Udacity
 
-    func getPublicUserDataUdacity(_ completionHandlerForUdacityGet: @escaping (_ result: UdacityPersonalData?, _ error: NSError?) -> Void) {
+   func getPublicUserDataUdacity(_ completionHandlerForUdacityGet: @escaping (_ result: UdacityPersonalData?, _ error: NSError?) -> Void) {
         
         //1. Specify parameters, method (if has {key}), and HTTP body (if POST)
         let parameters = [String:AnyObject]()

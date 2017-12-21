@@ -21,6 +21,31 @@ class MapVC: UIViewController {
     @IBOutlet weak var activityView: UIActivityIndicatorView!
     
     @IBAction func logoutButton(_ sender: Any) {
+        
+        ActivityIndicatorOverlay.show(self.view, loadingText: "Logging out...")
+        APIClient.sharedInstance().deleteSessionUdacity(sessionID: APIClient.sharedInstance().sessionID) { (success, error) in
+            
+            if success == true {
+                
+                let loginVC = self.storyboard!.instantiateViewController(withIdentifier: "LoginVC")
+                
+                performUIUpdatesOnMain {
+                    ActivityIndicatorOverlay.hide()
+                    self.present(loginVC, animated: true, completion: nil)
+                }
+                
+                print("logged out")
+                
+            } else {
+                
+                performUIUpdatesOnMain {
+                    AlertView.alertPopUp(view: self, alertMessage: "Error Logging Out")
+                    ActivityIndicatorOverlay.hide()
+                }
+                
+                print("error logging out")
+            }
+        }
     }
     
     @IBAction func addPinButton(_ sender: Any) {

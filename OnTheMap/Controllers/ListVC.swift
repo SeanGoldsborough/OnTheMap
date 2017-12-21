@@ -22,13 +22,37 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     
     @IBAction func logoutButton(_ sender: Any) {
+        
+        ActivityIndicatorOverlay.show(self.view, loadingText: "Logging out...")
+        APIClient.sharedInstance().deleteSessionUdacity(sessionID: APIClient.sharedInstance().sessionID) { (success, error) in
+            
+            if success == true {
+                
+                let loginVC = self.storyboard!.instantiateViewController(withIdentifier: "LoginVC")
+                
+                performUIUpdatesOnMain {
+                    ActivityIndicatorOverlay.hide()
+                    self.present(loginVC, animated: true, completion: nil)
+                }
+                
+                print("logged out")
+                
+            } else {
+                
+                performUIUpdatesOnMain {
+                    AlertView.alertPopUp(view: self, alertMessage: "Error Logging Out")
+                    ActivityIndicatorOverlay.hide()
+                }
+                
+                print("error logging out")
+            }
+        }
     }
     
     @IBAction func addPinButton(_ sender: Any) {
         print("addPin has been pressed")
         
-        let uniqueKey = UdacityPersonalData.sharedInstance().uniqueKey //"10081758676" //UdacityPersonalData.sharedInstance().uniqueKey
-        //let studentsArray = StudentArray.sharedInstance.listOfStudents//["10081758676"]
+        let uniqueKey = UdacityPersonalData.sharedInstance().uniqueKey
         var studentsArray = ["10081758676"]
         let moreStudents = StudentArray.sharedInstance.listOfStudents
         print("more students: \(moreStudents)")
@@ -93,19 +117,7 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
         print("xxx students array:\(self.students)")
     }
     
-    
-    func printFunc() {
-        print("printFunc has been called and should reload tableView")
-//        performUIUpdatesOnMain {
-//            self.tableView.reloadData()
-//            ActivityIndicatorOverlay.hide()
-//            print("printing students array:\(self.students)")
-//            print("the student array class is now: \(StudentArray.sharedInstance.listOfStudents)")
-//        }
-       
-    }
-    
-    
+
     func getStudents() {
         APIClient.sharedInstance().getStudentLocationsParse { (studentsResult, error) in
             print("students array class is: \(self.students)")
