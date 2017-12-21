@@ -93,7 +93,7 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
         
 
         
-        // Refresh Control Config
+        // Pull to Refresh Control Config
         
         if #available(iOS 10.0, *) {
             tableView.refreshControl = refreshControl
@@ -117,7 +117,6 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
         print("xxx students array:\(self.students)")
     }
     
-
     func getStudents() {
         APIClient.sharedInstance().getStudentLocationsParse { (studentsResult, error) in
             print("students array class is: \(self.students)")
@@ -177,6 +176,8 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
     }
     
 
+     // Pull to Refresh Control functions
+    
     @objc func refreshData(_ sender: Any) {
         refreshControl.beginRefreshing()
         fetchData()
@@ -188,11 +189,9 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
         print("the students array is: \(students)")
         
         performUIUpdatesOnMain {
-           // self.tableView.reloadData()
             self.updateView()
             self.activityIndicatorView.stopAnimating()
             refreshControl.endRefreshing()
-            //ActivityIndicatorOverlay.hide()
         }
     }
     
@@ -201,34 +200,9 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
         performUIUpdatesOnMain {
             self.tableView.reloadData()
         }
-        
-//        if students.count > 0  {
-//            getStudents()
-//
-//            performUIUpdatesOnMain {
-//                self.tableView.reloadData()
-//            }
-////
-////            let listView = ListVC()
-////            if listView.isViewLoaded {
-////                performUIUpdatesOnMain {
-////                    self.tableView.reloadData()
-////                }
-////            } else {
-////                performUIUpdatesOnMain {
-////                    //AlertView.alertPopUp(view: self, alertMessage: "Networking Error3")
-////                }
-////                print("put in map view reload here?")
-////            }
-//
-//        } else {
-//
-//        }
-        
-        print(students.count)
     }
     
-    private func setupActivityIndicatorView() {
+    @objc func setupActivityIndicatorView() {
         ActivityIndicatorOverlay.show(self.view, loadingText: "")
         activityIndicatorView.startAnimating()
     }

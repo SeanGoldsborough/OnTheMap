@@ -124,9 +124,15 @@ extension APIClient {
         /* 4. Make the request */
         let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
             
+            func sendError(_ error: String) {
+                print(error)
+                let userInfo = [NSLocalizedDescriptionKey : error]
+                completionHandlerForDELETE(nil, NSError(domain: "taskForDELETEMethodUdacity", code: 1, userInfo: userInfo))
+            }
+            
             /* GUARD: Was there an error? */
             guard data != nil else {
-                print("1There was an error with your request - UdacityDELETE: \(error!)")
+                sendError("1There was an error with your request - UdacityDELETE: \(error!)")
                 return
             }
             
@@ -138,11 +144,7 @@ extension APIClient {
             let newData = data?.subdata(in: range) /* subset response data! */
             print(String(data: newData!, encoding: .utf8)!)
             
-            func sendError(_ error: String) {
-                print(error)
-                let userInfo = [NSLocalizedDescriptionKey : error]
-                completionHandlerForDELETE(nil, NSError(domain: "taskForDELETEMethodUdacity", code: 1, userInfo: userInfo))
-            }
+            
             
             /* GUARD: Was there an error? */
             guard (error == nil) else {
@@ -173,34 +175,7 @@ extension APIClient {
         
         return task
     }
-    
-     //MARK: DELETE Convenience Methods - Udacity  var request = URLRequest(url: URL(string: "https://www.udacity.com/api/session")!)
-       func deleteSessionUdacity(sessionID: String?, completionHandlerForDeleteSession: @escaping (_ success: Bool, _ errorString: NSError?) -> Void) {
-    
-            /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
-            //let parameters = [APIClient.UdacityParameterKeys.Udacity] as! [String: AnyObject]
-            let parameters = [String:AnyObject]()
-    
-            let jsonBody = ""
-    
-            /* 2. Make the request */
-            let request = taskForDELETEMethodUdacity(URLPathVariants.UdacitySession, parameters: parameters, jsonBody: jsonBody) { (results, error) in
-                print("The deleteSessionUdacity JSON Data is: \(results)")
-                /* 3. Send the desired value(s) to completion handler */
-                if let error = error {
-                    print(error)
-                    completionHandlerForDeleteSession(false, error)
-                } else {
-                    if let sessionID = results?[APIClient.JSONResponseKeys.SessionID] as? String {
-                        completionHandlerForDeleteSession(true, nil)
-                    } else {
-                        print("Could not find \(APIClient.JSONResponseKeys.SessionID) in \(results!)")
-                        completionHandlerForDeleteSession(false, error)
-                    }
-                }
-            }
-            print("The deleteSessionUdacity request is: \(request)")
-        }
+
     
     // MARK: GET Methods - Udacity
     // TODO: FIX THIS SO IT WORKS WITH PROPER PARAMETERS

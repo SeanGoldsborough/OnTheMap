@@ -24,9 +24,7 @@ class MapVC: UIViewController {
         
         ActivityIndicatorOverlay.show(self.view, loadingText: "Logging out...")
         APIClient.sharedInstance().deleteSessionUdacity(sessionID: APIClient.sharedInstance().sessionID) { (success, error) in
-            
             if success == true {
-                
                 let loginVC = self.storyboard!.instantiateViewController(withIdentifier: "LoginVC")
                 
                 performUIUpdatesOnMain {
