@@ -17,6 +17,5 @@ class TabBarControllerViewController: UITabBarController, UITabBarControllerDele
         self.navigationController?.navigationBar.isHidden = true
         
     }
-    
-    
+ 
 }
