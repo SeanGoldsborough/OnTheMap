@@ -14,21 +14,21 @@ extension APIClient {
     // MARK: Helpers
     
     // given raw JSON, return a usable Foundation object
-    private func convertDataWithCompletionHandler(_ data: Data, completionHandlerForConvertData: (_ result: AnyObject?, _ error: NSError?) -> Void) {
-        
-        var parsedResult: AnyObject! = nil
-        do {
-            parsedResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as AnyObject
-            //parsedResult = try JSONDecoder().decode([StudentLocations].self, from: data) as AnyObject
-            
-        } catch {
-            let userInfo = [NSLocalizedDescriptionKey : "Could not parse the data as JSON: '\(data)'"]
-            completionHandlerForConvertData(nil, NSError(domain: "convertDataWithCompletionHandler", code: 1, userInfo: userInfo))
-        }
-        
-        completionHandlerForConvertData(parsedResult, nil)
-        
-    }
+//    private func convertDataWithCompletionHandler(_ data: Data, completionHandlerForConvertData: (_ result: AnyObject?, _ error: NSError?) -> Void) {
+//        
+//        var parsedResult: AnyObject! = nil
+//        do {
+//            parsedResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as AnyObject
+//            //parsedResult = try JSONDecoder().decode([StudentLocations].self, from: data) as AnyObject
+//            
+//        } catch {
+//            let userInfo = [NSLocalizedDescriptionKey : "Could not parse the data as JSON: '\(data)'"]
+//            completionHandlerForConvertData(nil, NSError(domain: "convertDataWithCompletionHandler", code: 1, userInfo: userInfo))
+//        }
+//        
+//        completionHandlerForConvertData(parsedResult, nil)
+//        
+//    }
         
     private func UdacityURLFromParameters(_ parameters: [String:AnyObject], withPathExtension: String? = nil) -> URL {
         
@@ -46,10 +46,6 @@ extension APIClient {
         print("UdacityURLFromParameters \(components.url!)")
         return components.url!
     }
-
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     // MARK: POST Method - Udacity
 
@@ -120,10 +116,6 @@ extension APIClient {
 
         return task
     }
-    
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     // MARK: DELETE Method - Udacity
     // TODO: FIX THIS SO IT WORKS WITH PROPER PARAMETERS
@@ -197,10 +189,6 @@ extension APIClient {
         
         return task
     }
-    
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     // MARK: GET Methods - Udacity
     // TODO: FIX THIS SO IT WORKS WITH PROPER PARAMETERS
