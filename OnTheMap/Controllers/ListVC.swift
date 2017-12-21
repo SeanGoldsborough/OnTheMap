@@ -75,7 +75,8 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
     @IBAction func refreshButton(_ sender: Any) {
         
         ActivityIndicatorOverlay.show(self.view, loadingText: "Locating...")
-        getStudents() 
+        getStudents()
+        print("ListVC refreshButton has been pressed")
     }
     
     

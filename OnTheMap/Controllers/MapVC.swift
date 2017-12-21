@@ -73,6 +73,7 @@ class MapVC: UIViewController {
     @IBAction func refreshButton(_ sender: Any) {
         ActivityIndicatorOverlay.show(self.view, loadingText: "Locating...")
         getStudents()
+        print("MapVC refreshButton has been pressed")
         
         }
     
