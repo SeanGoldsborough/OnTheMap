@@ -6,8 +6,8 @@
 //  Copyright © 2017 Sean Goldsborough. All rights reserved.
 //
 import Foundation
-
-extension ParseAPIClient {
+extension APIClient {
+//extension ParseAPIClient {
 
         
     // MARK: GET Convenience Methods - PARSE
@@ -16,7 +16,7 @@ extension ParseAPIClient {
             
             //1. Specify parameters, method (if has {key}), and HTTP body (if POST)
           
-            let parameters = [ParseAPIClient.URLQueryKeys.Limit: "100", ParseAPIClient.URLQueryKeys.Order: "-updatedAt"] as? [String: AnyObject]
+            let parameters = [APIClient.URLQueryKeys.Limit: "100", APIClient.URLQueryKeys.Order: "-updatedAt"] as? [String: AnyObject]
             var variant: String = URLPathVariants.StudentLocationPath
             
             /* 2. Make the request */
@@ -30,7 +30,7 @@ extension ParseAPIClient {
                     completionHandlerForParseGet([], error)
                 } else {
                     
-                    if let results = results?[ParseAPIClient.JSONResponseKeys.ParseResults] as? [[String:AnyObject]] {
+                    if let results = results?[APIClient.JSONResponseKeys.ParseResults] as? [[String:AnyObject]] {
                         
                         let students = StudentLocations.studentsFromResults(results)
                         print("Students from getStudentLocationsParse are: \(students)")
@@ -49,10 +49,10 @@ extension ParseAPIClient {
             //1. Specify parameters, method (if has {key}), and HTTP body (if POST)
             let variant: String = URLPathVariants.StudentLocationPath
             
-            var queryVariation = "{\"\(ParseAPIClient.URLQueryKeys.UniqueKey)\":\"\(UdacityPersonalData.sharedInstance().uniqueKey!)\"}"
+            var queryVariation = "{\"\(APIClient.URLQueryKeys.UniqueKey)\":\"\(UdacityPersonalData.sharedInstance().uniqueKey!)\"}"
            
             
-            var parameters = [ParseAPIClient.URLQueryKeys.Where: queryVariation] as? [String: AnyObject]
+            var parameters = [APIClient.URLQueryKeys.Where: queryVariation] as? [String: AnyObject]
             
             /* 2. Make the request */
             print("The getOneStudentLocationParse URL parameters are: \(parameters)")
@@ -70,7 +70,7 @@ extension ParseAPIClient {
                     print("The getOneStudentLocationParse results is: \(results)")
                     
                     guard let getResults = results!["results"] as? [[String:AnyObject]] else {
-                        print("Cannot find key '\(ParseAPIClient.JSONResponseKeys.UdacityPersonalDataUser)' in \(results!)")
+                        print("Cannot find key '\(APIClient.JSONResponseKeys.UdacityPersonalDataUser)' in \(results!)")
                         return
                     }
                     print("The getOneStudentLocationParse Guard/Let Get Results are: \(getResults)")
@@ -109,12 +109,12 @@ extension ParseAPIClient {
                     completionHandlerForPOSTUser(false, error)
                 } else {
                     
-                    if let objectID = results?[ParseAPIClient.JSONResponseKeys.ObjectId] as? String {
+                    if let objectID = results?[APIClient.JSONResponseKeys.ObjectId] as? String {
                         UdacityPersonalData.sharedInstance().objectId = objectID
                         print("ObjectID from JSON is: \(objectID)")
                         completionHandlerForPOSTUser(true, nil)
                     } else {
-                        print("Could not find \(ParseAPIClient.JSONResponseKeys.SessionID) in \(results)")
+                        print("Could not find \(APIClient.JSONResponseKeys.SessionID) in \(results)")
                         completionHandlerForPOSTUser(false, error)
                     }
                     
@@ -150,7 +150,7 @@ extension ParseAPIClient {
                         print("ObjectID from JSON is: \(objectID)")
                         completionHandlerForPUTUser(true, nil)
                     } else {
-                        print("Could not find \(ParseAPIClient.JSONResponseKeys.SessionID) in \(results)")
+                        print("Could not find \(APIClient.JSONResponseKeys.SessionID) in \(results)")
                         completionHandlerForPUTUser(false, error)
                     }
          

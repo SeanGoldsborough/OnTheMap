@@ -7,35 +7,8 @@
 //
 
 import Foundation
+extension APIClient {
 
-class ParseAPIClient : NSObject {
-    
-    // MARK: Properties
-    
-    // StudentLocation Array
-    var studentLocations: [StudentLocations] = [StudentLocations]()
-    var udacityDataArray = [UdacityPersonalData]()
-    
-    // shared session
-    var session = URLSession.shared
-    
-    // authentication state
-    var requestToken: String? = nil
-    var sessionID: String? = nil
-    var uniqueID: String? = nil
-    
-    var firstName: String? = nil
-    var lastName: String? = nil
-    
-    var latitude: String? = nil
-    var longitude: String? = nil
-    
-    // MARK: Initializers
-    
-    override init() {
-        super.init()
-    }
-    
     // MARK: Helpers
     
     // given raw JSON, return a usable Foundation object
@@ -59,9 +32,9 @@ class ParseAPIClient : NSObject {
     private func ParseURLFromParameters(_ parameters: [String:AnyObject], withPathExtension: String? = nil) -> URL {
         
         var components = URLComponents()
-        components.scheme = ParseAPIClient.Constants.APISchemeParse
-        components.host = ParseAPIClient.Constants.APIHostParse
-        components.path = ParseAPIClient.Constants.APIPathParse + (withPathExtension ?? "")
+        components.scheme = APIClient.Constants.APISchemeParse
+        components.host = APIClient.Constants.APIHostParse
+        components.path = APIClient.Constants.APIPathParse + (withPathExtension ?? "")
         components.queryItems = [URLQueryItem]()
         
         for (key, value) in parameters {
@@ -74,24 +47,6 @@ class ParseAPIClient : NSObject {
         
         print(components.url!)
         return components.url!
-    }
-    
-    // MARK: For UniqueKey and ObjectID - substitute the key for the value that is contained within the method name
-    func substituteKeyInMethod(_ method: String, key: String, value: String) -> String? {
-        if method.range(of: "{\(key)}") != nil {
-            return method.replacingOccurrences(of: "{\(key)}", with: value)
-        } else {
-            return nil
-        }
-    }
-    
-    // MARK: Shared Instance
-    
-    class func sharedInstance() -> ParseAPIClient {
-        struct Singleton {
-            static var sharedInstance = ParseAPIClient()
-        }
-        return Singleton.sharedInstance
     }
 
     

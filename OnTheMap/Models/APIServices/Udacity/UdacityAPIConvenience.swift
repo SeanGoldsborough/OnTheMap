@@ -7,8 +7,8 @@
 //
 
 import Foundation
-
-extension UdacityAPIClient {
+extension APIClient {
+//extension UdacityAPIClient {
     
     //value of requestToken is used/trickles down to be value of first parameter of loginWithToken, same for hostVC
     func authenticateUser( email: String, password: String, completionHandlerForAuth: @escaping (_ success: Bool, _ errorString: NSError?) -> Void) {

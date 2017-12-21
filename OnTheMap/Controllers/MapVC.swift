@@ -11,7 +11,7 @@ import UIKit
 import MapKit
 
 class MapVC: UIViewController {
-    
+        
     var students = StudentArray.sharedInstance.listOfStudents
 
     var annotations = [MKAnnotation]()

@@ -38,9 +38,6 @@
 		C6A14CAC1FB2B05A008E9C6C /* TabBarControllerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A14CAB1FB2B05A008E9C6C /* TabBarControllerViewController.swift */; };
 		C6A14CAE1FB2B330008E9C6C /* NavBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A14CAD1FB2B330008E9C6C /* NavBarController.swift */; };
 		C6AA024E1F9E45F70035A572 /* AddLocationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6AA024D1F9E45F70035A572 /* AddLocationVC.swift */; };
-		C6AA02731F9EB9CE0035A572 /* GCDBlackbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6AA02721F9EB9CE0035A572 /* GCDBlackbox.swift */; };
-		C6AA02741F9EB9CE0035A572 /* GCDBlackbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6AA02721F9EB9CE0035A572 /* GCDBlackbox.swift */; };
-		C6AA02751F9EB9CE0035A572 /* GCDBlackbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6AA02721F9EB9CE0035A572 /* GCDBlackbox.swift */; };
 		C6DF8AB01FD64DA40080B7E9 /* StudentLocations.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DF8AAF1FD64DA40080B7E9 /* StudentLocations.swift */; };
 		C6DF8AB21FD650DD0080B7E9 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DF8AB11FD650DD0080B7E9 /* Alerts.swift */; };
 		C6F30AA41FE83DAE00806721 /* StudentMapPins.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F30AA31FE83DAE00806721 /* StudentMapPins.swift */; };
@@ -112,7 +109,6 @@
 		C6A14CAD1FB2B330008E9C6C /* NavBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBarController.swift; sourceTree = "<group>"; };
 		C6AA024D1F9E45F70035A572 /* AddLocationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLocationVC.swift; sourceTree = "<group>"; };
 		C6AA026C1F9EB8320035A572 /* SearchDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDataSource.swift; sourceTree = "<group>"; };
-		C6AA02721F9EB9CE0035A572 /* GCDBlackbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDBlackbox.swift; sourceTree = "<group>"; };
 		C6DF8AAF1FD64DA40080B7E9 /* StudentLocations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentLocations.swift; sourceTree = "<group>"; };
 		C6DF8AB11FD650DD0080B7E9 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		C6F30AA31FE83DAE00806721 /* StudentMapPins.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentMapPins.swift; sourceTree = "<group>"; };
@@ -168,7 +164,6 @@
 			children = (
 				C63B68041F96601A00617549 /* AppDelegate.swift */,
 				C64522AF1FE9727000F5E7DA /* ToDoList.swift */,
-				C6AA02721F9EB9CE0035A572 /* GCDBlackbox.swift */,
 				C66546021FCA5C2000ECEFE3 /* GCD.swift */,
 				C63B68081F96601A00617549 /* Main.storyboard */,
 				C63B68411F96B09900617549 /* Models */,
@@ -207,8 +202,7 @@
 				C66546001FCA5B3400ECEFE3 /* UdacityPersonalData.swift */,
 				C6F30AA31FE83DAE00806721 /* StudentMapPins.swift */,
 				C6DF8AAF1FD64DA40080B7E9 /* StudentLocations.swift */,
-				C6AA02541F9EB64A0035A572 /* Parse */,
-				C6AA02531F9EB63D0035A572 /* Udacity */,
+				C6AA02531F9EB63D0035A572 /* APIServices */,
 				C63B684F1F96C74000617549 /* Photo.swift */,
 				C63B68501F96C74000617549 /* PhotoList.swift */,
 				C63B68511F96C74100617549 /* PhotoResponse.swift */,
@@ -283,24 +277,33 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		C6AA02531F9EB63D0035A572 /* Udacity */ = {
+		C6661C311FEB28EB004D2F7B /* Udacity */ = {
 			isa = PBXGroup;
 			children = (
 				C64522A71FE95DD000F5E7DA /* UdacityAPIClient.swift */,
-				C64522A91FE95E0C00F5E7DA /* UdacityAPIConstants.swift */,
 				C64522AB1FE95FBE00F5E7DA /* UdacityAPIConvenience.swift */,
-				C66545FC1FCA59EA00ECEFE3 /* APIClient.swift */,
-				C66545FE1FCA59F800ECEFE3 /* APIConstants.swift */,
+				C64522A91FE95E0C00F5E7DA /* UdacityAPIConstants.swift */,
 			);
 			path = Udacity;
+			sourceTree = "<group>";
+		};
+		C6AA02531F9EB63D0035A572 /* APIServices */ = {
+			isa = PBXGroup;
+			children = (
+				C66545FC1FCA59EA00ECEFE3 /* APIClient.swift */,
+				C66545FE1FCA59F800ECEFE3 /* APIConstants.swift */,
+				C6661C311FEB28EB004D2F7B /* Udacity */,
+				C6AA02541F9EB64A0035A572 /* Parse */,
+			);
+			path = APIServices;
 			sourceTree = "<group>";
 		};
 		C6AA02541F9EB64A0035A572 /* Parse */ = {
 			isa = PBXGroup;
 			children = (
 				C64522A31FE95A0B00F5E7DA /* ParseAPIClient.swift */,
-				C64522A51FE95A9D00F5E7DA /* ParseAPIConstants.swift */,
 				C64522AD1FE961CD00F5E7DA /* ParseAPIConvenience.swift */,
+				C64522A51FE95A9D00F5E7DA /* ParseAPIConstants.swift */,
 			);
 			path = Parse;
 			sourceTree = "<group>";
@@ -470,7 +473,6 @@
 				C6DF8AB21FD650DD0080B7E9 /* Alerts.swift in Sources */,
 				C63B68401F96971100617549 /* LoginVC.swift in Sources */,
 				C64522AC1FE95FBE00F5E7DA /* UdacityAPIConvenience.swift in Sources */,
-				C6AA02731F9EB9CE0035A572 /* GCDBlackbox.swift in Sources */,
 				C6AA024E1F9E45F70035A572 /* AddLocationVC.swift in Sources */,
 				C63B68571F96C7D900617549 /* FacebookAPI.swift in Sources */,
 				C62B8EE51F9A6874003D37FD /* UdacityGetPostMethods.swift in Sources */,
@@ -485,7 +487,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C63B681D1F96601B00617549 /* OnTheMapTests.swift in Sources */,
-				C6AA02741F9EB9CE0035A572 /* GCDBlackbox.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -494,7 +495,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C63B68281F96601B00617549 /* OnTheMapUITests.swift in Sources */,
-				C6AA02751F9EB9CE0035A572 /* GCDBlackbox.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

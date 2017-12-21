@@ -9,34 +9,8 @@
 
 import Foundation
 
-class UdacityAPIClient : NSObject {
-    
-    // MARK: Properties
-    
-    // StudentLocation Array
-    var studentLocations: [StudentLocations] = [StudentLocations]()
-    var udacityDataArray = [UdacityPersonalData]()
-    
-    // shared session
-    var session = URLSession.shared
-    
-    // authentication state
-    var requestToken: String? = nil
-    var sessionID: String? = nil
-    var uniqueID: String? = nil
-    
-    var firstName: String? = nil
-    var lastName: String? = nil
-    
-    var latitude: String? = nil
-    var longitude: String? = nil
-        
-    // MARK: Initializers
-    
-    override init() {
-        super.init()
-    }
-    
+extension APIClient {
+ 
     // MARK: Helpers
     
     // given raw JSON, return a usable Foundation object
@@ -55,28 +29,7 @@ class UdacityAPIClient : NSObject {
         completionHandlerForConvertData(parsedResult, nil)
         
     }
-    
-    // create a URL from parameters
-    private func ParseURLFromParameters(_ parameters: [String:AnyObject], withPathExtension: String? = nil) -> URL {
         
-        var components = URLComponents()
-        components.scheme = APIClient.Constants.APISchemeParse
-        components.host = APIClient.Constants.APIHostParse
-        components.path = APIClient.Constants.APIPathParse + (withPathExtension ?? "")
-        components.queryItems = [URLQueryItem]()
-        
-        for (key, value) in parameters {
-            let queryItem = URLQueryItem(name: key, value: "\(value)")
-            components.queryItems!.append(queryItem)
-        }
-        
-        components.percentEncodedQuery = components.percentEncodedQuery?
-            .replacingOccurrences(of: ":", with: "%3A")
-        
-        print(components.url!)
-        return components.url!
-    }
-    
     private func UdacityURLFromParameters(_ parameters: [String:AnyObject], withPathExtension: String? = nil) -> URL {
         
         var components = URLComponents()
@@ -93,32 +46,13 @@ class UdacityAPIClient : NSObject {
         print("UdacityURLFromParameters \(components.url!)")
         return components.url!
     }
-    
-    // MARK: For UniqueKey and ObjectID - substitute the key for the value that is contained within the method name
-    func substituteKeyInMethod(_ method: String, key: String, value: String) -> String? {
-        if method.range(of: "{\(key)}") != nil {
-            return method.replacingOccurrences(of: "{\(key)}", with: value)
-        } else {
-            return nil
-        }
-    }
-    
-    // MARK: Shared Instance
-    
-    class func sharedInstance() -> APIClient {
-        struct Singleton {
-            static var sharedInstance = APIClient()
-        }
-        return Singleton.sharedInstance
-    }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     // MARK: POST Method - Udacity
-   
-    
+
     func taskForPOSTMethodUdacity(_ method: String, parameters: [String:AnyObject], jsonBody: String, completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
         
         /* 1. Set the parameters */
@@ -157,8 +91,6 @@ class UdacityAPIClient : NSObject {
             }
           
             let newData = data?.subdata(in: range)
-            
-            
             
             /* GUARD: Was there an error? */
             guard (error == nil) else {
