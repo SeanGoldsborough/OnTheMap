@@ -71,9 +71,9 @@ class AlertView {
         let alertVC = UIAlertController(title: "Confirm Overwrite Your Current Location?".capitalized, message: "", preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "Cancel", style:.default, handler: nil)
         let okAction = UIAlertAction(title: "OK", style:.default, handler: {(action) -> Void in
-            let viewControllers: [UIViewController] = view.navigationController!.viewControllers as [UIViewController];
-            print("vc count is:\(viewControllers.count)");
-            view.navigationController!.popToViewController(viewControllers[viewControllers.count - 1], animated: true);
+//            let viewControllers: [UIViewController] = view.navigationController!.viewControllers as [UIViewController];
+//            print("vc count is:\(viewControllers.count)");
+//            view.navigationController!.popToViewController(viewControllers[viewControllers.count - 1], animated: true);
             tabVC.modalTransitionStyle = .crossDissolve
             view.present(tabVC, animated: true, completion: nil)
         })

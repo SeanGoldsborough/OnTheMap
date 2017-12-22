@@ -130,8 +130,8 @@ class LoginVC: UIViewController {
     }
     
     func completeLogIn() {
-        print("completeLogIn is happening")
-        let nextStoryboard = storyboard?.instantiateViewController(withIdentifier: "NavBarController")
+        //print("completeLogIn is happening")
+        let nextStoryboard = storyboard?.instantiateViewController(withIdentifier: "TabBarController")
         self.present(nextStoryboard!, animated: true, completion: nil)
         
     }

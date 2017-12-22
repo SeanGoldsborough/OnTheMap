@@ -14,7 +14,11 @@ class AddLocationVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var websiteTF: UITextField!
     @IBAction func cancelAddLoca(_ sender: Any) {
         ActivityIndicatorOverlay.show(self.view, "")
-        self.navigationController!.popViewController(animated: true)
+        //self.navigationController!.popViewController(animated: true)
+        let tabVC = self.storyboard!.instantiateViewController(withIdentifier: "TabBarController")
+            tabVC.modalTransitionStyle = .crossDissolve
+            self.present(tabVC, animated: true, completion: nil)
+        
     }
     
     @objc func hideIndicator() {
