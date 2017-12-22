@@ -55,19 +55,19 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
         let uniqueKey = UdacityPersonalData.sharedInstance().uniqueKey
         var studentsArray = ["10081758676"]
         let moreStudents = StudentArray.sharedInstance.listOfStudents
-        print("more students: \(moreStudents)")
+       
         
         for key in moreStudents {
-            print(key.uniqueKey)
+            
             studentsArray.append(key.uniqueKey!)
         }
         
         if studentsArray.contains(uniqueKey!) {
-            print("students array contains value for current user")
+           
             AlertView.addLocationAlert(view: self, alertTitle: "Update Location", alertMessage: "Would you like update a location?")
             
         } else {
-            print("current user has not yet created a location")
+            
             AlertView.addLocationAlert(view: self, alertTitle: "New Location", alertMessage: "Would you like to add a new location?")
         }
     }
@@ -76,7 +76,7 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
         
         ActivityIndicatorOverlay.show(self.view, loadingText: "Locating...")
         getStudents()
-        print("ListVC refreshButton has been pressed")
+        
     }
     
     
@@ -115,19 +115,17 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("xxx students array:\(self.students)")
     }
     
     func getStudents() {
         APIClient.sharedInstance().getStudentLocationsParse { (studentsResult, error) in
-            print("students array class is: \(self.students)")
             
             performUIUpdatesOnMain {
                 ActivityIndicatorOverlay.show(self.view, loadingText: "Loading...")
             }
             
             guard studentsResult != nil else {
-                print("1There was an error with your request -getStudentsListVC: \(error)")
+                
                 performUIUpdatesOnMain {
                     ActivityIndicatorOverlay.hide()
                     AlertView.alertPopUp(view: self, alertMessage: "Networking Error0")
@@ -142,7 +140,7 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
                     performUIUpdatesOnMain {
                         self.tableView.reloadData()
                         ActivityIndicatorOverlay.hide()
-                        print("printing students array:\(self.students)")
+                       
                         print("the student array class is now: \(StudentArray.sharedInstance.listOfStudents)")
                     }
                     
@@ -154,7 +152,7 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
         APIClient.sharedInstance().getPublicUserDataUdacity { (result, error) in
             
             guard result != nil else {
-                print("There was an error with your request - getPublicUserDataUdacity: \(error)")
+                
                 performUIUpdatesOnMain {
                     AlertView.alertPopUp(view: self, alertMessage: "Networking Error1")
                 }
@@ -167,7 +165,7 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
         APIClient.sharedInstance().getOneStudentLocationParse({ (result, error) in
             
             guard result != nil else {
-                print("There was an error with your request - getOneStudent: \(error)")
+                
                 performUIUpdatesOnMain {
                     AlertView.alertPopUp(view: self, alertMessage: "Networking Error2")
                 }
@@ -187,7 +185,6 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
     func fetchData() {
         
         getStudents()
-        print("the students array is: \(students)")
         
         performUIUpdatesOnMain {
             self.updateView()
@@ -197,7 +194,6 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
     }
     
     func updateView() {
-        print("updateview called")
         performUIUpdatesOnMain {
             self.tableView.reloadData()
         }
@@ -249,7 +245,7 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
         let studentWeb = studentFirstName.mediaURL
         
         let url = URL(string:studentWeb!)
-        print(url)
+        
         UIApplication.shared.open(url!, options: [:], completionHandler: nil)
         
     }

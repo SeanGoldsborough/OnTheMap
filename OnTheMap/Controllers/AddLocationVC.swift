@@ -12,9 +12,11 @@ class AddLocationVC: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var newLocationTF: UITextField!
     @IBOutlet weak var websiteTF: UITextField!
+    
+    @IBOutlet weak var findLocationButton: UIButton!
+    
     @IBAction func cancelAddLoca(_ sender: Any) {
         ActivityIndicatorOverlay.show(self.view, "")
-        //self.navigationController!.popViewController(animated: true)
         let tabVC = self.storyboard!.instantiateViewController(withIdentifier: "TabBarController")
             tabVC.modalTransitionStyle = .crossDissolve
             self.present(tabVC, animated: true, completion: nil)
@@ -28,13 +30,10 @@ class AddLocationVC: UIViewController, UITextFieldDelegate {
         if newLocationTF.text == "" && websiteTF.text == "" {
             AlertView.alertMessage(view: self, title: "ERROR", message: "Invalid Location or Website", numberOfButtons: 1, leftButtonTitle: "OK", leftButtonStyle: 1, rightButtonTitle: "Cancel", rightButtonStyle: 0)
         } else {
-            
             let myVC = storyboard?.instantiateViewController(withIdentifier: "ConfirmVC") as! ConfirmVC
             myVC.locationPassed = newLocationTF.text!
             myVC.websitePassed = websiteTF.text!
             navigationController?.pushViewController(myVC, animated: true)
-
-            print("Valid Location and/or Website Entered")
         }
     }
     
@@ -42,9 +41,6 @@ class AddLocationVC: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        print(APIClient.sharedInstance().uniqueID!)
-        
     
         newLocationTF.delegate = self
         websiteTF.delegate = self
@@ -53,11 +49,11 @@ class AddLocationVC: UIViewController, UITextFieldDelegate {
         subscribeToNotification(.UIKeyboardWillHide, selector: #selector(keyboardWillHide))
         subscribeToNotification(.UIKeyboardDidShow, selector: #selector(keyboardDidShow))
         subscribeToNotification(.UIKeyboardDidHide, selector: #selector(keyboardDidHide))
+
         
         tabBarController?.tabBar.isHidden = true
         navigationController?.navigationBar.backItem?.backBarButtonItem?.title = "Cancel"
-        
-        
+  
     }
     
     override func viewWillDisappear(_ animated: Bool) {

@@ -285,6 +285,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="findLocationButton" destination="58R-Dg-8DI" id="U4U-Y0-DMt"/>
                         <outlet property="newLocationTF" destination="Vcg-pL-jUC" id="wrB-yf-gah"/>
                         <outlet property="websiteTF" destination="SmP-1J-779" id="Tqw-FX-dom"/>
                     </connections>

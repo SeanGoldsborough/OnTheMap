@@ -34,7 +34,6 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
         let uniqueKey = UdacityPersonalData.sharedInstance().uniqueKey
         var studentsArray = ["10081758676"]
         let moreStudents = StudentArray.sharedInstance.listOfStudents
-        print("more students: \(moreStudents)")
         
         for key in moreStudents {
             print(key.uniqueKey)
@@ -42,12 +41,8 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
         }
         
         if studentsArray.contains(uniqueKey!) {
-            print("calling ParsePUTFunction")
             
             APIClient.sharedInstance().putUserPARSE(mapString: self.locationPassed, studentURL: self.websitePassed) { (success, error) in
-                print("pressed PUT student!")
-                print("PUT student success is...\(success)")
-                print("PUT student error is...\(error)")
                 
                 if success == true {
                     performUIUpdatesOnMain {
@@ -65,18 +60,14 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
                 }
             }
         } else {
-            print("calling ParsePOSTFunction")
+            //print("calling ParsePOSTFunction")
             
             APIClient.sharedInstance().postUserPARSE(mapString: self.locationPassed, studentURL: self.websitePassed) { (success, error) in
-                print("pressed post student!")
-                print("post student success is...\(success)")
-                print("post student error is...\(error)")
                 
                 if success == true {
                     performUIUpdatesOnMain {
                         AlertView.overwriteLocation(view: self, tabBarView: TabBarControllerViewController())
                         ActivityIndicatorOverlay.hide()
-                        print("will log in now...\(success)")
                         self.finishButton.isEnabled = true
                     }
                 } else {
@@ -96,10 +87,6 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
         
         cityLabel.text = locationPassed.capitalized
         
-        print(websitePassed)
-        
-        print("printing the objectID from udacity personal data\(UdacityPersonalData.sharedInstance().objectId)")
-        
         performUIUpdatesOnMain {
             ActivityIndicatorOverlay.show(self.mapView, loadingText: "Locating...")
             self.finishButton.isEnabled = false
@@ -108,14 +95,14 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
         locationUpdate( { (results, error) in
 
             if let error = error {
-                print("locationUpdate Error is: \(error)")
+                
                 performUIUpdatesOnMain {
                     AlertView.popToAddLocationVC(view: self)
                     ActivityIndicatorOverlay.hide()
                 }
             } else if results == true {
                 //completionHandlerForGeocoding(true, nil)
-                print("locationUpdate results is: \(results)")
+              
             }
         })
     }
@@ -144,21 +131,18 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        print(#function)
+        
         let url = URL(string:websitePassed)
         if control == view.rightCalloutAccessoryView {
             UIApplication.shared.open(url!, options: [:], completionHandler: nil)
         }
     }
 
-    
-    // TODO: Add completion handler to this func so when done it stops the activity view from animated if success and if error present ALERTsd
-    //THIS IS WHERE WE CONVERT STRING TO COORDS!
+   
+    //THIS IS WHERE WE CONVERT STRING TO COORDS
     func locationUpdate(_ completionHandlerForGeocoding: @escaping (_ success: Bool, _ errorString: Error?) -> Void) {
         
         var parsedResult: AnyObject! = nil
-        
-        print("THIS IS WHERE WE CONVERT STRING TO COORDS!")
         
         guard let mapView = mapView,
             let searchText = cityLabel.text else { return }
@@ -171,38 +155,25 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
         search.start { response, error in
             guard let response = response else {
                 completionHandlerForGeocoding(false, error)
-                print("There was an error searching for: error: ")
-
+                
                 return
             }
             
             for item in response.mapItems {
-                print(searchText)
-                print("item in map search response is: \(item)")
-                print("item in map search lat is: \(item.placemark.coordinate.latitude)")
-                print("item in map search long is: \(item.placemark.coordinate.longitude)")
-                
-                
+
                 UdacityPersonalData.sharedInstance().mapString = searchText
                 UdacityPersonalData.sharedInstance().latitude = item.placemark.coordinate.latitude
                 UdacityPersonalData.sharedInstance().longitude = item.placemark.coordinate.longitude
                 UdacityPersonalData.sharedInstance().mediaURL = self.websitePassed
                 
-                print("The value of UdacityPersonalData lat is now: \(UdacityPersonalData.sharedInstance().mapString!)")
-                print("The value of UdacityPersonalData lat is now: \(UdacityPersonalData.sharedInstance().latitude!)")
-                print("The value of UdacityPersonalData long is now: \(UdacityPersonalData.sharedInstance().longitude!)")
-                print("The value of UdacityPersonalData mediaURL is now: \(UdacityPersonalData.sharedInstance().mediaURL!)")
-                print("The value of UdacityPersonalData objectID is now: \(UdacityPersonalData.sharedInstance().objectId!)")
-                
                 self.matchingItems.append(item as MKMapItem)
-                print("Matching items = \(self.matchingItems.count)")
                 
                 let annotation = MKPointAnnotation()
                 annotation.coordinate = item.placemark.coordinate
                 annotation.title = UdacityPersonalData.sharedInstance().firstName! + " " + UdacityPersonalData.sharedInstance().lastName!
                 annotation.subtitle = UdacityPersonalData.sharedInstance().mediaURL
                 self.mapView.addAnnotation(annotation)
-                //self.mapView.setRegion(annotation.coordinate, animated: true)
+                
                 let initialLocation = CLLocation(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude)
                 let regionRadius: CLLocationDistance = 1000
                         func centerMapOnLocation(location: CLLocation) {

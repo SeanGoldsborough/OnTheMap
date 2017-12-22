@@ -47,24 +47,21 @@ class MapVC: UIViewController {
     }
     
     @IBAction func addPinButton(_ sender: Any) {
-        print("addPin has been pressed")
+       
         
         let uniqueKey = UdacityPersonalData.sharedInstance().uniqueKey
         var studentsArray = ["10081758676"]
         let moreStudents = StudentArray.sharedInstance.listOfStudents
-        print("more students: \(moreStudents)")
+        
         
         for key in moreStudents {
-            print(key.uniqueKey)
             studentsArray.append(key.uniqueKey!)
         }
         
         if studentsArray.contains(uniqueKey!) {
-            print("students array contains value for current user")
             AlertView.addLocationAlert(view: self, alertTitle: "Update Location", alertMessage: "Would you like update a location?")
             
         } else {
-            print("current user has not yet created a location")
             AlertView.addLocationAlert(view: self, alertTitle: "New Location", alertMessage: "Would you like to add a new location?")
         }
         
@@ -73,7 +70,7 @@ class MapVC: UIViewController {
     @IBAction func refreshButton(_ sender: Any) {
         ActivityIndicatorOverlay.show(self.view, loadingText: "Locating...")
         getStudents()
-        print("MapVC refreshButton has been pressed")
+       
         
         }
     
@@ -97,7 +94,7 @@ class MapVC: UIViewController {
             
             if let students = studentsResults {
                 
-                self.students = students //as in the constant from if/let statement which = movies returned by comp hand
+                self.students = students
                 StudentArray.sharedInstance.listOfStudents = students
                 
                 if students.count < 1 {
@@ -105,7 +102,6 @@ class MapVC: UIViewController {
                     performUIUpdatesOnMain {
                         AlertView.alertPopUp(view: self, alertMessage: "Networking Error on GET All Students")
                         ActivityIndicatorOverlay.hide()
-                        
                     }
                     
                 } else {
@@ -117,9 +113,6 @@ class MapVC: UIViewController {
                     }
                 }
             } else {
-
-                print("There was an error with your request: getStudents: \(error)")
-                
                 performUIUpdatesOnMain {
                     AlertView.alertPopUp(view: self, alertMessage: "Networking Error on GET All Students")
                     ActivityIndicatorOverlay.hide()
@@ -131,8 +124,6 @@ class MapVC: UIViewController {
     func getPublicUserData() {
         
         APIClient.sharedInstance().getPublicUserDataUdacity { (result, error) in
-            
-            print("printing results from getPublicDataUdacity:\(result)")
             
             if let results = result {
                 print("printing results from getPublicDataUdacity:\(results)")
@@ -150,18 +141,12 @@ class MapVC: UIViewController {
     
     func populateMap() {
         self.annotations.removeAll()
-        print("populateMap has been called:\(populateMap)")
         let studentsArray = students
-        print("printing students array MAP:\(studentsArray)")
-        
+       
         for dictionary in studentsArray {
             
             let studentData = dictionary
-            
-            print("printing studentFirstName:\(studentData)")
-            
             let coordinate = CLLocationCoordinate2D(latitude: dictionary.latitude!, longitude: dictionary.longitude!)
-            
             let firstName = studentData.firstName!
             let lastName = studentData.lastName!
             let fullName = firstName + " " + lastName as! String
@@ -169,7 +154,6 @@ class MapVC: UIViewController {
             
             let annotation = StudentMapPins(title: fullName, subTitle: mediaURL, coordinate: coordinate)
             
-//            self.annotations.removeAll()
             self.annotations.append(annotation)
         }
         print("Annotations array from PopulateMapFunc = \(self.annotations)")
@@ -185,7 +169,6 @@ class MapVC: UIViewController {
         APIClient.sharedInstance().getOneStudentLocationParse({ (result, error) in
             
             if error != nil{
-                print("1getOneStudentThe results of your request: \(error)")
                 performUIUpdatesOnMain {
                     AlertView.alertPopUp(view: self, alertMessage: "Networking Error on GET One Student")
                 }
@@ -196,12 +179,6 @@ class MapVC: UIViewController {
             }
         })
     }
-    
-    func printFunc() {
-        print("printFunc has been called and should reload mapView")
-        self.populateMap()
-    }
-    
 }
 
 
@@ -235,8 +212,6 @@ extension MapVC: MKMapViewDelegate {
         let location = view.annotation as! StudentMapPins
         
         let url  = URL(string: "\(location.subTitle!)")
-        print(url)
-        print(location.subTitle)
         UIApplication.shared.open(url!, options: [:], completionHandler: nil)
     }
 }

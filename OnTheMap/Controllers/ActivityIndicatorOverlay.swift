@@ -18,7 +18,7 @@ class ActivityIndicatorOverlay {
     
     static func show() {
         guard let currentMainWindow = UIApplication.shared.keyWindow else {
-            print("No main window.")
+            
             return
             
         }
@@ -26,11 +26,6 @@ class ActivityIndicatorOverlay {
     }
     
     static func show(_ currentMainWindow: UIView, _ loadingText: String) {
-//        guard let currentMainWindow = UIApplication.shared.keyWindow else {
-//            print("No main window.")
-//            return
-//        }
-       // let currentMainWindow = UIView
         
         show(currentMainWindow, loadingText: loadingText)
     }
@@ -40,33 +35,29 @@ class ActivityIndicatorOverlay {
     }
     
     static func show(_ overlayTarget : UIView, loadingText: String?) {
-        // Clear it first in case it was already shown
+
         hide()
         
-        // register device orientation notification
         NotificationCenter.default.addObserver(
             self, selector:
             #selector(ActivityIndicatorOverlay.rotated),
             name: NSNotification.Name.UIDeviceOrientationDidChange,
             object: nil)
         
-        // Create the overlay
+        // Create overlay
         
         let overlay = UIView(frame: overlayTarget.frame)
         overlay.center = overlayTarget.center
-        print("overlay center is: \(overlay.center)")
         overlay.alpha = 0
         overlay.backgroundColor = UIColor.black
         overlayTarget.addSubview(overlay)
-        //overlayTarget.bringSubview(toFront: overlay)
-        
-        // Create and animate the activity indicator
+        //Indicator
         let indicator = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
         indicator.center = overlay.center
         indicator.startAnimating()
         overlay.addSubview(indicator)
         
-        // Create label
+        // Label
         if let textString = loadingText {
             let label = UILabel()
             label.text = textString
@@ -76,7 +67,7 @@ class ActivityIndicatorOverlay {
             overlay.addSubview(label)
         }
         
-        // Animate the overlay to show
+        // Animate overlay
         UIView.beginAnimations(nil, context: nil)
         UIView.setAnimationDuration(0.5)
         overlay.alpha = overlay.alpha > 0 ? 0 : 0.5
@@ -89,8 +80,7 @@ class ActivityIndicatorOverlay {
     
     static func hide() {
         if currentOverlay != nil {
-            
-            // unregister device orientation notification
+        
             NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIDeviceOrientationDidChange,                                                      object: nil)
             
             currentOverlay?.removeFromSuperview()
@@ -101,7 +91,7 @@ class ActivityIndicatorOverlay {
     }
     
     @objc private static func rotated() {
-        // handle device orientation change by reactivating the loading indicator
+        // handle device rotation
         if currentOverlay != nil {
             show(currentOverlayTarget!, loadingText: currentLoadingText)
         }

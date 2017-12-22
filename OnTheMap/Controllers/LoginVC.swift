@@ -36,7 +36,6 @@ class LoginVC: UIViewController {
                         self.completeLogIn()
                         self.activityOverlay?.isHidden = true
                         self.activityIndicator?.stopAnimating()
-                        print("will log in now...")
                     }
                     
                 } else {
@@ -48,9 +47,6 @@ class LoginVC: UIViewController {
                 }
             }
             
-            print("OKAY")
-            print("Email address is valid")
-            
         } else if emailTextField?.text == "" || passwordTextField?.text == "" {
             AlertView.alertMessage(view: self, title: "No User Name or Password", message: "Please try again.", numberOfButtons: 1, leftButtonTitle: "OK", leftButtonStyle: 1, rightButtonTitle: "Cancel", rightButtonStyle: 0)
             performUIUpdatesOnMain {
@@ -60,7 +56,6 @@ class LoginVC: UIViewController {
             
         } else if isEmailAddressValid == false {
             
-            print("Email address is not valid")
             AlertView.alertMessage(view: self, title: "Email/Password Not Valid", message: "Please try again.", numberOfButtons: 1, leftButtonTitle: "OK", leftButtonStyle: 1, rightButtonTitle: "Cancel", rightButtonStyle: 0)
             performUIUpdatesOnMain {
                 self.activityOverlay?.isHidden = true
@@ -130,10 +125,8 @@ class LoginVC: UIViewController {
     }
     
     func completeLogIn() {
-        //print("completeLogIn is happening")
         let nextStoryboard = storyboard?.instantiateViewController(withIdentifier: "TabBarController")
         self.present(nextStoryboard!, animated: true, completion: nil)
-        
     }
 
 }
