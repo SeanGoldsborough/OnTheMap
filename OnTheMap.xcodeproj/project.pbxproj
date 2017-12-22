@@ -16,7 +16,6 @@
 		C63B68281F96601B00617549 /* OnTheMapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63B68271F96601B00617549 /* OnTheMapUITests.swift */; };
 		C63B68361F9669B000617549 /* ListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63B68351F9669B000617549 /* ListVC.swift */; };
 		C63B68381F96752C00617549 /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63B68371F96752C00617549 /* MapVC.swift */; };
-		C63B683C1F96914800617549 /* TestTextDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63B683B1F96914800617549 /* TestTextDelegate.swift */; };
 		C63B68401F96971100617549 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63B683F1F96971100617549 /* LoginVC.swift */; };
 		C64522A41FE95A0B00F5E7DA /* ParseAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C64522A31FE95A0B00F5E7DA /* ParseAPIClient.swift */; };
 		C64522A81FE95DD000F5E7DA /* UdacityAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C64522A71FE95DD000F5E7DA /* UdacityAPIClient.swift */; };
@@ -69,7 +68,6 @@
 		C63B68291F96601B00617549 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C63B68351F9669B000617549 /* ListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListVC.swift; sourceTree = "<group>"; };
 		C63B68371F96752C00617549 /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
-		C63B683B1F96914800617549 /* TestTextDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestTextDelegate.swift; sourceTree = "<group>"; };
 		C63B683F1F96971100617549 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		C64522A31FE95A0B00F5E7DA /* ParseAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseAPIClient.swift; sourceTree = "<group>"; };
 		C64522A71FE95DD000F5E7DA /* UdacityAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UdacityAPIClient.swift; sourceTree = "<group>"; };
@@ -197,7 +195,6 @@
 				C63B68351F9669B000617549 /* ListVC.swift */,
 				C6AA024D1F9E45F70035A572 /* AddLocationVC.swift */,
 				C65AE7DE1FB0D2580046DEFB /* ConfirmVC.swift */,
-				C63B683B1F96914800617549 /* TestTextDelegate.swift */,
 				C65AE7E41FB104BD0046DEFB /* ActivityIndicatorOverlay.swift */,
 				C6DF8AB11FD650DD0080B7E9 /* Alerts.swift */,
 			);
@@ -378,7 +375,6 @@
 				C65AE7DF1FB0D2580046DEFB /* ConfirmVC.swift in Sources */,
 				C63B68361F9669B000617549 /* ListVC.swift in Sources */,
 				C65AE7E51FB104BD0046DEFB /* ActivityIndicatorOverlay.swift in Sources */,
-				C63B683C1F96914800617549 /* TestTextDelegate.swift in Sources */,
 				C6F30AA41FE83DAE00806721 /* StudentMapPins.swift in Sources */,
 				C63B680D1F96601A00617549 /* OnTheMap.xcdatamodeld in Sources */,
 				C64522A81FE95DD000F5E7DA /* UdacityAPIClient.swift in Sources */,

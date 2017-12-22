@@ -10,8 +10,7 @@ import Foundation
 import MapKit
 import Contacts
 
-// MARK: Swift 4
-class StudentArray : NSObject, Decodable {
+class StudentArray : NSObject {
     public var listOfStudents : [StudentLocations] = []
  
     static let sharedInstance = StudentArray()
@@ -20,7 +19,7 @@ class StudentArray : NSObject, Decodable {
 // MARK: Shared Instance
 
 
-struct StudentLocations : Decodable {
+struct StudentLocations {
     
     public var createdAt : String?
     public var firstName : String?
@@ -34,8 +33,6 @@ struct StudentLocations : Decodable {
     public var updatedAt : String?
     
     init?(dictionary: [String:AnyObject]) {
-        // How do you get data from json decoding into json response keys?
-        //title = dictionary[TMDBClient.JSONResponseKeys.MovieTitle] as! String
         
         createdAt = dictionary["createdAt"] as? String ?? "no value"
         firstName = dictionary["firstName"] as? String ?? "[No First Name]"
@@ -60,14 +57,6 @@ struct StudentLocations : Decodable {
             studentList.append(StudentLocations(dictionary: result)!)
             
         }
-
-        // TODO: SORTING IN REV CHRONOLOGICAL ORDER IS IMPLEMENTED WITH THE URL QUERY ON PARSE GET
-        //students.sort { $0.updatedAt < $1.updatedAt }
-        //students.sort(by: { $0.updatedAt!.compare($1.updatedAt!) == .orderedDescending })
-        
-        print(students)
-        print("student list array is: \(studentList)")
-        print("student list array uniqueKeys are: \(StudentLocations.CodingKeys.uniqueKey)")
         return students
     }
      

@@ -7,7 +7,7 @@
 //
 
 import Foundation
-// TODO: Swift 4 CODABLE
+
 class UdacityPersonalData : NSObject {
     
     public var createdAt : Date?
@@ -20,21 +20,6 @@ class UdacityPersonalData : NSObject {
     public var objectId : String? = ""
     public var uniqueKey : String? = ""
     public var updatedAt : Date?
-    
-//        init?(udacityPersonalDataDict: [String:AnyObject]) {
-//    
-//            createdAt = udacityPersonalDataDict["createdAt"] as? Date
-//            firstName = udacityPersonalDataDict["firstName"] as? String
-//            lastName = udacityPersonalDataDict["lastName"] as? String
-//            latitude = udacityPersonalDataDict["latitude"] as? Double
-//            longitude = udacityPersonalDataDict["longitude"] as? Double
-//            mapString = udacityPersonalDataDict["mapString"] as? String
-//            mediaURL = udacityPersonalDataDict["mediaURL"] as? String
-//            objectId = udacityPersonalDataDict["objectId"] as? String ?? ""
-//            uniqueKey = udacityPersonalDataDict["uniqueKey"] as? String
-//            updatedAt = udacityPersonalDataDict["updatedAt"] as? Date
-//        }
-
     
     // MARK: Shared Instance
     

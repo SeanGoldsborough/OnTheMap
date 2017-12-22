@@ -111,12 +111,18 @@ class LoginVC: UIViewController {
         
         emailTextField?.text = ""
         passwordTextField?.text = ""
+ 
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        //subscribeToKeyboardNotifications()
         
         subscribeToNotification(.UIKeyboardWillShow, selector: #selector(keyboardWillShow))
         subscribeToNotification(.UIKeyboardWillHide, selector: #selector(keyboardWillHide))
         subscribeToNotification(.UIKeyboardDidShow, selector: #selector(keyboardDidShow))
         subscribeToNotification(.UIKeyboardDidHide, selector: #selector(keyboardDidHide))
-        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -142,28 +148,28 @@ extension LoginVC: UITextFieldDelegate {
     }
     
     
-    // MARK: Show/Hide Keyboard
-    
+//    // MARK: Show/Hide Keyboard
+//
     @objc func keyboardWillShow(_ notification: Notification) {
         if !keyboardIsShown {
-            view.frame.origin.y == keyboardHeight(notification)
+            view.frame.origin.y -= keyboardHeight(notification) / 2.5
         }
     }
-    
+
     @objc func keyboardWillHide(_ notification: Notification) {
         if keyboardIsShown {
-            view.frame.origin.y == keyboardHeight(notification)
+            view.frame.origin.y += keyboardHeight(notification) / 2.5
         }
     }
-    
+
     @objc func keyboardDidShow(_ notification: Notification) {
         keyboardIsShown = true
     }
-    
+
     @objc func keyboardDidHide(_ notification: Notification) {
         keyboardIsShown = false
     }
-    
+
     func keyboardHeight(_ notification: Notification) -> CGFloat {
         let userInfo = (notification as NSNotification).userInfo
         let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
