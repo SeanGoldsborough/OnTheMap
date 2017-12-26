@@ -4,8 +4,6 @@
 //
 //  Created by Sean Goldsborough on 11/21/17.
 //  Copyright © 2017 Sean Goldsborough. All rights reserved.
-// MARK: NEED: UDACITY(XPOST METHOD, XPOST CONVENIENCES, XDELETE METHOD, XDELETE CONVENIENCES, XGET METHOD, XGET CONVENIENCES)
-// MARK: NEED: PARSE(XGET METHOD, XGET CONVENIENCES, POST METHOD, POST CONVENIENCES, PUT METHOD, PUT CONVENIENCES)
 
 import Foundation
 
@@ -90,7 +88,7 @@ extension APIClient {
     }
     
     // MARK: DELETE Method - Udacity
-    // TODO: FIX THIS SO IT WORKS WITH PROPER PARAMETERS
+
     func taskForDELETEMethodUdacity(_ method: String, parameters: [String:AnyObject], jsonBody: String, completionHandlerForDELETE: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
         
         /* 1. Set the parameters */
@@ -157,7 +155,7 @@ extension APIClient {
 
     
     // MARK: GET Methods - Udacity
-    // TODO: FIX THIS SO IT WORKS WITH PROPER PARAMETERS
+
     func taskForGETMethodUdacity(variant: String, parameters: [String:AnyObject], completionHandlerForUdacityGET: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
         
         /* 1. Set the parameters */

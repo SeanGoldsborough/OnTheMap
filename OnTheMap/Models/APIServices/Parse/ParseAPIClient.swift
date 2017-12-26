@@ -33,7 +33,7 @@ extension APIClient {
 
     
     // MARK: GET Methods - Parse
-    // TODO: FIX THIS SO IT WORKS WITH PROPER PARAMETERS
+
     func taskForGETMethodParse(variant: String, parameters: [String:AnyObject], completionHandlerForParseGET: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
         
         /* 1. Set the parameters */
@@ -81,7 +81,7 @@ extension APIClient {
     
     
     // MARK: POST Method - PARSE
-    // TODO: FIX THIS SO IT WORKS WITH PROPER PARAMETERS
+
     func taskForPOSTMethodParse(_ variant: String, parameters: [String:AnyObject], jsonBody: String, completionHandlerForPOSTParse: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
         
         /* 1. Set the parameters */
@@ -132,7 +132,7 @@ extension APIClient {
 
     
     // MARK: PUT Method - PARSE
-    // TODO: FIX THIS SO IT WORKS WITH PROPER PARAMETERS
+
     func taskForPUTMethodPARSE(_ variant: String, parameters: [String:AnyObject], jsonBody: String, completionHandlerForPUT: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
         
         /* 1. Set the parameters */

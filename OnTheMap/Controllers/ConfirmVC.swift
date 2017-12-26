@@ -60,7 +60,6 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
                 }
             }
         } else {
-            //print("calling ParsePOSTFunction")
             
             APIClient.sharedInstance().postUserPARSE(mapString: self.locationPassed, studentURL: self.websitePassed) { (success, error) in
                 
