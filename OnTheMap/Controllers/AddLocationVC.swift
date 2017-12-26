@@ -78,13 +78,13 @@ class AddLocationVC: UIViewController, UITextFieldDelegate {
     
     @objc func keyboardWillShow(_ notification: Notification) {
         if !keyboardIsShown {
-            view.frame.origin.y -= keyboardHeight(notification) / 2.5
+            view.frame.origin.y -= keyboardHeight(notification) / 2.4
         }
     }
     
     @objc func keyboardWillHide(_ notification: Notification) {
         if keyboardIsShown {
-            view.frame.origin.y += keyboardHeight(notification) / 2.5
+            view.frame.origin.y += keyboardHeight(notification) / 2.4
         }
     }
     

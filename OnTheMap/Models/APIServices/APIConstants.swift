@@ -14,7 +14,6 @@ extension APIClient {
     struct Constants {
         
         // MARK: API Keys
-        //        static let APIKeyTMDB = "cec14169bb6921f04d7278bbc2277288"
         static let APIKeyUdacity = "cec14169bb6921f04d7278bbc2277288"
         static let APIKeyUdacityNil = ""
         static let APIKeyParse = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
@@ -43,7 +42,6 @@ extension APIClient {
         static let ParseUniqueID = "id"
         
         // MARK: Udacity UsersID
-        //static let UdacityUserID = "/users/{user_id}"
         static let UdacityUserID = "/users/"
         
         // MARK: Udacity POST Session
@@ -86,7 +84,7 @@ extension APIClient {
     
     // MARK: JSON Response Keys
     struct JSONResponseKeys {
-        // TODO: To shush compiler for now...delete this when you build your funcs in APIClient
+        
         static let SessionID = "sessionId"
         
         

@@ -25,8 +25,6 @@ extension APIClient {
             let queryItem = URLQueryItem(name: key, value: "\(value)")
             components.queryItems!.append(queryItem)
         }
-
-        print("UdacityURLFromParameters \(components.url!)")
         return components.url!
     }
     
@@ -44,9 +42,6 @@ extension APIClient {
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = jsonBody.data(using: String.Encoding.utf8)
-
-        print("The POST Udacity request.httpBody is: ")
-        print(String(data: request.httpBody!, encoding: .utf8)!)
         
         /* 4. Make the request */
         let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
@@ -85,7 +80,7 @@ extension APIClient {
             
             /* 5/6. Parse the data and use the data (happens in completion handler) */
             self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForPOST)
-            print("The Udacity POST JSON Data is: \(data)")
+            
         }
         
         /* 7. Start the request */
@@ -113,7 +108,6 @@ extension APIClient {
         if let xsrfCookie = xsrfCookie {
             request.setValue(xsrfCookie.value, forHTTPHeaderField: "X-XSRF-TOKEN")
         }
-        print("The request.httpBody is: \(request.httpBody)")
         
         /* 4. Make the request */
         let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
@@ -134,9 +128,9 @@ extension APIClient {
                 sendError("ERROR ON RANGE/DATA!")
                 return
             }
-            //let range = Range(5..<data!.count)
+            
             let newData = data?.subdata(in: range) /* subset response data! */
-            //print(String(data: newData!, encoding: .utf8)!)
+            
 
             
             /* GUARD: Did we get a successful 2XX response? */
@@ -153,11 +147,9 @@ extension APIClient {
             
             /* 5/6. Parse the data and use the data (happens in completion handler) */
             self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForDELETE)
-            //             print("The POST JSON Data is: \(data)")
         }
         
         /* 7. Start the request */
-         print("The DELETE Udacity request is: \(request)")
         task.resume()
         
         return task
@@ -170,16 +162,12 @@ extension APIClient {
         
         /* 1. Set the parameters */
         var parametersWithApiKey = parameters
-        //let variant = ""
+       
         let variant = URLPathVariants.UdacityUserID + APIClient.sharedInstance().uniqueID!
-        
-        print("The Udacity GET parameter keys are: \(APIClient.sharedInstance().uniqueID!)")
-        print("The Udacity GET variant is: \(variant)")
         
         /* 2/3. Build the URL, Configure the request */
         let request = NSMutableURLRequest(url: UdacityURLFromParameters(parametersWithApiKey, withPathExtension: variant), cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10.0)
-       
-        print("The Udacity GET URL Request is: \(request)")
+
         /* 4. Make the request */
         let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
             
@@ -199,14 +187,10 @@ extension APIClient {
                 sendError("ERROR ON RANGE/DATA!")
                 return
             }
-            //let range = Range(5..<data!.count)
+            
             let newData = data?.subdata(in: range) /* subset response data! */
-            
-            
             var encodedData = String(data: newData!, encoding: .utf8)!
-            print("endcoded data is: \(encodedData) and encoding the udacity get JSON data here:")
-            //print(String(data: newData!, encoding: .utf8)!)
-            
+        
             /* GUARD: Did we get a successful 2XX response? */
             guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
                 sendError("Udacity GET: Your request returned a status code other than 2xx!")
@@ -219,12 +203,8 @@ extension APIClient {
                 return
             }
             
-            print("The Udacity GET URL Data Task Response is: \(response)")
-            
-            
             /* 5/6. Parse the data and use the data (happens in completion handler) */
             self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForUdacityGET)
-            print("Data from Udacity GET data task\(data)")
         }
         
         /* 7. Start the request */

@@ -28,7 +28,6 @@ extension APIClient {
         components.percentEncodedQuery = components.percentEncodedQuery?
             .replacingOccurrences(of: ":", with: "%3A")
         
-        print(components.url!)
         return components.url!
     }
 
@@ -44,7 +43,6 @@ extension APIClient {
         let request = NSMutableURLRequest(url: ParseURLFromParameters(parametersWithApiKey, withPathExtension: variant), cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10.0)
         request.addValue(Constants.ApplicationIDParse, forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue(Constants.APIKeyParse, forHTTPHeaderField: "X-Parse-REST-API-Key")
-        print("The Parse GET URL Request is: \(request)")
         /* 4. Make the request */
         let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
             
@@ -71,12 +69,8 @@ extension APIClient {
                 sendError("Parse GET: No data was returned by the request!")
                 return
             }
-            
-            print("Parse GET: The URL Data Task Response is: \(response)")
-            
             /* 5/6. Parse the data and use the data (happens in completion handler) */
             self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForParseGET)
-            print("data from PARSE get data task is: \(data)")
         }
         
         /* 7. Start the request */
@@ -100,13 +94,8 @@ extension APIClient {
         request.addValue(Constants.APIKeyParse, forHTTPHeaderField: "X-Parse-REST-API-Key")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = jsonBody.data(using: String.Encoding.utf8)
-        print("The request.httpBody is: \(request.httpBody!)")
-        
         /* 4. Make the request */
         let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
-            print("Parse POST: The URL Data Task Response is: \(request)")
-            print("Parse POST: The URL Data Task Response is: \(response)")
-            //print("Parse POST: The URL Data Task Response is: \(task)")
             func sendError(_ error: String) {
                 print(error)
                 let userInfo = [NSLocalizedDescriptionKey : error]
@@ -133,7 +122,6 @@ extension APIClient {
 
             /* 5/6. Parse the data and use the data (happens in completion handler) */
             self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForPOSTParse)
-            print("The POST JSON Data is: \(data)")
         }
         
         /* 7. Start the request */
@@ -159,8 +147,6 @@ extension APIClient {
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = jsonBody.data(using: String.Encoding.utf8)
-        print("The request.httpBody is: \(request.httpBody)")
-        
         /* 4. Make the request */
         let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
             
@@ -190,7 +176,6 @@ extension APIClient {
             
             /* 5/6. Parse the data and use the data (happens in completion handler) */
             self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForPUT)
-            //             print("The POST JSON Data is: \(data)")
         }
         
         /* 7. Start the request */

@@ -4,8 +4,6 @@
 //
 //  Created by Sean Goldsborough on 11/21/17.
 //  Copyright © 2017 Sean Goldsborough. All rights reserved.
-// MARK: NEED: UDACITY(XPOST METHOD, XPOST CONVENIENCES, XDELETE METHOD, XDELETE CONVENIENCES, XGET METHOD, XGET CONVENIENCES)
-// MARK: NEED: PARSE(XGET METHOD, XGET CONVENIENCES, POST METHOD, POST CONVENIENCES, PUT METHOD, PUT CONVENIENCES)
 
 import Foundation
 
@@ -43,9 +41,7 @@ class APIClient : NSObject {
         
         var parsedResult: AnyObject! = nil
         do {
-            parsedResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as AnyObject
-            //parsedResult = try JSONDecoder().decode([StudentLocations].self, from: data) as AnyObject
-            
+            parsedResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as AnyObject    
         } catch {
             let userInfo = [NSLocalizedDescriptionKey : "Could not parse the data as JSON: '\(data)'"]
             completionHandlerForConvertData(nil, NSError(domain: "convertDataWithCompletionHandler", code: 1, userInfo: userInfo))

@@ -152,13 +152,13 @@ extension LoginVC: UITextFieldDelegate {
 //
     @objc func keyboardWillShow(_ notification: Notification) {
         if !keyboardIsShown {
-            view.frame.origin.y -= keyboardHeight(notification) / 2.5
+            view.frame.origin.y -= keyboardHeight(notification) / 2.6
         }
     }
 
     @objc func keyboardWillHide(_ notification: Notification) {
         if keyboardIsShown {
-            view.frame.origin.y += keyboardHeight(notification) / 2.5
+            view.frame.origin.y += keyboardHeight(notification) / 2.6
         }
     }
 
