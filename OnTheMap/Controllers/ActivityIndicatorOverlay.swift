@@ -4,6 +4,7 @@
 //
 //  Created by Sean Goldsborough on 11/6/17.
 //  Copyright © 2017 Sean Goldsborough. All rights reserved.
+//  Bart Jacobs - https://cocoacasts.com/how-to-add-pull-to-refresh-to-a-table-view-or-collection-view
 //
 
 import Foundation
