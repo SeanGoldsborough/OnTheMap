@@ -4,7 +4,7 @@
 //
 //  Created by Sean Goldsborough on 10/17/17.
 //  Copyright © 2017 Sean Goldsborough. All rights reserved.
-//
+//  Audrey Tam - https://www.raywenderlich.com/160517/mapkit-tutorial-getting-started
 
 import Foundation
 import UIKit
