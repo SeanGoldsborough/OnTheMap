@@ -21,7 +21,6 @@
 		C64522A81FE95DD000F5E7DA /* UdacityAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C64522A71FE95DD000F5E7DA /* UdacityAPIClient.swift */; };
 		C64522AC1FE95FBE00F5E7DA /* UdacityAPIConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = C64522AB1FE95FBE00F5E7DA /* UdacityAPIConvenience.swift */; };
 		C64522AE1FE961CD00F5E7DA /* ParseAPIConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = C64522AD1FE961CD00F5E7DA /* ParseAPIConvenience.swift */; };
-		C64522B01FE9727000F5E7DA /* ToDoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = C64522AF1FE9727000F5E7DA /* ToDoList.swift */; };
 		C65AE7DF1FB0D2580046DEFB /* ConfirmVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65AE7DE1FB0D2580046DEFB /* ConfirmVC.swift */; };
 		C65AE7E51FB104BD0046DEFB /* ActivityIndicatorOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65AE7E41FB104BD0046DEFB /* ActivityIndicatorOverlay.swift */; };
 		C66545FD1FCA59EA00ECEFE3 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66545FC1FCA59EA00ECEFE3 /* APIClient.swift */; };
@@ -73,7 +72,6 @@
 		C64522A71FE95DD000F5E7DA /* UdacityAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UdacityAPIClient.swift; sourceTree = "<group>"; };
 		C64522AB1FE95FBE00F5E7DA /* UdacityAPIConvenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UdacityAPIConvenience.swift; sourceTree = "<group>"; };
 		C64522AD1FE961CD00F5E7DA /* ParseAPIConvenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseAPIConvenience.swift; sourceTree = "<group>"; };
-		C64522AF1FE9727000F5E7DA /* ToDoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoList.swift; sourceTree = "<group>"; };
 		C65AE7DE1FB0D2580046DEFB /* ConfirmVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmVC.swift; sourceTree = "<group>"; };
 		C65AE7E41FB104BD0046DEFB /* ActivityIndicatorOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorOverlay.swift; sourceTree = "<group>"; };
 		C66545FC1FCA59EA00ECEFE3 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
@@ -145,7 +143,6 @@
 			isa = PBXGroup;
 			children = (
 				C63B68041F96601A00617549 /* AppDelegate.swift */,
-				C64522AF1FE9727000F5E7DA /* ToDoList.swift */,
 				C66546021FCA5C2000ECEFE3 /* GCD.swift */,
 				C63B68411F96B09900617549 /* Models */,
 				C617E2D71FED493D00D88A45 /* Views */,
@@ -369,7 +366,6 @@
 				C64522A41FE95A0B00F5E7DA /* ParseAPIClient.swift in Sources */,
 				C6DF8AB01FD64DA40080B7E9 /* StudentLocations.swift in Sources */,
 				C64522AE1FE961CD00F5E7DA /* ParseAPIConvenience.swift in Sources */,
-				C64522B01FE9727000F5E7DA /* ToDoList.swift in Sources */,
 				C66546031FCA5C2000ECEFE3 /* GCD.swift in Sources */,
 				C66545FD1FCA59EA00ECEFE3 /* APIClient.swift in Sources */,
 				C65AE7DF1FB0D2580046DEFB /* ConfirmVC.swift in Sources */,
