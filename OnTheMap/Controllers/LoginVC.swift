@@ -48,7 +48,7 @@ class LoginVC: UIViewController {
             }
             
         } else if emailTextField?.text == "" || passwordTextField?.text == "" {
-            AlertView.alertMessage(view: self, title: "No User Name or Password", message: "Please try again.", numberOfButtons: 1, leftButtonTitle: "OK", leftButtonStyle: 1, rightButtonTitle: "Cancel", rightButtonStyle: 0)
+            AlertView.alertMessage(view: self, title: "No Username or Password", message: "Please try again.", numberOfButtons: 1, leftButtonTitle: "OK", leftButtonStyle: 1, rightButtonTitle: "Cancel", rightButtonStyle: 0)
             performUIUpdatesOnMain {
                 self.activityOverlay?.isHidden = true
                 self.activityIndicator?.stopAnimating()

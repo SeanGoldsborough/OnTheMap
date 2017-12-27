@@ -104,13 +104,13 @@ extension APIClient {
             
             /* GUARD: Was there any data returned? */
             guard let data = data else {
-                sendError("No data was returned by the request!")
+                sendError("No data was returned by the request: \(error!.localizedDescription)")
                 return
             }
             
             /* GUARD: Did we get a successful 2XX response? */
             guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
-                sendError("Your request returned a status code other than 2xx\(error?.localizedDescription)!")
+                sendError("Your request returned a status code other than 2xx\(error!.localizedDescription)!")
                 return
             }
             
