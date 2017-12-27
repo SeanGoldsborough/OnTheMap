@@ -26,10 +26,12 @@ class MapVC: UIViewController {
         APIClient.sharedInstance().deleteSessionUdacity(sessionID: APIClient.sharedInstance().sessionID) { (success, error) in
             if success == true {
                 let loginVC = self.storyboard!.instantiateViewController(withIdentifier: "LoginVC")
+                let tabVC = self.storyboard!.instantiateViewController(withIdentifier: "TabBarController")
                 
                 performUIUpdatesOnMain {
                     ActivityIndicatorOverlay.hide()
                     self.present(loginVC, animated: true, completion: nil)
+                    tabVC.dismiss(animated: true, completion: nil)
                 }
                 
                 print("logged out")
@@ -37,7 +39,7 @@ class MapVC: UIViewController {
             } else {
                 
                 performUIUpdatesOnMain {
-                    AlertView.alertPopUp(view: self, alertMessage: "Error Logging Out")
+                    AlertView.alertPopUp(view: self, alertMessage: (error?.localizedDescription)!)//"Error Logging Out")
                     ActivityIndicatorOverlay.hide()
                 }
                 
@@ -70,6 +72,8 @@ class MapVC: UIViewController {
     @IBAction func refreshButton(_ sender: Any) {
         ActivityIndicatorOverlay.show(self.view, loadingText: "Locating...")
         getStudents()
+        let moreStudents = StudentArray.sharedInstance.listOfStudents
+        print("student array shared instance count is: \(moreStudents.count)")
        
         
         }
@@ -91,6 +95,7 @@ class MapVC: UIViewController {
     func getStudents() {
         
         APIClient.sharedInstance().getStudentLocationsParse { (studentsResults, error) in
+            print("The StudentArray.sharedInstance.listOfStudents array  count is: \(StudentArray.sharedInstance.listOfStudents.count)")
             
             if let students = studentsResults {
                 
@@ -100,7 +105,7 @@ class MapVC: UIViewController {
                 if students.count < 1 {
                     
                     performUIUpdatesOnMain {
-                        AlertView.alertPopUp(view: self, alertMessage: "Networking Error on GET All Students")
+                        AlertView.alertPopUp(view: self, alertMessage: (error?.localizedDescription)!)//"Networking Error on GET All Students")
                         ActivityIndicatorOverlay.hide()
                     }
                     
@@ -109,12 +114,12 @@ class MapVC: UIViewController {
                     self.getPublicUserData()
                     self.getOneStudent()
                     performUIUpdatesOnMain {
-                       
+                     print("The StudentArray.sharedInstance.listOfStudents array  count is now: \(StudentArray.sharedInstance.listOfStudents.count)")
                     }
                 }
             } else {
                 performUIUpdatesOnMain {
-                    AlertView.alertPopUp(view: self, alertMessage: "Networking Error on GET All Students")
+                    AlertView.alertPopUp(view: self, alertMessage: (error?.localizedDescription)!)//"Networking Error on GET All Students")
                     ActivityIndicatorOverlay.hide()
                 }
             }
@@ -133,14 +138,20 @@ class MapVC: UIViewController {
                 print("There was an error with your request: getStudents: \(error)")
                 
                 performUIUpdatesOnMain {
-                    AlertView.alertPopUp(view: self, alertMessage: "Networking Error on GET All Students")
+                    AlertView.alertPopUp(view: self, alertMessage: (error?.localizedDescription)!)//"Networking Error on GET All Students")
                 }
             }
         }
     }
     
     func populateMap() {
+       
+        performUIUpdatesOnMain {
+            self.mapView.removeAnnotations(self.annotations)
+        }
         self.annotations.removeAll()
+        
+        print("annotations array  count is: \(annotations.count)")
         let studentsArray = students
        
         for dictionary in studentsArray {
@@ -155,6 +166,7 @@ class MapVC: UIViewController {
             let annotation = StudentMapPins(title: fullName, subTitle: mediaURL, coordinate: coordinate)
             
             self.annotations.append(annotation)
+            print("annotations array  count is now: \(annotations.count)")
         }
         print("Annotations array from PopulateMapFunc = \(self.annotations)")
         
@@ -170,7 +182,7 @@ class MapVC: UIViewController {
             
             if error != nil{
                 performUIUpdatesOnMain {
-                    AlertView.alertPopUp(view: self, alertMessage: "Networking Error on GET One Student")
+                    AlertView.alertPopUp(view: self, alertMessage: (error?.localizedDescription)!) //"Networking Error on GET One Student")
                 }
                 
             } else {

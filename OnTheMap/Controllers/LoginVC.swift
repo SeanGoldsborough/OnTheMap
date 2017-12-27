@@ -42,7 +42,7 @@ class LoginVC: UIViewController {
                     performUIUpdatesOnMain {
                     self.activityOverlay?.isHidden = true
                     self.activityIndicator?.stopAnimating()
-                    AlertView.alertPopUp(view: self, alertMessage: "Log In Unsuccessful")
+                    AlertView.alertPopUp(view: self, alertMessage: (errorString?.localizedDescription)!)//"Log In Unsuccessful")
                     }
                 }
             }
@@ -130,9 +130,15 @@ class LoginVC: UIViewController {
         unsubscribeFromAllNotifications()
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        print("loginVC did disappear")
+    }
+    
     func completeLogIn() {
         let nextStoryboard = storyboard?.instantiateViewController(withIdentifier: "TabBarController")
         self.present(nextStoryboard!, animated: true, completion: nil)
+        //self.dismiss(animated: true, completion: nil)
     }
 
 }
@@ -152,13 +158,13 @@ extension LoginVC: UITextFieldDelegate {
 //
     @objc func keyboardWillShow(_ notification: Notification) {
         if !keyboardIsShown {
-            view.frame.origin.y -= keyboardHeight(notification) / 2.6
+            view.frame.origin.y = -keyboardHeight(notification) / 2.6
         }
     }
 
     @objc func keyboardWillHide(_ notification: Notification) {
         if keyboardIsShown {
-            view.frame.origin.y += keyboardHeight(notification) / 2.6
+            view.frame.origin.y = 0
         }
     }
 

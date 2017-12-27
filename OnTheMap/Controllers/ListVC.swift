@@ -29,10 +29,12 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
             if success == true {
                 
                 let loginVC = self.storyboard!.instantiateViewController(withIdentifier: "LoginVC")
+                let tabVC = self.storyboard!.instantiateViewController(withIdentifier: "TabBarController")
                 
                 performUIUpdatesOnMain {
                     ActivityIndicatorOverlay.hide()
                     self.present(loginVC, animated: true, completion: nil)
+                    tabVC.dismiss(animated: true, completion: nil)
                 }
                 
                 print("logged out")

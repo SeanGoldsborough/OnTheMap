@@ -52,7 +52,7 @@ extension APIClient {
             }
 
             guard data != nil else {
-                sendError("1There was an error with your request - UdacityPOST: \(error!)")
+                sendError("There was an error with your request - UdacityPOST: \(error!.localizedDescription)")
                
                 return
             }
@@ -118,7 +118,7 @@ extension APIClient {
             
             /* GUARD: Was there an error? */
             guard data != nil else {
-                sendError("1There was an error with your request - UdacityDELETE: \(error!)")
+                sendError("There was an error with your request - UdacityDELETE: \(error!.localizedDescription)")
                 return
             }
             
@@ -177,7 +177,7 @@ extension APIClient {
             
             /* GUARD: Was there an error? */
             guard data != nil else {
-                sendError("1There was an error with your request - UdacityGET: \(error!)")
+                sendError("There was an error with your request - UdacityGET: \(error!.localizedDescription)")
                 return
             }
             
@@ -187,7 +187,7 @@ extension APIClient {
             }
             
             let newData = data?.subdata(in: range) /* subset response data! */
-            var encodedData = String(data: newData!, encoding: .utf8)!
+            //var encodedData = String(data: newData!, encoding: .utf8)!
         
             /* GUARD: Did we get a successful 2XX response? */
             guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {

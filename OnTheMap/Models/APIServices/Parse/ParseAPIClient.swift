@@ -54,7 +54,7 @@ extension APIClient {
             
             /* GUARD: Was there an error? */
             guard (error == nil) else {
-                sendError("Parse GET: There was an error with your request: \(error!)")
+                sendError("Parse GET: There was an error with your request: \(error!.localizedDescription)")
                 return
             }
             
@@ -110,13 +110,13 @@ extension APIClient {
             
             /* GUARD: Did we get a successful 2XX response? */
             guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
-                sendError("Your request returned a status code other than 2xx\(error)!")
+                sendError("Your request returned a status code other than 2xx\(error?.localizedDescription)!")
                 return
             }
             
             /* GUARD: Was there an error? */
             guard (error == nil) else {
-                sendError("There was an error with your request: \(error)")
+                sendError("There was an error with your request: \(error!.localizedDescription)")
                 return
             }
 
@@ -158,7 +158,7 @@ extension APIClient {
             
             /* GUARD: Was there an error? */
             guard (error == nil) else {
-                sendError("There was an error with your request: \(error!)")
+                sendError("There was an error with your request: \(error!.localizedDescription)")
                 return
             }
             
