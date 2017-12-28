@@ -27,9 +27,7 @@ class AlertView {
         let addLocation = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
             
             
-            let addLocationNavVC = view.storyboard!.instantiateViewController(withIdentifier: "AddLocationNavCont") //as! AddLocationVC
-            //view.navigationController!.pushViewController(addLocationNavVC, animated: true)
-           
+            let addLocationNavVC = view.storyboard!.instantiateViewController(withIdentifier: "AddLocationNavCont") 
             addLocationNavVC.modalTransitionStyle = .crossDissolve
             view.present(addLocationNavVC, animated: true, completion: nil)
             
