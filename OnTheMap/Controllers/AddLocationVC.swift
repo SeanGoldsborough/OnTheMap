@@ -16,7 +16,7 @@ class AddLocationVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var findLocationButton: UIButton!
     
     @IBAction func cancelAddLoca(_ sender: Any) {
-        ActivityIndicatorOverlay.show(self.view, "")
+        ActivityIndicatorOverlay.show(view, "")
         let tabVC = self.storyboard!.instantiateViewController(withIdentifier: "TabBarController")
             tabVC.modalTransitionStyle = .crossDissolve
             self.present(tabVC, animated: true, completion: nil)

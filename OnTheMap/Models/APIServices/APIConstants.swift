@@ -16,8 +16,8 @@ extension APIClient {
         // MARK: API Keys
         static let APIKeyUdacity = "cec14169bb6921f04d7278bbc2277288"
         static let APIKeyUdacityNil = ""
-        static let APIKeyParse = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
-        static let ApplicationIDParse = "QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr"
+        static let APIKeyParse = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY" //"QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
+        static let ApplicationIDParse = "QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr" //"QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr"
         
         
         static let APISchemeParse = "https"

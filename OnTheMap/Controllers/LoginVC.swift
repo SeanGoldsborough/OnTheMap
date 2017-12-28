@@ -116,9 +116,7 @@ class LoginVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        //subscribeToKeyboardNotifications()
-        
+
         subscribeToNotification(.UIKeyboardWillShow, selector: #selector(keyboardWillShow))
         subscribeToNotification(.UIKeyboardWillHide, selector: #selector(keyboardWillHide))
         subscribeToNotification(.UIKeyboardDidShow, selector: #selector(keyboardDidShow))
@@ -138,7 +136,7 @@ class LoginVC: UIViewController {
     func completeLogIn() {
         let nextStoryboard = storyboard?.instantiateViewController(withIdentifier: "TabBarController")
         self.present(nextStoryboard!, animated: true, completion: nil)
-        //self.dismiss(animated: true, completion: nil)
+        
     }
 
 }

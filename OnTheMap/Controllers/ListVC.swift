@@ -23,18 +23,17 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
     
     @IBAction func logoutButton(_ sender: Any) {
         
-        ActivityIndicatorOverlay.show(self.view, loadingText: "Logging out...")
+        ActivityIndicatorOverlay.show(view, loadingText: "Logging out...")
         APIClient.sharedInstance().deleteSessionUdacity(sessionID: APIClient.sharedInstance().sessionID) { (success, error) in
             
             if success == true {
                 
-                let loginVC = self.storyboard!.instantiateViewController(withIdentifier: "LoginVC")
                 let tabVC = self.storyboard!.instantiateViewController(withIdentifier: "TabBarController")
                 
                 performUIUpdatesOnMain {
                     ActivityIndicatorOverlay.hide()
-                    self.present(loginVC, animated: true, completion: nil)
                     tabVC.dismiss(animated: true, completion: nil)
+                    self.dismiss(animated: true, completion: nil)
                 }
                 
                 print("logged out")
@@ -76,7 +75,7 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
     
     @IBAction func refreshButton(_ sender: Any) {
         
-        ActivityIndicatorOverlay.show(self.view, loadingText: "Locating...")
+        ActivityIndicatorOverlay.show(view, loadingText: "Locating...")
         getStudents()
         
     }
@@ -85,7 +84,7 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        ActivityIndicatorOverlay.show(self.view, "Locating...")
+        ActivityIndicatorOverlay.show(view, "Locating...")
     
         self.navigationController?.navigationBar.isHidden = false
 
@@ -112,11 +111,6 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
         
         getOneStudent()
         
-    }
-    
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
     }
     
     func getStudents() {
@@ -202,7 +196,7 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
     }
     
     @objc func setupActivityIndicatorView() {
-        ActivityIndicatorOverlay.show(self.view, loadingText: "")
+        ActivityIndicatorOverlay.show(view, loadingText: "")
         activityIndicatorView.startAnimating()
     }
     

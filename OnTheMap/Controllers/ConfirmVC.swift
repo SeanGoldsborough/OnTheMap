@@ -42,7 +42,7 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
         
         if studentsArray.contains(uniqueKey!) {
             
-            APIClient.sharedInstance().putUserPARSE(mapString: self.locationPassed, studentURL: self.websitePassed) { (success, error) in
+            APIClient.sharedInstance().putUserPARSE(mapString: locationPassed, studentURL: websitePassed) { (success, error) in
                 
                 if success == true {
                     performUIUpdatesOnMain {
@@ -61,7 +61,7 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
             }
         } else {
             
-            APIClient.sharedInstance().postUserPARSE(mapString: self.locationPassed, studentURL: self.websitePassed) { (success, error) in
+            APIClient.sharedInstance().postUserPARSE(mapString: locationPassed, studentURL: websitePassed) { (success, error) in
                 
                 if success == true {
                     performUIUpdatesOnMain {
@@ -100,8 +100,7 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
                     ActivityIndicatorOverlay.hide()
                 }
             } else if results == true {
-                //completionHandlerForGeocoding(true, nil)
-              
+               
             }
         })
     }

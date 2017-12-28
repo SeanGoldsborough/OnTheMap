@@ -22,16 +22,15 @@ class MapVC: UIViewController {
     
     @IBAction func logoutButton(_ sender: Any) {
         
-        ActivityIndicatorOverlay.show(self.view, loadingText: "Logging out...")
+        ActivityIndicatorOverlay.show(view, loadingText: "Logging out...")
         APIClient.sharedInstance().deleteSessionUdacity(sessionID: APIClient.sharedInstance().sessionID) { (success, error) in
             if success == true {
-                let loginVC = self.storyboard!.instantiateViewController(withIdentifier: "LoginVC")
                 let tabVC = self.storyboard!.instantiateViewController(withIdentifier: "TabBarController")
                 
                 performUIUpdatesOnMain {
                     ActivityIndicatorOverlay.hide()
-                    self.present(loginVC, animated: true, completion: nil)
                     tabVC.dismiss(animated: true, completion: nil)
+                    self.dismiss(animated: true, completion: nil)
                 }
                 
                 print("logged out")
@@ -70,7 +69,7 @@ class MapVC: UIViewController {
     }
     
     @IBAction func refreshButton(_ sender: Any) {
-        ActivityIndicatorOverlay.show(self.view, loadingText: "Locating...")
+        ActivityIndicatorOverlay.show(view, loadingText: "Locating...")
         getStudents()
         let moreStudents = StudentArray.sharedInstance.listOfStudents
         print("student array shared instance count is: \(moreStudents.count)")
@@ -83,7 +82,7 @@ class MapVC: UIViewController {
         
         super.viewDidLoad()
         
-        ActivityIndicatorOverlay.show(self.view, loadingText: "Locating...")
+        ActivityIndicatorOverlay.show(view, loadingText: "Locating...")
         
         mapView.delegate = self
 
@@ -149,7 +148,7 @@ class MapVC: UIViewController {
         performUIUpdatesOnMain {
             self.mapView.removeAnnotations(self.annotations)
         }
-        self.annotations.removeAll()
+        annotations.removeAll()
         
         print("annotations array  count is: \(annotations.count)")
         let studentsArray = students
@@ -165,7 +164,7 @@ class MapVC: UIViewController {
             
             let annotation = StudentMapPins(title: fullName, subTitle: mediaURL, coordinate: coordinate)
             
-            self.annotations.append(annotation)
+            annotations.append(annotation)
             print("annotations array  count is now: \(annotations.count)")
         }
         print("Annotations array from PopulateMapFunc = \(self.annotations)")
@@ -186,7 +185,7 @@ class MapVC: UIViewController {
                 }
                 
             } else {
-                print("1getOneStudentThere was an NO error with your request: \(result)")
+                print("getOneStudentThere was NO error with your request: \(result)")
     
             }
         })
