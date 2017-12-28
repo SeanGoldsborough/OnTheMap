@@ -29,9 +29,6 @@ class MapVC: UIViewController {
                 
                 performUIUpdatesOnMain {
                     ActivityIndicatorOverlay.hide()
-                    tabVC.navigationController?.dismiss(animated: true, completion: nil)
-                    self.navigationController?.popViewController(animated: true)
-                    tabVC.dismiss(animated: true, completion: nil)
                     self.dismiss(animated: true, completion: nil)
                     
                 }
