@@ -23,13 +23,13 @@ class LoginVC: UIViewController {
             self.activityIndicator?.startAnimating()
         }
 
-        let isEmailAddressValid = isValidEmailAddress(emailAddressString: (self.emailTextField?.text!)!)
+        let isEmailAddressValid = isValidEmailAddress(emailAddressString: (emailTextField?.text!)!)
         
         if isEmailAddressValid == true {
             
             let client = APIClient.sharedInstance()
        
-            client.authenticateUser(email: (self.emailTextField?.text!)!, password: (self.passwordTextField?.text!)!) { (success, errorString) in
+            client.authenticateUser(email: (emailTextField?.text!)!, password: (passwordTextField?.text!)!) { (success, errorString) in
 
                 if success {
                     performUIUpdatesOnMain {
@@ -134,7 +134,7 @@ class LoginVC: UIViewController {
     }
     
     func completeLogIn() {
-        let nextStoryboard = storyboard?.instantiateViewController(withIdentifier: "TabBarController")
+        let nextStoryboard = self.storyboard?.instantiateViewController(withIdentifier: "TabBarController")
         self.present(nextStoryboard!, animated: true, completion: nil)
         
     }
@@ -146,8 +146,8 @@ extension LoginVC: UITextFieldDelegate {
     // MARK: UITextFieldDelegate
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        self.emailTextField?.resignFirstResponder()
-        self.passwordTextField?.resignFirstResponder()
+        emailTextField?.resignFirstResponder()
+        passwordTextField?.resignFirstResponder()
         return true
     }
     

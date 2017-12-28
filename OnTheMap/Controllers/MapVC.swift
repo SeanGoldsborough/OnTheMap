@@ -22,15 +22,26 @@ class MapVC: UIViewController {
     
     @IBAction func logoutButton(_ sender: Any) {
         
-        ActivityIndicatorOverlay.show(view, loadingText: "Logging out...")
+        ActivityIndicatorOverlay.show(self.view, loadingText: "Logging out...")
         APIClient.sharedInstance().deleteSessionUdacity(sessionID: APIClient.sharedInstance().sessionID) { (success, error) in
             if success == true {
                 let tabVC = self.storyboard!.instantiateViewController(withIdentifier: "TabBarController")
+                var mapNavCont = UINavigationController() //self.storyboard!.instantiateViewController(withIdentifier: "MapNavCont")
                 
                 performUIUpdatesOnMain {
                     ActivityIndicatorOverlay.hide()
+                    tabVC.navigationController?.dismiss(animated: true, completion: nil)
+//                    tabVC.navigationController?.popViewController(animated: true)
+                    self.navigationController?.popViewController(animated: true)
+                    mapNavCont.dismiss(animated: true, completion: nil)
+                    self.navigationController?.dismiss(animated: true, completion: {
+                        mapNavCont.dismiss(animated: true, completion: nil)
+                    })
+                    
+                    
                     tabVC.dismiss(animated: true, completion: nil)
                     self.dismiss(animated: true, completion: nil)
+                    
                 }
                 
                 print("logged out")
@@ -88,6 +99,11 @@ class MapVC: UIViewController {
 
         getStudents()
 
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(true)
+        print("map view did disappear")
     }
     
     

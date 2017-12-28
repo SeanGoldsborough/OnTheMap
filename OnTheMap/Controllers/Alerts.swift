@@ -27,8 +27,12 @@ class AlertView {
         let addLocation = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
             
             
-            let addLocationNavVC = view.storyboard!.instantiateViewController(withIdentifier: "AddLocationVC") as! AddLocationVC
-            view.navigationController!.pushViewController(addLocationNavVC, animated: true)
+            let addLocationNavVC = view.storyboard!.instantiateViewController(withIdentifier: "AddLocationNavCont") //as! AddLocationVC
+            //view.navigationController!.pushViewController(addLocationNavVC, animated: true)
+           
+            addLocationNavVC.modalTransitionStyle = .crossDissolve
+            view.present(addLocationNavVC, animated: true, completion: nil)
+            
    
         })
         alert.addAction(addLocation)
@@ -36,6 +40,7 @@ class AlertView {
         
         performUIUpdatesOnMain {
             view.present(alert, animated: true, completion: nil)
+            
         }
     }
     
@@ -67,13 +72,23 @@ class AlertView {
     class func overwriteLocation(view: UIViewController, tabBarView: UITabBarController){
        
         let tabVC = view.storyboard!.instantiateViewController(withIdentifier: "TabBarController")
+        let addVC = view.storyboard!.instantiateViewController(withIdentifier: "AddLocationVC")
+        let confirmVC = view.storyboard!.instantiateViewController(withIdentifier: "ConfirmVC")
+        
         
         let alertVC = UIAlertController(title: "Confirm Overwrite Your Current Location?".capitalized, message: "", preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "Cancel", style:.default, handler: nil)
         let okAction = UIAlertAction(title: "OK", style:.default, handler: {(action) -> Void in
 
-            tabVC.modalTransitionStyle = .crossDissolve
-            view.present(tabVC, animated: true, completion: nil)
+//            tabVC.modalTransitionStyle = .crossDissolve
+//            view.present(tabVC, animated: true, completion: nil)
+//            let viewControllers: [UIViewController] = view.navigationController!.viewControllers as [UIViewController];
+//            view.navigationController!.popToViewController(viewControllers[viewControllers.count - 2], animated: true);
+            //view.navigationController?.popToRootViewController(animated: true)
+            
+            confirmVC.dismiss(animated: true, completion: nil)
+            addVC.dismiss(animated: true, completion: nil)
+            view.dismiss(animated: true, completion: nil)
         })
         
         alertVC.addAction(okAction)

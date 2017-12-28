@@ -48,7 +48,7 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
                     performUIUpdatesOnMain {
                         AlertView.overwriteLocation(view: self, tabBarView: TabBarControllerViewController())
                         ActivityIndicatorOverlay.hide()
-                        print("will log in now...\(success)")
+                        print("will go back to tab now...\(success)")
                         self.finishButton.isEnabled = true
                     }
                 } else {

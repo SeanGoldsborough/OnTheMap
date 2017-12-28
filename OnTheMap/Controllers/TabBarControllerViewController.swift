@@ -14,10 +14,10 @@ class TabBarControllerViewController: UITabBarController, UITabBarControllerDele
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let loginVC = storyboard?.instantiateViewController(withIdentifier: "LoginVC")
-        loginVC?.dismiss(animated: true, completion: nil)
+//        let loginVC = storyboard?.instantiateViewController(withIdentifier: "LoginVC")
+//        loginVC?.dismiss(animated: true, completion: nil)
         
-        self.navigationController?.navigationBar.isHidden = true
+        //self.navigationController?.navigationBar.isHidden = true
         
     }
     

@@ -16,10 +16,25 @@ class AddLocationVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var findLocationButton: UIButton!
     
     @IBAction func cancelAddLoca(_ sender: Any) {
-        ActivityIndicatorOverlay.show(view, "")
-        let tabVC = self.storyboard!.instantiateViewController(withIdentifier: "TabBarController")
-            tabVC.modalTransitionStyle = .crossDissolve
-            self.present(tabVC, animated: true, completion: nil)
+        
+        ActivityIndicatorOverlay.show(self.view, "")
+//        let tabVC = self.storyboard!.instantiateViewController(withIdentifier: "TabBarController")
+//            tabVC.dismiss(animated: true, completion: nil)
+//            tabVC.modalTransitionStyle = .crossDissolve
+//            self.present(tabVC, animated: true, completion: nil)
+        
+//        let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController];
+//        self.navigationController!.popToViewController(viewControllers[viewControllers.count - 2], animated: true);
+//        self.navigationController!.popViewController(animated: true)
+//        self.navigationController?.popToRootViewController(animated: true)
+        
+//                let tabVC = self.storyboard!.instantiateViewController(withIdentifier: "TabBarController")
+//                    //tabVC.dismiss(animated: true, completion: nil)
+//                    tabVC.modalTransitionStyle = .crossDissolve
+//                    self.present(tabVC, animated: true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
+       
+        
         
     }
     
@@ -52,8 +67,6 @@ class AddLocationVC: UIViewController, UITextFieldDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        //subscribeToKeyboardNotifications()
         
         subscribeToNotification(.UIKeyboardWillShow, selector: #selector(keyboardWillShow))
         subscribeToNotification(.UIKeyboardWillHide, selector: #selector(keyboardWillHide))
