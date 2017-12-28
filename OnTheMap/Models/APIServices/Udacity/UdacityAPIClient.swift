@@ -52,7 +52,7 @@ extension APIClient {
             }
 
             guard data != nil else {
-                sendError("There was an error with your request")
+                 sendError("No data was returned by the request")
                
                 return
             }
@@ -66,7 +66,7 @@ extension APIClient {
             
             /* GUARD: Did we get a successful 2XX response? */
             guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
-                sendError("Your request returned a status code other than 2xx. Please check your email/password and try again")
+                sendError("Please check your email/password and try again")
                 return
             }
             
@@ -116,9 +116,10 @@ extension APIClient {
                 completionHandlerForDELETE(nil, NSError(domain: "taskForDELETEMethodUdacity", code: 1, userInfo: userInfo))
             }
             
+
             /* GUARD: Was there an error? */
             guard data != nil else {
-                sendError("There was an error with your request")
+                sendError("No data was returned by the request")
                 return
             }
             
@@ -133,7 +134,7 @@ extension APIClient {
             
             /* GUARD: Did we get a successful 2XX response? */
             guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
-                sendError("Your request returned a status code other than 2xx")
+                 sendError("There was an error with your request")
                 return
             }
             
@@ -177,7 +178,7 @@ extension APIClient {
             
             /* GUARD: Was there an error? */
             guard data != nil else {
-                sendError("There was an error with your request")
+                sendError("No data was returned by the request")
                 return
             }
             
@@ -191,7 +192,7 @@ extension APIClient {
         
             /* GUARD: Did we get a successful 2XX response? */
             guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
-                sendError("Your request returned a status code other than 2xx")
+                sendError("There was an error with your request")
                 return
             }
             

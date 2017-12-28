@@ -18,24 +18,7 @@ class AddLocationVC: UIViewController, UITextFieldDelegate {
     @IBAction func cancelAddLoca(_ sender: Any) {
         
         ActivityIndicatorOverlay.show(self.view, "")
-//        let tabVC = self.storyboard!.instantiateViewController(withIdentifier: "TabBarController")
-//            tabVC.dismiss(animated: true, completion: nil)
-//            tabVC.modalTransitionStyle = .crossDissolve
-//            self.present(tabVC, animated: true, completion: nil)
-        
-//        let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController];
-//        self.navigationController!.popToViewController(viewControllers[viewControllers.count - 2], animated: true);
-//        self.navigationController!.popViewController(animated: true)
-//        self.navigationController?.popToRootViewController(animated: true)
-        
-//                let tabVC = self.storyboard!.instantiateViewController(withIdentifier: "TabBarController")
-//                    //tabVC.dismiss(animated: true, completion: nil)
-//                    tabVC.modalTransitionStyle = .crossDissolve
-//                    self.present(tabVC, animated: true, completion: nil)
-        self.dismiss(animated: true, completion: nil)
-       
-        
-        
+        self.dismiss(animated: true, completion: nil)  
     }
     
     @objc func hideIndicator() {

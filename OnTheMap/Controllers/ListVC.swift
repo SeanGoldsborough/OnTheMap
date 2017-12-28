@@ -124,7 +124,7 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
                 
                 performUIUpdatesOnMain {
                     ActivityIndicatorOverlay.hide()
-                    AlertView.alertPopUp(view: self, alertMessage: "Networking Error0")
+                    AlertView.alertPopUp(view: self, alertMessage: "Unable to get Student Locations Data \(error!.localizedDescription)")
                 }
                 return
             }
@@ -150,7 +150,7 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
             guard result != nil else {
                 
                 performUIUpdatesOnMain {
-                    AlertView.alertPopUp(view: self, alertMessage: "Networking Error1")
+                    AlertView.alertPopUp(view: self, alertMessage: "Unable to get Udacity User Data \(error!.localizedDescription)")
                 }
                 return
             }
@@ -163,7 +163,7 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
             guard result != nil else {
                 
                 performUIUpdatesOnMain {
-                    AlertView.alertPopUp(view: self, alertMessage: "Networking Error2")
+                    AlertView.alertPopUp(view: self, alertMessage: "Unable to get Parse User Data \(error!.localizedDescription)")
                 }
                 return
             }

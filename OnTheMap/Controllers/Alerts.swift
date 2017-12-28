@@ -13,7 +13,7 @@ class AlertView {
     
     class func alertPopUp(view: UIViewController, alertMessage: String) {
         let alert = UIAlertController(title: "ERROR", message: alertMessage, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Clear", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: "Try Again", style: .default, handler: nil))
         
         performUIUpdatesOnMain {
             view.present(alert, animated: true, completion: nil)
@@ -79,12 +79,6 @@ class AlertView {
         let alertVC = UIAlertController(title: "Confirm Overwrite Your Current Location?".capitalized, message: "", preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "Cancel", style:.default, handler: nil)
         let okAction = UIAlertAction(title: "OK", style:.default, handler: {(action) -> Void in
-
-//            tabVC.modalTransitionStyle = .crossDissolve
-//            view.present(tabVC, animated: true, completion: nil)
-//            let viewControllers: [UIViewController] = view.navigationController!.viewControllers as [UIViewController];
-//            view.navigationController!.popToViewController(viewControllers[viewControllers.count - 2], animated: true);
-            //view.navigationController?.popToRootViewController(animated: true)
             
             confirmVC.dismiss(animated: true, completion: nil)
             addVC.dismiss(animated: true, completion: nil)
