@@ -10,7 +10,7 @@ extension APIClient {
         
     // MARK: GET Convenience Methods - PARSE
     
-    func getStudentLocationsParse(_ completionHandlerForParseGet: @escaping (_ result: [StudentLocations]?, _ error: NSError?) -> Void) {
+    func getStudentLocationsParse(_ completionHandlerForParseGet: @escaping (_ result: [StudentLocations]?, _ error: Error?) -> Void) {
             
             //1. Specify parameters, method (if has {key}), and HTTP body (if POST)
           
@@ -31,14 +31,15 @@ extension APIClient {
                         let students = StudentLocations.studentsFromResults(results)
                         completionHandlerForParseGet(students, nil)
                     } else {
-                        completionHandlerForParseGet([], NSError(domain: "getStudentLocationsParse parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getStudentLocationsParse"]))
+//                        completionHandlerForParseGet([], NSError(domain: "getStudentLocationsParse parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getStudentLocationsParse"]))
+                        completionHandlerForParseGet([], error)
                     }
                 }
             }
         }
         
     // MARK: GETing One Student Location - PARSE
-    func getOneStudentLocationParse(_ completionHandlerForParseGet: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) {
+    func getOneStudentLocationParse(_ completionHandlerForParseGet: @escaping (_ result: AnyObject?, _ error: Error?) -> Void) {
             
             //1. Specify parameters, method (if has {key}), and HTTP body (if POST)
             let variant: String = URLPathVariants.StudentLocationPath
@@ -70,7 +71,7 @@ extension APIClient {
     //
     // MARK: POSTing One Student Location - PARSE
 
-    func postUserPARSE(mapString: String?, studentURL: String?, completionHandlerForPOSTUser: @escaping (_ success: Bool, _ errorString: NSError?) -> Void) {
+    func postUserPARSE(mapString: String?, studentURL: String?, completionHandlerForPOSTUser: @escaping (_ success: Bool, _ errorString: Error?) -> Void) {
             
             /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
             let parameters = [String: AnyObject]()
@@ -99,7 +100,7 @@ extension APIClient {
         
     // MARK: PUT Convenience Methods - PARSE
 
-    func putUserPARSE(mapString: String?, studentURL: String?, completionHandlerForPUTUser: @escaping (_ success: Bool, _ errorString: NSError?) -> Void) {
+    func putUserPARSE(mapString: String?, studentURL: String?, completionHandlerForPUTUser: @escaping (_ success: Bool, _ errorString: Error?) -> Void) {
 
             let jsonBody = "{\"uniqueKey\": \"\(UdacityPersonalData.sharedInstance().uniqueKey!)\", \"firstName\": \"\(UdacityPersonalData.sharedInstance().firstName!)\", \"lastName\": \"\(UdacityPersonalData.sharedInstance().lastName!)\",\"mapString\": \"\(UdacityPersonalData.sharedInstance().mapString!)\", \"mediaURL\": \"\(UdacityPersonalData.sharedInstance().mediaURL!)\",\"latitude\": \(UdacityPersonalData.sharedInstance().latitude!), \"longitude\": \(UdacityPersonalData.sharedInstance().longitude!)}"
             

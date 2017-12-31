@@ -28,7 +28,7 @@ extension APIClient {
     
     // MARK: POST Method - Udacity
 
-    func taskForPOSTMethodUdacity(_ method: String, parameters: [String:AnyObject], jsonBody: String, completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+    func taskForPOSTMethodUdacity(_ method: String, parameters: [String:AnyObject], jsonBody: String, completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: Error?) -> Void) -> URLSessionDataTask {
         
         /* 1. Set the parameters */
         var parametersWithApiKey = parameters
@@ -44,21 +44,32 @@ extension APIClient {
         /* 4. Make the request */
         let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
             
-            func sendError(_ error: String) {
+            func sendError(_ error: Error?) {
                 print(error)
                 
-                let userInfo = [NSLocalizedDescriptionKey : error]
-                completionHandlerForPOST(nil, NSError(domain: "taskForPOSTMethodUdacity", code: 1, userInfo: userInfo))
+                //let userInfo = [NSLocalizedDescriptionKey : error]
+                completionHandlerForPOST(nil, error)
+                //completionHandlerForPOST(nil, NSError(domain: "taskForPOSTMethodUdacity", code: 1, userInfo: userInfo))
+            }
+            
+            if let error = error {
+                print(7)
+                completionHandlerForPOST(nil, error)
             }
 
             guard data != nil else {
-                 sendError("No data was returned by the request")
+                print(8)
+                 //sendError((error?.localizedDescription)!)
+                sendError(error)
                
                 return
             }
             
             guard let range = Range?(5..<data!.count) else {
-                sendError("ERROR ON RANGE/DATA!")
+                print(9)
+                 sendError(error)
+                //sendError((error?.localizedDescription)!)
+                //sendError("\(error!) 2ERROR ON RANGE/DATA!")
                 return
             }
           
@@ -66,13 +77,17 @@ extension APIClient {
             
             /* GUARD: Did we get a successful 2XX response? */
             guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
-                sendError("Please check your email/password and try again")
+                 sendError(error)
+                //sendError((error?.localizedDescription)!)//"\(error!) 3Please check your email/password and try again")
                 return
             }
             
             /* GUARD: Was there any data returned? */
             guard let data = newData else {
-                sendError("No data was returned by the request")
+                print(10)
+                 sendError(error)
+                //sendError((error?.localizedDescription)!)
+                //sendError("\(error!) 4No data was returned by the request")
                 return
             }
             
@@ -89,7 +104,7 @@ extension APIClient {
     
     // MARK: DELETE Method - Udacity
 
-    func taskForDELETEMethodUdacity(_ method: String, parameters: [String:AnyObject], jsonBody: String, completionHandlerForDELETE: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+    func taskForDELETEMethodUdacity(_ method: String, parameters: [String:AnyObject], jsonBody: String, completionHandlerForDELETE: @escaping (_ result: AnyObject?, _ error: Error?) -> Void) -> URLSessionDataTask {
         
         /* 1. Set the parameters */
         var parametersWithApiKey = parameters
@@ -110,21 +125,24 @@ extension APIClient {
         /* 4. Make the request */
         let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
             
-            func sendError(_ error: String) {
+            func sendError(_ error: Error?) {
                 print(error)
-                let userInfo = [NSLocalizedDescriptionKey : error]
-                completionHandlerForDELETE(nil, NSError(domain: "taskForDELETEMethodUdacity", code: 1, userInfo: userInfo))
+                //let userInfo = [NSLocalizedDescriptionKey : error]
+                completionHandlerForDELETE(nil, error)
+                //completionHandlerForDELETE(nil, NSError(domain: "taskForDELETEMethodUdacity", code: 1, userInfo: userInfo))
             }
             
 
             /* GUARD: Was there an error? */
             guard data != nil else {
-                sendError("No data was returned by the request")
+                sendError(error)
+                //sendError("No data was returned by the request")
                 return
             }
             
             guard let range = Range?(5..<data!.count) else {
-                sendError("ERROR ON RANGE/DATA!")
+                sendError(error)
+                //sendError("ERROR ON RANGE/DATA!")
                 return
             }
             
@@ -134,13 +152,15 @@ extension APIClient {
             
             /* GUARD: Did we get a successful 2XX response? */
             guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
-                 sendError("There was an error with your request")
+                sendError(error)
+                //sendError("There was an error with your request")
                 return
             }
             
             /* GUARD: Was there any data returned? */
             guard let data = newData else {
-                sendError("No data was returned by the request")
+                sendError(error)
+                //sendError("No data was returned by the request")
                 return
             }
             
@@ -157,7 +177,7 @@ extension APIClient {
     
     // MARK: GET Methods - Udacity
 
-    func taskForGETMethodUdacity(variant: String, parameters: [String:AnyObject], completionHandlerForUdacityGET: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+    func taskForGETMethodUdacity(variant: String, parameters: [String:AnyObject], completionHandlerForUdacityGET: @escaping (_ result: AnyObject?, _ error: Error?) -> Void) -> URLSessionDataTask {
         
         /* 1. Set the parameters */
         var parametersWithApiKey = parameters
@@ -170,20 +190,25 @@ extension APIClient {
         /* 4. Make the request */
         let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
             
-            func sendError(_ error: String) {
+            func sendError(_ error: Error?) {
                 print(error)
-                let userInfo = [NSLocalizedDescriptionKey : error]
-                completionHandlerForUdacityGET(nil, NSError(domain: "taskForGETMethodUdacity", code: 1, userInfo: userInfo))
+                //let userInfo = [NSLocalizedDescriptionKey : error]
+                completionHandlerForUdacityGET(nil, error)
+                //completionHandlerForUdacityGET(nil, NSError(domain: "taskForGETMethodUdacity", code: 1, userInfo: userInfo))
             }
             
             /* GUARD: Was there an error? */
             guard data != nil else {
-                sendError("No data was returned by the request")
+                sendError(error)
+                //sendError((error?.localizedDescription)!)
+                //sendError("No data was returned by the request")
                 return
             }
             
             guard let range = Range?(5..<data!.count) else {
-                sendError("ERROR ON RANGE/DATA!")
+                sendError(error)
+                //sendError((error?.localizedDescription)!)
+                //sendError("ERROR ON RANGE/DATA!")
                 return
             }
             
@@ -192,13 +217,17 @@ extension APIClient {
         
             /* GUARD: Did we get a successful 2XX response? */
             guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
-                sendError("There was an error with your request")
+                sendError(error)
+                //sendError((error?.localizedDescription)!)
+                //sendError("There was an error with your request")
                 return
             }
             
             /* GUARD: Was there any data returned? */
             guard let data = newData else {
-                sendError("No data was returned by the request")
+                sendError(error)
+                //sendError((error?.localizedDescription)!)
+                //sendError("No data was returned by the request")
                 return
             }
             

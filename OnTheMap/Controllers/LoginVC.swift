@@ -42,10 +42,11 @@ class LoginVC: UIViewController {
                     performUIUpdatesOnMain {
                     self.activityOverlay?.isHidden = true
                     self.activityIndicator?.stopAnimating()
-                    AlertView.alertPopUp(view: self, alertMessage: (errorString?.localizedDescription)!)//"Log In Unsuccessful")
+                        AlertView.alertPopUp(view: self, alertMessage: errorString?.localizedDescription ?? "Invalid Credentials") //"Log In Unsuccessful")
                     }
                 }
             }
+          
             
         } else if emailTextField?.text == "" || passwordTextField?.text == "" {
             AlertView.alertMessage(view: self, title: "No Username or Password", message: "Please try again.", numberOfButtons: 1, leftButtonTitle: "OK", leftButtonStyle: 1, rightButtonTitle: "Cancel", rightButtonStyle: 0)

@@ -110,7 +110,7 @@ class MapVC: UIViewController {
                 if students.count < 1 {
                     
                     performUIUpdatesOnMain {
-                        AlertView.alertPopUp(view: self, alertMessage: (error?.localizedDescription)!)//"Networking Error on GET All Students")
+                        AlertView.alertPopUp(view: self, alertMessage: error?.localizedDescription ?? "Networking Error")
                         ActivityIndicatorOverlay.hide()
                     }
                     

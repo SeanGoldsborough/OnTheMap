@@ -34,7 +34,7 @@ extension APIClient {
     
     // MARK: GET Methods - Parse
 
-    func taskForGETMethodParse(variant: String, parameters: [String:AnyObject], completionHandlerForParseGET: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+    func taskForGETMethodParse(variant: String, parameters: [String:AnyObject], completionHandlerForParseGET: @escaping (_ result: AnyObject?, _ error: Error?) -> Void) -> URLSessionDataTask {
         
         /* 1. Set the parameters */
         var parametersWithApiKey = parameters
@@ -46,27 +46,31 @@ extension APIClient {
         /* 4. Make the request */
         let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
             
-            func sendError(_ error: String) {
+            func sendError(_ error: Error?) {
                 print(error)
-                let userInfo = [NSLocalizedDescriptionKey : error]
-                completionHandlerForParseGET(nil, NSError(domain: "taskForGETMethodParse", code: 1, userInfo: userInfo))
+                //let userInfo = [NSLocalizedDescriptionKey : error]
+                //completionHandlerForParseGET(nil, NSError(domain: "taskForGETMethodParse", code: 1, userInfo: userInfo))
+                completionHandlerForParseGET(nil, error)
             }
             
             /* GUARD: Was there an error? */
             guard (error == nil) else {
-                sendError("Network Unavailable")
+                //sendError("Network Unavailable")
+                sendError(error)
                 return
             }
             
             /* GUARD: Did we get a successful 2XX response? */
             guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
-                sendError("There was an error with your request")
+                //sendError("There was an error with your request")
+                sendError(error)
                 return
             }
             
             /* GUARD: Was there any data returned? */
             guard let data = data else {
-                sendError("No data was returned by the request")
+                //sendError("No data was returned by the request")
+                sendError(error)
                 return
             }
             /* 5/6. Parse the data and use the data (happens in completion handler) */
@@ -82,7 +86,7 @@ extension APIClient {
     
     // MARK: POST Method - PARSE
 
-    func taskForPOSTMethodParse(_ variant: String, parameters: [String:AnyObject], jsonBody: String, completionHandlerForPOSTParse: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+    func taskForPOSTMethodParse(_ variant: String, parameters: [String:AnyObject], jsonBody: String, completionHandlerForPOSTParse: @escaping (_ result: AnyObject?, _ error: Error?) -> Void) -> URLSessionDataTask {
         
         /* 1. Set the parameters */
         var parameters = [String: AnyObject]()
@@ -96,27 +100,31 @@ extension APIClient {
         request.httpBody = jsonBody.data(using: String.Encoding.utf8)
         /* 4. Make the request */
         let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
-            func sendError(_ error: String) {
+            func sendError(_ error: Error?) {
                 print(error)
-                let userInfo = [NSLocalizedDescriptionKey : error]
-                completionHandlerForPOSTParse(nil, NSError(domain: "taskForPOSTMethodParse", code: 1, userInfo: userInfo))
+                //let userInfo = [NSLocalizedDescriptionKey : error]
+                //completionHandlerForPOSTParse(nil, NSError(domain: "taskForPOSTMethodParse", code: 1, userInfo: userInfo))
+                completionHandlerForPOSTParse(nil, error)
             }
             
             /* GUARD: Was there any data returned? */
             guard let data = data else {
-                sendError("No data was returned by the request")
+                //sendError("No data was returned by the request")
+                sendError(error)
                 return
             }
             
             /* GUARD: Did we get a successful 2XX response? */
             guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
-                sendError("There was an error with your request")
+                sendError(error)
+                //sendError("There was an error with your request")
                 return
             }
             
             /* GUARD: Was there an error? */
             guard (error == nil) else {
-                sendError("Network Unavailable")
+                sendError(error)
+                //sendError("Network Unavailable")
                 return
             }
 
@@ -133,7 +141,7 @@ extension APIClient {
     
     // MARK: PUT Method - PARSE
 
-    func taskForPUTMethodPARSE(_ variant: String, parameters: [String:AnyObject], jsonBody: String, completionHandlerForPUT: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+    func taskForPUTMethodPARSE(_ variant: String, parameters: [String:AnyObject], jsonBody: String, completionHandlerForPUT: @escaping (_ result: AnyObject?, _ error: Error?) -> Void) -> URLSessionDataTask {
         
         /* 1. Set the parameters */
         var parameters = [String:AnyObject]()
@@ -150,27 +158,31 @@ extension APIClient {
         /* 4. Make the request */
         let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
             
-            func sendError(_ error: String) {
+            func sendError(_ error: Error?) {
                 print(error)
-                let userInfo = [NSLocalizedDescriptionKey : error]
-                completionHandlerForPUT(nil, NSError(domain: "taskForPUTMethodPARSE", code: 1, userInfo: userInfo))
+                //let userInfo = [NSLocalizedDescriptionKey : error]
+                completionHandlerForPUT(nil, error)
+                //completionHandlerForPUT(nil, NSError(domain: "taskForPUTMethodPARSE", code: 1, userInfo: userInfo))
             }
             
             /* GUARD: Was there an error? */
             guard (error == nil) else {
-                sendError("Network Unavailable")
+                sendError(error)
+                //sendError("Network Unavailable")
                 return
             }
             
             /* GUARD: Did we get a successful 2XX response? */
             guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
-                sendError("There was an error with your request")
+                sendError(error)
+                //sendError("There was an error with your request")
                 return
             }
             
             /* GUARD: Was there any data returned? */
             guard let data = data else {
-                sendError("No data was returned by the request")
+                sendError(error)
+                //sendError("No data was returned by the request")
                 return
             }
             
