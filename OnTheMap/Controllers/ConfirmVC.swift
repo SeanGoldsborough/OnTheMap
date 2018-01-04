@@ -54,7 +54,7 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
                 } else {
                     performUIUpdatesOnMain {
                         ActivityIndicatorOverlay.hide()
-                        AlertView.alertPopUp(view: self, alertMessage: (error?.localizedDescription)!)//"Submission Unsuccessful")
+                        AlertView.alertPopUp(view: self, alertMessage: error! ?? "Submission Unsuccessful")
                         self.finishButton.isEnabled = true
                     }
                 }
@@ -72,7 +72,7 @@ class ConfirmVC: UIViewController, MKMapViewDelegate {
                 } else {
                     performUIUpdatesOnMain {
                         ActivityIndicatorOverlay.hide()
-                        AlertView.alertPopUp(view: self, alertMessage: (error?.localizedDescription)!)//"Submission Unsuccessful")
+                        AlertView.alertPopUp(view: self, alertMessage: error! ?? "Submission Unsuccessful")
                         self.finishButton.isEnabled = true
                     }
                 }

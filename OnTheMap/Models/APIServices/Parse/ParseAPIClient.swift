@@ -46,35 +46,86 @@ extension APIClient {
         /* 4. Make the request */
         let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
             
+            //print("No data was returned by the request\(data)")
+            //print("Data from parse get is: \(String(data: data!, encoding: .utf8)!)")
+            
             func sendError(_ error: Error?) {
                 print(error)
+                completionHandlerForParseGET(nil, error)
                 //let userInfo = [NSLocalizedDescriptionKey : error]
                 //completionHandlerForParseGET(nil, NSError(domain: "taskForGETMethodParse", code: 1, userInfo: userInfo))
-                completionHandlerForParseGET(nil, error)
+               
             }
+            
+//            let results = String(data: data!, encoding: .utf8)
+//
+//            var parseError: AnyObject?
+//
+//            if let parseError = results!["error"] as? String {
+//                print("An error was returned by the request \(parseError)")
+//            }
+//            if let parsedData = results as? String {
+//                print("got the results in parsed data")
+//                parseError = parsedData as AnyObject
+//                //let errorMessage = parseError!["error"] as? String
+//                print("parse GET method error is: \(parseError)")
+            
+//                if let account = parsedData["error"] as? String {
+//                     print("the results are: \(account)")
+//                }
+//                else {
+//                    print("the results are good")
+//                }
+               
+//                let account = parseError!["error"] as? String
+//                 print("the account is: \(account)")
+//            } else {
+//                print("the results are not good")
+//
+//            }
+
+            
+            
+//            do {
+//                let parsedData = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as AnyObject
+//                //print("the parsedData is: \(parsedData)")
+//                guard let account = parsedData["error"] as? String else {print("the results are good");return}
+//                print("the results are: \(account)")
+//                //accountVariable = account
+//            } catch {
+//                print("the results are good: ")
+//            }
+            
             
             /* GUARD: Was there an error? */
             guard (error == nil) else {
                 //sendError("Network Unavailable")
+                print("No error was returned by the request")
                 sendError(error)
                 return
             }
             
-            /* GUARD: Did we get a successful 2XX response? */
-            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
-                //sendError("There was an error with your request")
-                sendError(error)
-                return
-            }
+//            /* GUARD: Did we get a successful 2XX response? */
+//            if let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 {
+//                print("valid status code of Parse GET")
+//            } else {
+//                //sendError("There was an error with your request")
+//                sendError(error)
+//            }
+            
+//            let dataResults = String(data: data!, encoding: .utf8)
+//            print("Data was returned by the request was: \(dataResults)")
             
             /* GUARD: Was there any data returned? */
-            guard let data = data else {
-                //sendError("No data was returned by the request")
+            guard data != nil else {
+//                print("No data was returned by the request \(data)")
                 sendError(error)
                 return
             }
+            
             /* 5/6. Parse the data and use the data (happens in completion handler) */
-            self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForParseGET)
+            self.convertDataWithCompletionHandler(data!, completionHandlerForConvertData: completionHandlerForParseGET)
+            
         }
         
         /* 7. Start the request */
@@ -114,12 +165,12 @@ extension APIClient {
                 return
             }
             
-            /* GUARD: Did we get a successful 2XX response? */
-            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
-                sendError(error)
-                //sendError("There was an error with your request")
-                return
-            }
+//            /* GUARD: Did we get a successful 2XX response? */
+//            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
+//                sendError(error)
+//                //sendError("There was an error with your request")
+//                return
+//            }
             
             /* GUARD: Was there an error? */
             guard (error == nil) else {
@@ -172,12 +223,12 @@ extension APIClient {
                 return
             }
             
-            /* GUARD: Did we get a successful 2XX response? */
-            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
-                sendError(error)
-                //sendError("There was an error with your request")
-                return
-            }
+//            /* GUARD: Did we get a successful 2XX response? */
+//            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
+//                sendError(error)
+//                //sendError("There was an error with your request")
+//                return
+//            }
             
             /* GUARD: Was there any data returned? */
             guard let data = data else {

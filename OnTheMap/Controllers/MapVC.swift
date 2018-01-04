@@ -29,6 +29,7 @@ class MapVC: UIViewController {
                 let tabVC = self.storyboard!.instantiateViewController(withIdentifier: "TabBarController")
                 
                 performUIUpdatesOnMain {
+                    
                     ActivityIndicatorOverlay.hide()
                     self.dismiss(animated: true, completion: nil)
                     
@@ -39,7 +40,7 @@ class MapVC: UIViewController {
             } else {
                 
                 performUIUpdatesOnMain {
-                    AlertView.alertPopUp(view: self, alertMessage: (error?.localizedDescription)!)//"Error Logging Out")
+                    AlertView.alertPopUp(view: self, alertMessage: error! ?? "Networking Error")//"Error Logging Out")
                     ActivityIndicatorOverlay.hide()
                 }
                 
@@ -110,7 +111,7 @@ class MapVC: UIViewController {
                 if students.count < 1 {
                     
                     performUIUpdatesOnMain {
-                        AlertView.alertPopUp(view: self, alertMessage: error?.localizedDescription ?? "Networking Error")
+                        AlertView.alertPopUp(view: self, alertMessage: (error) ?? "Networking Error")
                         ActivityIndicatorOverlay.hide()
                     }
                     
@@ -124,7 +125,7 @@ class MapVC: UIViewController {
                 }
             } else {
                 performUIUpdatesOnMain {
-                    AlertView.alertPopUp(view: self, alertMessage: (error?.localizedDescription)!)//"Networking Error on GET All Students")
+                    AlertView.alertPopUp(view: self, alertMessage: error! ?? "Networking Error")//"Networking Error on GET All Students")
                     ActivityIndicatorOverlay.hide()
                 }
             }
@@ -143,7 +144,7 @@ class MapVC: UIViewController {
                 print("There was an error with your request: getStudents: \(error)")
                 
                 performUIUpdatesOnMain {
-                    AlertView.alertPopUp(view: self, alertMessage: (error?.localizedDescription)!)//"Networking Error on GET All Students")
+                    AlertView.alertPopUp(view: self, alertMessage: error! ?? "Networking Error")//"Networking Error on GET All Students")
                 }
             }
         }
@@ -187,7 +188,7 @@ class MapVC: UIViewController {
             
             if error != nil{
                 performUIUpdatesOnMain {
-                    AlertView.alertPopUp(view: self, alertMessage: (error?.localizedDescription)!) //"Networking Error on GET One Student")
+                    AlertView.alertPopUp(view: self, alertMessage: error! ?? "Networking Error") //"Networking Error on GET One Student")
                 }
                 
             } else {

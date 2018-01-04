@@ -41,7 +41,7 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
             } else {
                 
                 performUIUpdatesOnMain {
-                    AlertView.alertPopUp(view: self, alertMessage: "Error Logging Out")
+                    AlertView.alertPopUp(view: self, alertMessage: error! ?? "Networking Error")
                     ActivityIndicatorOverlay.hide()
                 }
                 
@@ -124,7 +124,7 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
                 
                 performUIUpdatesOnMain {
                     ActivityIndicatorOverlay.hide()
-                    AlertView.alertPopUp(view: self, alertMessage: "Unable to get Student Locations Data \(error!.localizedDescription)")
+                    AlertView.alertPopUp(view: self, alertMessage: error! ?? "Networking Error")
                 }
                 return
             }
@@ -150,7 +150,7 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
             guard result != nil else {
                 
                 performUIUpdatesOnMain {
-                    AlertView.alertPopUp(view: self, alertMessage: "Unable to get Udacity User Data \(error!.localizedDescription)")
+                    AlertView.alertPopUp(view: self, alertMessage: error! ?? "Networking Error")
                 }
                 return
             }
@@ -163,7 +163,7 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINa
             guard result != nil else {
                 
                 performUIUpdatesOnMain {
-                    AlertView.alertPopUp(view: self, alertMessage: "Unable to get Parse User Data \(error!.localizedDescription)")
+                    AlertView.alertPopUp(view: self, alertMessage: error! ?? "Networking Error")
                 }
                 return
             }

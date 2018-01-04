@@ -10,7 +10,7 @@ extension APIClient {
         
     // MARK: GET Convenience Methods - PARSE
     
-    func getStudentLocationsParse(_ completionHandlerForParseGet: @escaping (_ result: [StudentLocations]?, _ error: Error?) -> Void) {
+    func getStudentLocationsParse(_ completionHandlerForParseGet: @escaping (_ result: [StudentLocations]?, _ error: String?) -> Void) {
             
             //1. Specify parameters, method (if has {key}), and HTTP body (if POST)
           
@@ -20,27 +20,48 @@ extension APIClient {
             /* 2. Make the request */
             
             let request = taskForGETMethodParse(variant: variant, parameters: parameters!) { (results, error) in
-
+                print("Parse get Students Locations error is: \(error)")
                 /* 3. Send the desired value(s) to completion handler */
-                if let error = error {
-                    completionHandlerForParseGet([], error)
+                if error != nil {
+                    
+                     print("Parse error string any object is: \(error?.localizedDescription)")
+                    
+                    completionHandlerForParseGet([], error?.localizedDescription)
                 } else {
+//                     print("Get Students Locations JSON data returned was \(results!)")
+//                    if let parseError = results?["error"] as? [String:Any] {
+//                        print("Parse error is: \(parseError)")
+//                        print("Parse error!")
+//                        completionHandlerForParseGet([], "there was a parseError")
+//                    } else {
+//                        print("No Parse error!")
+//                        completionHandlerForParseGet(results as? [StudentLocations], "NO parseError")
+//                    }
                     
                     if let results = results?[APIClient.JSONResponseKeys.ParseResults] as? [[String:AnyObject]] {
-                        
+                        print("Parse error on get all students is: \(results)")
                         let students = StudentLocations.studentsFromResults(results)
+                        print("Parse students is: \(students)")
                         completionHandlerForParseGet(students, nil)
-                    } else {
+//                    } else if let errorResults = results?["error"] as? String {
+//                         print("Parse error on get all students is: \(errorResults)")
+//                        //let parseErrorMessage = errorResults
+//                        completionHandlerForParseGet(nil, errorResults)
+                    } else if let results = results?["error"] as? String {
+                        print("2Parse error on get all students is: \(results)")
+                        //let parseErrorMessage = errorResults
+                        completionHandlerForParseGet(nil, results)
+                }else {
 //                        completionHandlerForParseGet([], NSError(domain: "getStudentLocationsParse parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getStudentLocationsParse"]))
-                        completionHandlerForParseGet([], error)
+                        completionHandlerForParseGet([], error?.localizedDescription)
                     }
                 }
             }
         }
         
     // MARK: GETing One Student Location - PARSE
-    func getOneStudentLocationParse(_ completionHandlerForParseGet: @escaping (_ result: AnyObject?, _ error: Error?) -> Void) {
-            
+    func getOneStudentLocationParse(_ completionHandlerForParseGet: @escaping (_ result: AnyObject?, _ error: String?) -> Void) {
+        
             //1. Specify parameters, method (if has {key}), and HTTP body (if POST)
             let variant: String = URLPathVariants.StudentLocationPath
             
@@ -51,10 +72,20 @@ extension APIClient {
             
             /* 2. Make the request */
             let request = taskForGETMethodParse(variant: variant, parameters: parameters!) { (results, error) in
+                print(" get one JSON data returned was \(results)")
                 /* 3. Send the desired value(s) to completion handler */
                 if error != nil {
-                    completionHandlerForParseGet(nil, error)
+                    completionHandlerForParseGet(nil, error?.localizedDescription)
                 } else {
+                    
+                    if let parseError = results!["error"] as? String {
+                        print("Parse error GET one student is: \(parseError)")
+                        print("Parse error!")
+                        completionHandlerForParseGet(results, parseError)
+                    } else {
+                        print("No Parse error!")
+                    }
+                    
                     guard let getResults = results!["results"] as? [[String:AnyObject]] else {
                         return
                     }
@@ -71,7 +102,7 @@ extension APIClient {
     //
     // MARK: POSTing One Student Location - PARSE
 
-    func postUserPARSE(mapString: String?, studentURL: String?, completionHandlerForPOSTUser: @escaping (_ success: Bool, _ errorString: Error?) -> Void) {
+    func postUserPARSE(mapString: String?, studentURL: String?, completionHandlerForPOSTUser: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
             
             /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
             let parameters = [String: AnyObject]()
@@ -84,14 +115,22 @@ extension APIClient {
                 /* 3. Send the desired value(s) to completion handler */
                 if let error = error {
                     print(error)
-                    completionHandlerForPOSTUser(false, error)
+                    completionHandlerForPOSTUser(false, error.localizedDescription)
                 } else {
+                    
+                    if let parseError = results!["error"] as? String {
+                        print("Parse error is: \(parseError)")
+                        print("Parse error!")
+                        completionHandlerForPOSTUser(false, parseError)
+                    } else {
+                        print("No Parse error!")
+                    }
                     
                     if let objectID = results?[APIClient.JSONResponseKeys.ObjectId] as? String {
                         UdacityPersonalData.sharedInstance().objectId = objectID
                         completionHandlerForPOSTUser(true, nil)
                     } else {
-                        completionHandlerForPOSTUser(false, error)
+                        completionHandlerForPOSTUser(false, error?.localizedDescription)
                     }
                 }
             }
@@ -100,7 +139,7 @@ extension APIClient {
         
     // MARK: PUT Convenience Methods - PARSE
 
-    func putUserPARSE(mapString: String?, studentURL: String?, completionHandlerForPUTUser: @escaping (_ success: Bool, _ errorString: Error?) -> Void) {
+    func putUserPARSE(mapString: String?, studentURL: String?, completionHandlerForPUTUser: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
 
             let jsonBody = "{\"uniqueKey\": \"\(UdacityPersonalData.sharedInstance().uniqueKey!)\", \"firstName\": \"\(UdacityPersonalData.sharedInstance().firstName!)\", \"lastName\": \"\(UdacityPersonalData.sharedInstance().lastName!)\",\"mapString\": \"\(UdacityPersonalData.sharedInstance().mapString!)\", \"mediaURL\": \"\(UdacityPersonalData.sharedInstance().mediaURL!)\",\"latitude\": \(UdacityPersonalData.sharedInstance().latitude!), \"longitude\": \(UdacityPersonalData.sharedInstance().longitude!)}"
             
@@ -109,12 +148,22 @@ extension APIClient {
             let request = taskForPUTMethodPARSE(URLPathVariants.StudentLocationPath + "/" + UdacityPersonalData.sharedInstance().objectId!, parameters: [String : AnyObject](), jsonBody: jsonBody) { (results, error) in
                 /* 3. Send the desired value(s) to completion handler */
                 if let error = error {
-                    completionHandlerForPUTUser(false, error)
+                    completionHandlerForPUTUser(false, error.localizedDescription)
                 } else {
+                    
+                    if let parseError = results!["error"] as? String {
+                        print("Parse error is: \(parseError)")
+                        print("Parse error!")
+                        completionHandlerForPUTUser(false, parseError)
+                    } else {
+                        print("No Parse error!")
+                    }
+                    
+                    
                     if let objectID = UdacityPersonalData.sharedInstance().objectId {
                         completionHandlerForPUTUser(true, nil)
                     } else {
-                        completionHandlerForPUTUser(false, error)
+                        completionHandlerForPUTUser(false, error?.localizedDescription)
                     }
                     completionHandlerForPUTUser(true, nil)
                 }

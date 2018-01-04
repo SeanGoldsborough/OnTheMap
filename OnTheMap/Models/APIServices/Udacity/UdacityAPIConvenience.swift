@@ -9,7 +9,7 @@
 import Foundation
 extension APIClient {
 
-    func authenticateUser( email: String, password: String, completionHandlerForAuth: @escaping (_ success: Bool, _ errorString: Error?) -> Void) {
+    func authenticateUser( email: String, password: String, completionHandlerForAuth: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
        
         getSessionID(userName: email, userPassword: password) { (success, sessionID, errorString) in
             
@@ -42,7 +42,7 @@ extension APIClient {
     
     
     // MARK: POST Convenience Methods - Udacity
-    private func getSessionID(userName: String?, userPassword: String?, completionHandlerForSession: @escaping (_ success: Bool, _ sessionID: String?, _ errorString: Error?) -> Void) {
+    private func getSessionID(userName: String?, userPassword: String?, completionHandlerForSession: @escaping (_ success: Bool, _ sessionID: String?, _ errorString: String?) -> Void) {
         
         /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
 
@@ -55,30 +55,45 @@ extension APIClient {
 
             guard let results = results as? AnyObject else {
                 print(3)
-                completionHandlerForSession(false, nil, error)
+                completionHandlerForSession(false, nil, error?.localizedDescription)
                 //completionHandlerForSession(false, nil, NSError(domain: "getSessionID parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Login Failed (Session ID0)."]))
                 return
             }
-
+            
+            if let udacityStatusCode = results["error"] as? String {
+                print("Udacity error status code is: \(udacityStatusCode)")
+                print("Udacity Status Code error!")
+                
+                completionHandlerForSession(false, nil, udacityStatusCode)
+                
+            } else {
+                
+                print("No Udacity Status Code error!")
+                
+            }
+            
+            
+            
             guard let session = results["session"] as? [String: Any] else {
                 print(4)
-                completionHandlerForSession(false, nil, error)//NSError(domain: "getSessionID parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Login Failed: \(error!.localizedDescription)."]))
+                print("results from getSessionID are: \(results)")
+                completionHandlerForSession(false, nil, error?.localizedDescription)//NSError(domain: "getSessionID parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Login Failed: \(error!.localizedDescription)."]))
                 return
             }
            
-            guard let sessionID = session["id"] as? String else {
-                print(5)
-                completionHandlerForSession(false, nil, error)
-//                completionHandlerForSession(false, nil, NSError(domain: "getSessionID parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Login Failed (Session ID2)."]))
-                return
-            }
+//            guard let sessionID = session["id"] as? String else {
+//                print(5)
+//                completionHandlerForSession(false, nil, error)
+////                completionHandlerForSession(false, nil, NSError(domain: "getSessionID parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Login Failed (Session ID2)."]))
+//                return
+//            }
             
             if let sessionID = session[APIClient.JSONResponseKeys.SessionIDUdacity] as? String {
                 
                 completionHandlerForSession(true, sessionID, nil)
             } else {
                 print(6)
-                completionHandlerForSession(false, nil, error)
+                completionHandlerForSession(false, nil, error?.localizedDescription)
                 //completionHandlerForSession(false, nil, NSError(domain: "getSessionID parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Login Failed (Session ID3)."]))
             }
         }
@@ -86,7 +101,7 @@ extension APIClient {
     
     // MARK: Get UniqueID - Udacity
 
-    private func getUniqueIDUdacity(userName: String?, userPassword: String?, completionHandlerForUniqueID: @escaping (_ success: Bool, _ uniqueID: String?, _ errorString: Error?) -> Void) {
+    private func getUniqueIDUdacity(userName: String?, userPassword: String?, completionHandlerForUniqueID: @escaping (_ success: Bool, _ uniqueID: String?, _ errorString: String?) -> Void) {
         
         /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
         
@@ -101,16 +116,29 @@ extension APIClient {
             /* 3. Send the desired value(s) to completion handler */
             if let error = error {
                 print(error)
-                completionHandlerForUniqueID(false, nil, error)
+                completionHandlerForUniqueID(false, nil, error.localizedDescription)
                 //completionHandlerForUniqueID(false, nil, NSError(domain: "getUniqueIDUdacity parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Login Failed (UniqueID)."]))
             } else {
+                
+                if let udacityError = results!["error"] as? String {
+                    print("Udacity error is: \(udacityError)")
+                    print("Udacity error!")
+                    
+                    completionHandlerForUniqueID(false, nil, udacityError)
+                    
+                } else {
+                    
+                    print("No Udacity error!")
+                    
+                }
+                
                 guard let account = results![APIClient.JSONResponseKeys.Account] as? [String: Any] else {print("error: no account");return}
                 guard let uniqueKey = account[APIClient.JSONResponseKeys.UniqueKeyUdacity] as? String else {print("error");return}
                 if let uniqueKey = account[APIClient.JSONResponseKeys.UniqueKeyUdacity] as? String {
                     UdacityPersonalData.sharedInstance().uniqueKey = uniqueKey
                     completionHandlerForUniqueID(true, uniqueKey, nil)
                 } else {
-                    completionHandlerForUniqueID(false, nil, error)
+                    completionHandlerForUniqueID(false, nil, error?.localizedDescription)
                     //completionHandlerForUniqueID(false, nil, NSError(domain: "getUniqueIDUdacity parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Login Failed (UniqueID)."]))
                 }
             }
@@ -119,18 +147,29 @@ extension APIClient {
 
     
     //MARK: DELETE Convenience Methods - Udacity  var request = URLRequest(url: URL(string: "https://www.udacity.com/api/session")!)
-    func deleteSessionUdacity(sessionID: String?, completionHandlerForDeleteSession: @escaping (_ success: Bool, _ errorString: Error?) -> Void) {
+    func deleteSessionUdacity(sessionID: String?, completionHandlerForDeleteSession: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
         
         let parameters = [String:AnyObject]()
         
         let jsonBody = ""
         
         /* 2. Make the request */
-        let request = taskForDELETEMethodUdacity(URLPathVariants.UdacitySession, parameters: parameters, jsonBody: jsonBody) { (results, error) in            /* 3. Send the desired value(s) to completion handler */
+        let request = taskForDELETEMethodUdacity(URLPathVariants.UdacitySession, parameters: parameters, jsonBody: jsonBody) { (results, error) in
+            
+            /* 3. Send the desired value(s) to completion handler */
             if let error = error {
                 print(error)
-                completionHandlerForDeleteSession(false, error)
+                completionHandlerForDeleteSession(false, error.localizedDescription)
             } else {
+                
+                if let udacityError = results!["error"] as? String {
+                    print("Udacity error is: \(udacityError)")
+                    print("Udacity error!")
+                    completionHandlerForDeleteSession(false, udacityError)
+                } else {
+                    print("No Udacity error!")
+                }
+
                 guard let session = results![APIClient.JSONResponseKeys.Session] as? [String:AnyObject] else {
                     return
                 }
@@ -138,6 +177,7 @@ extension APIClient {
                     return
                 }
                 APIClient.sharedInstance().sessionID = sessionIdResults
+                UdacityPersonalData.sharedInstance().uniqueKey = nil
                 completionHandlerForDeleteSession(true, nil)
             }
         }
@@ -147,7 +187,7 @@ extension APIClient {
     //
     // MARK: GETing Public User Data - Udacity
 
-   func getPublicUserDataUdacity(_ completionHandlerForUdacityGet: @escaping (_ result: UdacityPersonalData?, _ error: Error?) -> Void) {
+   func getPublicUserDataUdacity(_ completionHandlerForUdacityGet: @escaping (_ result: UdacityPersonalData?, _ error: String?) -> Void) {
         
         //1. Specify parameters, method (if has {key}), and HTTP body (if POST)
         let parameters = [String:AnyObject]()
@@ -159,10 +199,18 @@ extension APIClient {
         let _ = taskForGETMethodUdacity(variant: variant, parameters: parameters) { (results, error) in
             /* 3. Send the desired value(s) to completion handler */
             if let error = error {
-                completionHandlerForUdacityGet(nil, error)
+                completionHandlerForUdacityGet(nil, error.localizedDescription)
             } else {
                 
                 if let result = results {
+                    
+                    if let udacityError = results!["error"] as? String {
+                        print("Udacity error is: \(udacityError)")
+                        print("Udacity error!")
+                        completionHandlerForUdacityGet(nil, udacityError)
+                    } else {
+                        print("No Udacity error!")
+                    }
                     
                     guard let getResults = results![APIClient.JSONResponseKeys.UdacityPersonalDataUser] as? [String:AnyObject] else {
                         return
@@ -184,7 +232,7 @@ extension APIClient {
                     UdacityPersonalData.sharedInstance().uniqueKey = keyResults
                     completionHandlerForUdacityGet(UdacityPersonalData.sharedInstance(), nil)
                 } else {
-                    completionHandlerForUdacityGet(nil, error)
+                    completionHandlerForUdacityGet(nil, error?.localizedDescription)
                     //completionHandlerForUdacityGet(nil, NSError(domain: "getPublicUserDataUdacity parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getPublicUserDataUdacity"]))
                 }
             }

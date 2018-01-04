@@ -42,7 +42,7 @@ class LoginVC: UIViewController {
                     performUIUpdatesOnMain {
                     self.activityOverlay?.isHidden = true
                     self.activityIndicator?.stopAnimating()
-                        AlertView.alertPopUp(view: self, alertMessage: errorString?.localizedDescription ?? "Invalid Credentials") //"Log In Unsuccessful")
+                        AlertView.alertPopUp(view: self, alertMessage: errorString ?? "Invalid Credentials") //"Log In Unsuccessful")
                     }
                 }
             }
@@ -102,7 +102,7 @@ class LoginVC: UIViewController {
             
             self.activityOverlay?.isHidden = true
             self.activityIndicator?.stopAnimating()
-            
+           
         }
         
         var registeredInt: Int

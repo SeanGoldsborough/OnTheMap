@@ -44,6 +44,8 @@ extension APIClient {
         /* 4. Make the request */
         let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
             
+            
+            
             func sendError(_ error: Error?) {
                 print(error)
                 
@@ -51,10 +53,13 @@ extension APIClient {
                 completionHandlerForPOST(nil, error)
                 //completionHandlerForPOST(nil, NSError(domain: "taskForPOSTMethodUdacity", code: 1, userInfo: userInfo))
             }
-            
-            if let error = error {
-                print(7)
-                completionHandlerForPOST(nil, error)
+
+            guard (error == nil) else {
+                print("8 error is: \(error)")
+                //sendError((error?.localizedDescription)!)
+                sendError(error)
+                
+                return
             }
 
             guard data != nil else {
@@ -75,12 +80,7 @@ extension APIClient {
           
             let newData = data?.subdata(in: range)
             
-            /* GUARD: Did we get a successful 2XX response? */
-            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
-                 sendError(error)
-                //sendError((error?.localizedDescription)!)//"\(error!) 3Please check your email/password and try again")
-                return
-            }
+            print("Udacity Data is: \(String(data: newData!, encoding: .utf8)!)")
             
             /* GUARD: Was there any data returned? */
             guard let data = newData else {
