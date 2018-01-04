@@ -28,31 +28,18 @@ extension APIClient {
                     
                     completionHandlerForParseGet([], error?.localizedDescription)
                 } else {
-//                     print("Get Students Locations JSON data returned was \(results!)")
-//                    if let parseError = results?["error"] as? [String:Any] {
-//                        print("Parse error is: \(parseError)")
-//                        print("Parse error!")
-//                        completionHandlerForParseGet([], "there was a parseError")
-//                    } else {
-//                        print("No Parse error!")
-//                        completionHandlerForParseGet(results as? [StudentLocations], "NO parseError")
-//                    }
+
                     
                     if let results = results?[APIClient.JSONResponseKeys.ParseResults] as? [[String:AnyObject]] {
                         print("Parse error on get all students is: \(results)")
                         let students = StudentLocations.studentsFromResults(results)
                         print("Parse students is: \(students)")
                         completionHandlerForParseGet(students, nil)
-//                    } else if let errorResults = results?["error"] as? String {
-//                         print("Parse error on get all students is: \(errorResults)")
-//                        //let parseErrorMessage = errorResults
-//                        completionHandlerForParseGet(nil, errorResults)
+
                     } else if let results = results?["error"] as? String {
                         print("2Parse error on get all students is: \(results)")
-                        //let parseErrorMessage = errorResults
                         completionHandlerForParseGet(nil, results)
                 }else {
-//                        completionHandlerForParseGet([], NSError(domain: "getStudentLocationsParse parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getStudentLocationsParse"]))
                         completionHandlerForParseGet([], error?.localizedDescription)
                     }
                 }
@@ -80,7 +67,6 @@ extension APIClient {
                     
                     if let parseError = results!["error"] as? String {
                         print("Parse error GET one student is: \(parseError)")
-                        print("Parse error!")
                         completionHandlerForParseGet(results, parseError)
                     } else {
                         print("No Parse error!")
@@ -117,20 +103,19 @@ extension APIClient {
                     print(error)
                     completionHandlerForPOSTUser(false, error.localizedDescription)
                 } else {
-                    
+                     print(" post new student JSON data returned was \(results)")
                     if let parseError = results!["error"] as? String {
                         print("Parse error is: \(parseError)")
                         print("Parse error!")
                         completionHandlerForPOSTUser(false, parseError)
                     } else {
                         print("No Parse error!")
-                    }
-                    
-                    if let objectID = results?[APIClient.JSONResponseKeys.ObjectId] as? String {
-                        UdacityPersonalData.sharedInstance().objectId = objectID
-                        completionHandlerForPOSTUser(true, nil)
-                    } else {
-                        completionHandlerForPOSTUser(false, error?.localizedDescription)
+                        if let objectID = results?[APIClient.JSONResponseKeys.ObjectId] as? String {
+                            UdacityPersonalData.sharedInstance().objectId = objectID
+                            completionHandlerForPOSTUser(true, nil)
+                        } else {
+                            completionHandlerForPOSTUser(false, error?.localizedDescription)
+                        }
                     }
                 }
             }
@@ -157,13 +142,11 @@ extension APIClient {
                         completionHandlerForPUTUser(false, parseError)
                     } else {
                         print("No Parse error!")
-                    }
-                    
-                    
-                    if let objectID = UdacityPersonalData.sharedInstance().objectId {
-                        completionHandlerForPUTUser(true, nil)
-                    } else {
-                        completionHandlerForPUTUser(false, error?.localizedDescription)
+                        if let objectID = UdacityPersonalData.sharedInstance().objectId {
+                            completionHandlerForPUTUser(true, nil)
+                        } else {
+                            completionHandlerForPUTUser(false, error?.localizedDescription)
+                        }
                     }
                     completionHandlerForPUTUser(true, nil)
                 }
